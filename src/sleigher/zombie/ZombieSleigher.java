@@ -1,5 +1,17 @@
 package sleigher.zombie;
 
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
+import java.awt.Transparency;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JFrame;
 
 import com.jackdahms.Controllable;
@@ -10,33 +22,124 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     public static int WIDTH = 600;
     public static int HEIGHT = 600;
     
-    private ControllableThread ct;
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Santa Sleigher");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
-        
-        //add ZombieSleigher to jframe
-        
-        frame.setVisible(true);
-    }
+    private ControllableThread controllableThread;
+    
+    private JFrame frame;
+    private Canvas canvas;
+    private BufferStrategy strategy;
+    private BufferedImage background;
+    private Graphics2D backgroundGraphics;
+    private Graphics2D graphics;
+    //helps canvas, tells it where to buffer
+    private GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment()
+    										.getDefaultScreenDevice()
+    										.getDefaultConfiguration();
     
     public ZombieSleigher() {
     	
+    	//create JFrame
+    	frame = new JFrame("Santa Sleigher");
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+        	public void windowClosing(WindowEvent e) {
+        		exit();
+        	}
+        });
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+    	frame.setVisible(true);
+    	
+    	//create the canvas and add it to the frame
+    	canvas = new Canvas(config);
+    	canvas.setSize(WIDTH, HEIGHT);
+    	frame.add(canvas, 0); //adds canvas at index 0
+    	
+    	//create background image and buffer
+    	background = create(WIDTH, HEIGHT, false);
+    	canvas.createBufferStrategy(2);
+    	do {
+    		strategy = canvas.getBufferStrategy();
+    	} while (strategy == null);
+    	
     	//Update will be called 60 fps, render will be called default 60 fps
-    	ct = new ControllableThread(this);
-    	ct.setTargetUps(60);
-    	ct.start();
+    	controllableThread = new ControllableThread(this);
+    	controllableThread.setTargetUps(60);
+    	
+    	//and awaaaaay we go!
+    	controllableThread.start();
+    	init();
+    }
+    
+    public void init() {
+    	backgroundGraphics = (Graphics2D) background.getGraphics();
     }
     
     public void update() {
     	
     }
     
+    public void renderGame(Graphics2D g, float delta) {
+    	g.setColor(Color.white);
+    	g.drawString("Hello world!", 50, 50);
+    }
+    
     public void render(float delta) {
-    	
+    	do {
+			Graphics2D bg = getBuffer();
+			
+			renderGame(backgroundGraphics, delta);
+			
+			bg.drawImage(background, 0, 0, null);
+			
+			bg.dispose();
+		} while (!updateScreen());
+    }
+    
+    public static void main(String[] args) {
+        new ZombieSleigher();
+    }
+    
+    /**
+     * Worker Methods
+     */
+    
+    //when the frame exits
+    public void exit() {
+    	controllableThread.stop();
+    	frame.dispose();
+    }
+    
+    //create a hardware accelerated image
+    public BufferedImage create(int width, int height, boolean alpha) {
+    	return config.createCompatibleImage(width, height, alpha ? Transparency.TRANSLUCENT : Transparency.OPAQUE);
+    }
+    
+    //screen and buffer stuff
+    private Graphics2D getBuffer() {
+    	if (graphics == null) {
+    		try {
+    			graphics = (Graphics2D) strategy.getDrawGraphics();
+    		} catch (IllegalStateException e) {
+    			return null;
+    		}
+    	}
+    	return graphics;
+    }
+    
+    private boolean updateScreen() {
+    	graphics.dispose();
+    	graphics = null;
+    	try {
+    		strategy.show();
+    		Toolkit.getDefaultToolkit().sync();
+    		return !strategy.contentsLost();
+    	} catch (NullPointerException e) {
+    		return true;
+
+    	} catch (IllegalStateException e) {
+    		return true;
+    	}
     }
 
 }
