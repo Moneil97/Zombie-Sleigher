@@ -85,6 +85,7 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     	g.setColor(Color.white);
     	g.fillRect(0, 0, WIDTH, HEIGHT);
     	
+    	//tilt sleigh right or left based on movement
     	int swidth = 50;
     	int sheight = 60;
     	g.setColor(Color.red);
