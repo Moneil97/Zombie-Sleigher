@@ -19,8 +19,8 @@ import com.jackdahms.ControllableThread;
 
 public class ZombieSleigher implements Controllable{ //we want to make this a canvas and use bufferstrategy, not jpanel
 
-    public static int WIDTH = 600;
-    public static int HEIGHT = 600;
+    public static int WIDTH = 700;
+    public static int HEIGHT = 500;
     
     private ControllableThread controllableThread;
     
@@ -82,10 +82,10 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     int counter = 0;
     public void renderGame(Graphics2D g, float delta) {
     	//wipe the screen. we ain't usin' swing anymore, boys
-    	g.setColor(Color.white);
+    	g.setColor(Color.black);
     	g.fillRect(0, 0, WIDTH, HEIGHT);
     	
-    	g.setColor(Color.black);
+    	g.setColor(Color.white);
     	g.drawString("hey", 50, counter);
     	counter++;
     	if (counter == HEIGHT) counter = 0;
