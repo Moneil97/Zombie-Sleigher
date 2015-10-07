@@ -82,13 +82,18 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     int counter = 0;
     public void renderGame(Graphics2D g, float delta) {
     	//wipe the screen. we ain't usin' swing anymore, boys
-    	g.setColor(Color.black);
-    	g.fillRect(0, 0, WIDTH, HEIGHT);
-    	
     	g.setColor(Color.white);
-    	g.drawString("hey", 50, counter);
-    	counter++;
-    	if (counter == HEIGHT) counter = 0;
+    	g.fillRect(0, 0, 700, 500);
+    	
+    	int swidth = 50;
+    	int sheight = 60;
+    	g.setColor(Color.red);
+    	g.fillRect(50, 50, 50, sheight);
+    	
+    	int rwidth = swidth;
+    	int rheight = 100;
+    	g.setColor(Color.blue);
+    	g.fillRect(50, 50 + sheight, rwidth, rheight);
     }
     
     //don't draw here, draw in renderGame
