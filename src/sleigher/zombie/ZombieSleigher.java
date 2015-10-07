@@ -67,8 +67,8 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     	controllableThread.setTargetUps(60);
     	
     	//and awaaaaay we go!
-    	controllableThread.start();
     	init();
+    	controllableThread.start();
     }
     
     public void init() {
@@ -79,9 +79,16 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     	
     }
     
+    int counter = 0;
     public void renderGame(Graphics2D g, float delta) {
+    	//wipe the screen. we ain't usin' swing anymore, boys
     	g.setColor(Color.white);
-    	g.drawString("Hello world!", 50, 50);
+    	g.fillRect(0, 0, WIDTH, HEIGHT);
+    	
+    	g.setColor(Color.black);
+    	g.drawString("hey", 50, counter);
+    	counter++;
+    	if (counter == HEIGHT) counter = 0;
     }
     
     public void render(float delta) {
