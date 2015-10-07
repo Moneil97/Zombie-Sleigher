@@ -91,6 +91,7 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     	if (counter == HEIGHT) counter = 0;
     }
     
+    //don't draw here, draw in renderGame
     public void render(float delta) {
     	do {
 			Graphics2D bg = getBuffer();
