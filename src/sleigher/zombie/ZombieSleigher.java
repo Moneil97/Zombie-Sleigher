@@ -11,7 +11,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import com.jackdahms.Controllable;
@@ -30,7 +33,6 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     private BufferedImage background;
     private Graphics2D backgroundGraphics;
     private Graphics2D graphics;
-    //helps canvas, tells it where to buffer
     private GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment()
     										.getDefaultScreenDevice()
     										.getDefaultConfiguration();
@@ -40,6 +42,8 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     	GAME
     }
     private Gamestate gamestate = Gamestate.TITLE;
+    
+    private BufferedImage gameBackground;
     
     public ZombieSleigher() {
     	
@@ -79,10 +83,18 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     
     public void init() {
     	backgroundGraphics = (Graphics2D) background.getGraphics();
+
+    	gamestate = Gamestate.TITLE;
+    	
+    	gameBackground = load("res/background.jpg");
     }
     
     public void update() {
-    	
+    	if (gamestate == Gamestate.GAME) {
+    		
+    	} else if (gamestate == Gamestate.TITLE) {
+    		
+    	}
     }
     
     int counter = 0;
@@ -91,21 +103,27 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     	g.setColor(Color.white);
     	g.fillRect(0, 0, WIDTH, HEIGHT);
     	
-    	//tilt sleigh right or left based on movement
-    	int swidth = 50;
-    	int sheight = 60;
-    	g.setColor(Color.red);
-    	g.fillRect(50, 50, swidth, sheight);
+    	g.drawImage(gameBackground, 0, 0, null);
     	
-    	int rwidth = swidth;
-    	int rheight = 100;
-    	g.setColor(Color.blue);
-    	g.fillRect(50, 50 + sheight, rwidth, rheight);
-    	
-    	int zwidth = 40;
-    	int zheight = 50;
-    	g.setColor(Color.green);
-    	g.fillRect(150, 50, zwidth, zheight);
+    	if (gamestate == Gamestate.GAME) {
+	    	//tilt sleigh right or left based on movement
+	    	int swidth = 50;
+	    	int sheight = 60;
+	    	g.setColor(Color.red);
+	    	g.fillRect(50, 50, swidth, sheight);
+	    	
+	    	int rwidth = swidth;
+	    	int rheight = 100;
+	    	g.setColor(Color.blue);
+	    	g.fillRect(50, 50 + sheight, rwidth, rheight);
+	    	
+	    	int zwidth = 40;
+	    	int zheight = 50;
+	    	g.setColor(Color.green);
+	    	g.fillRect(150, 50, zwidth, zheight);
+    	} else if (gamestate == Gamestate.TITLE) {
+    		
+    	}
     }
     
     //don't draw here, draw in renderGame
@@ -115,7 +133,7 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
 			
 			renderGame(backgroundGraphics, delta);
 			
-			bg.drawImage(background, 0, 0, null);
+			bg.drawImage(background, 0, 0, 800, 600, null);
 			
 			bg.dispose();
 		} while (!updateScreen());
@@ -133,6 +151,27 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     public void exit() {
     	controllableThread.stop();
     	frame.dispose();
+    }
+    
+    public BufferedImage load(String path) {
+    	try {
+			return ImageIO.read(this.getClass().getResource(path));
+		} catch (Exception e) {
+			e.printStackTrace();
+			BufferedImage missingTexture = create(800, 600, false);
+			
+			//the "missing texture" texture from garry's mod
+			Graphics2D g = (Graphics2D) missingTexture.getGraphics();
+			g.setColor(Color.PINK);
+			g.fillRect(0, 0, 400, 300);
+			g.fillRect(400, 300, 400, 300);
+			g.setColor(Color.BLACK);
+			g.fillRect(400, 0, 400, 300);
+			g.fillRect(0, 300, 400, 300);
+			g.dispose();
+			
+			return missingTexture;
+		}
     }
     
     //create a hardware accelerated image
