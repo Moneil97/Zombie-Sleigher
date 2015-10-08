@@ -35,6 +35,12 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     										.getDefaultScreenDevice()
     										.getDefaultConfiguration();
     
+    private enum Gamestate {
+    	TITLE,
+    	GAME
+    }
+    private Gamestate gamestate = Gamestate.TITLE;
+    
     public ZombieSleigher() {
     	
     	//create JFrame
