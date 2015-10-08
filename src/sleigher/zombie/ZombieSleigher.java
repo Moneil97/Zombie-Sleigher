@@ -38,7 +38,6 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     public ZombieSleigher() {
     	
     	//create JFrame
-    	System.out.println("cameron");
     	frame = new JFrame("Santa Sleigher");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
