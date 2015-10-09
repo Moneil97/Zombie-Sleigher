@@ -140,7 +140,7 @@ public class ZombieSleigher implements Controllable {
     	//Needs to be added after buttons are created
     	canvas.addMouseMotionListener(new MouseMotion());
     	canvas.addMouseListener(new Mouse());
-    	canvas.addKeyListener(new Keyboard());
+    	canvas.addKeyListener(new Key());
     }
     
     public void update() {
@@ -151,53 +151,57 @@ public class ZombieSleigher implements Controllable {
     	}
     }
     
-    
-    
-    int counter = 0;
     public void renderGame(Graphics2D g, float delta) {
-    	//wipe the screen. we ain't usin' swing anymore, boys
-    	g.setColor(Color.white);
-    	g.fillRect(0, 0, WIDTH, HEIGHT);
     	
     	g.drawImage(gameBackground, 0, 0, null);
     	
-    	if (gamestate == Gamestate.GAME) {
-    		
-	    	//tilt sleigh right or left based on movement
-	    	int swidth = 50;
-	    	int sheight = 60;
-	    	g.setColor(Color.red);
-	    	g.fillRect(50, 50, swidth, sheight);
-	    	
-	    	int rwidth = swidth;
-	    	int rheight = 100;
-	    	g.setColor(Color.blue);
-	    	g.fillRect(50, 50 + sheight, rwidth, rheight);
-	    	
-	    	int zwidth = 40;
-	    	int zheight = 50;
-	    	g.setColor(Color.green);
-	    	g.fillRect(150, 50, zwidth, zheight);
-	    	
-    	} else if (gamestate == Gamestate.TITLE) {
-    		
-    		//the title
-    		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-    		g.setColor(Color.red);
-    		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-    		attributes.put(TextAttribute.TRACKING, 0.3);
-    		Font font = new Font("helvetica", Font.PLAIN, 60).deriveFont(attributes);
-    		g.setFont(font);
-    		g.drawString("Zombie Sleigher", 25, 100);
-    		
-    		for (BoxButton b : menuButtons)
-    			b.render(g);
-    	} else if (gamestate == Gamestate.PAUSE) {
-    		
-    		g.setColor(new Color(0, 0, 0, 120));
-    		g.fillRect(0, 0, WIDTH, HEIGHT);
-    	}
+    	//tilt sleigh right or left based on movement
+    	int swidth = 50;
+    	int sheight = 60;
+    	g.setColor(Color.red);
+    	g.fillRect(50, 50, swidth, sheight);
+    	
+    	int rwidth = swidth;
+    	int rheight = 100;
+    	g.setColor(Color.blue);
+    	g.fillRect(50, 50 + sheight, rwidth, rheight);
+    	
+    	int zwidth = 40;
+    	int zheight = 50;
+    	g.setColor(Color.green);
+    	g.fillRect(150, 50, zwidth, zheight);
     }
+    
+    public void renderTitle(Graphics2D g, float delta) {
+    	
+    	g.drawImage(gameBackground, 0, 0, null);
+
+		//the title
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g.setColor(Color.red);
+		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+		attributes.put(TextAttribute.TRACKING, 0.3);
+		Font font = new Font("helvetica", Font.PLAIN, 60).deriveFont(attributes);
+		g.setFont(font);
+		g.drawString("Zombie Sleigher", 25, 100);
+		
+		for (BoxButton b : menuButtons)
+			b.render(g);
+    }
+    
+    public void renderPause(Graphics2D g, float delta) {
+    	renderGame(g, delta);
+
+		g.setColor(new Color(0, 0, 0, 120));
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		resumeButton.render(g);
+		quitButton.render(g);
+    }
+    
+    /**
+     * Input Adapter Classes
+     */
     
     private class MouseMotion extends MouseMotionAdapter {
     	public void mouseMoved(MouseEvent e) {
@@ -243,7 +247,7 @@ public class ZombieSleigher implements Controllable {
     	}
     }
     
-    private class Keyboard extends KeyAdapter {
+    private class Key extends KeyAdapter {
     	public void keyReleased(KeyEvent e) {
     		int key = e.getKeyCode();
     		switch(key) {
@@ -258,12 +262,26 @@ public class ZombieSleigher implements Controllable {
      * Worker Methods
      */
     
+    public static void main(String[] args) {
+        new ZombieSleigher();
+    }
+    
     //don't draw here, draw in renderGame
     public void render(float delta) {
     	do {
 			Graphics2D bg = getBuffer();
 			
-			renderGame(backgroundGraphics, delta);
+			if (gamestate == Gamestate.GAME) {
+				renderGame(backgroundGraphics, delta);
+			} else if (gamestate == Gamestate.PAUSE) {
+				renderPause(backgroundGraphics, delta);
+			} else if (gamestate == Gamestate.TITLE) {
+				renderTitle(backgroundGraphics, delta);
+			} else if (gamestate == Gamestate.SHOP) {
+				
+			} else if (gamestate == Gamestate.INSTRUCTIONS) {
+				
+			}
 			
 			bg.drawImage(background, 0, 0, 800, 600, null);
 			
@@ -271,9 +289,6 @@ public class ZombieSleigher implements Controllable {
 		} while (!updateScreen());
     }
     
-    public static void main(String[] args) {
-        new ZombieSleigher();
-    }
     
     //when the frame exits
     public void exit() {

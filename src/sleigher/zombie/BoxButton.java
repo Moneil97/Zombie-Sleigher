@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 
 public abstract class BoxButton {
 	
-	abstract void onPress();
-	
 	int x, y;
 	int width, height;
 	
@@ -45,6 +43,8 @@ public abstract class BoxButton {
 		g.drawString(title, x + width / 2 - w / 2, y + height / 2 + h / 3);
 	}
 	
+	abstract void onPress();
+	
 	public void mouseMoved(int ex, int ey) {
 		hovering = false;
 		if (ex > x && ex < x + width)
@@ -64,8 +64,10 @@ public abstract class BoxButton {
 	public void mouseReleased(int ex, int ey) {
 		if (ex > x && ex < x + width)
 			if (ey > y && ey < y + height)
-				if (pressed)
+				if (pressed) {
+					hovering = false;
 					onPress();
+				}
 	}
 
 }
