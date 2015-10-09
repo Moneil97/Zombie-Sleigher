@@ -50,6 +50,7 @@ public class ZombieSleigher implements Controllable {
     	GAME, 
     	SHOP,
     	INSTRUCTIONS,
+    	PAUSE
     }
     private Gamestate gamestate = Gamestate.TITLE;
     
@@ -100,19 +101,19 @@ public class ZombieSleigher implements Controllable {
     	
     	gameBackground = load("/res/background.jpg");
     	
-    	menuButtons[0] = new BoxButton("PLAY", 500, 300, 200, 40){
+    	menuButtons[0] = new BoxButton("PLAY", 500, 200, 200, 40){
     		@Override
     		void onPress() {
     			gamestate = Gamestate.GAME;
     		}
     	};
-    	menuButtons[1] = new BoxButton("SHOP", 500, 400, 200, 40){
+    	menuButtons[1] = new BoxButton("SHOP", 500, 260, 200, 40){
     		@Override
     		void onPress() {
     			gamestate = Gamestate.SHOP;
     		}
     	};
-    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 500, 500, 200, 40){
+    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 500, 320, 200, 40){
     		@Override
     		void onPress() {
     			gamestate = Gamestate.INSTRUCTIONS;
