@@ -2,17 +2,22 @@ package sleigher.zombie;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.font.TextAttribute;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -44,6 +49,8 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     private Gamestate gamestate = Gamestate.TITLE;
     
     private BufferedImage gameBackground;
+    
+    private BoxButton[] menuButtons = new BoxButton[3];
     
     public ZombieSleigher() {
     	
@@ -86,14 +93,19 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
 
     	gamestate = Gamestate.TITLE;
     	
-    	gameBackground = load("res/background.jpg");
+    	gameBackground = load("/res/background.jpg");
+    	
+    	menuButtons[0] = new BoxButton("PLAY", 0, 0, 0, 0);
+    	menuButtons[1] = new BoxButton("SHOP", 0, 0, 0, 0);
+    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 0, 0, 0, 0);
     }
     
     public void update() {
     	if (gamestate == Gamestate.GAME) {
     		
     	} else if (gamestate == Gamestate.TITLE) {
-    		
+    		//TODO 
+    		//buttons!
     	}
     }
     
@@ -123,6 +135,18 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
 	    	g.fillRect(150, 50, zwidth, zheight);
     	} else if (gamestate == Gamestate.TITLE) {
     		
+    		//the title
+    		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    		g.setColor(Color.red);
+    		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+    		attributes.put(TextAttribute.TRACKING, 0.3);
+    		Font font = new Font("helvetica", Font.PLAIN, 60).deriveFont(attributes);
+    		g.setFont(font);
+    		g.drawString("Santa Sleigher", 60, 100);
+    		
+    		for (BoxButton b : menuButtons) {
+    			b.render(g);
+    		}
     	}
     }
     
