@@ -124,13 +124,13 @@ public class ZombieSleigher implements Controllable {
     		}
     	};
     	
-    	resumeButton = new BoxButton("RESUME", 400, 300, 60, 20) {
+    	resumeButton = new BoxButton("RESUME", 300, 285, 100, 30) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.GAME;
     		}
     	};
-    	quitButton = new BoxButton("MENU", 400, 380, 60, 20) {
+    	quitButton = new BoxButton("MENU", 424, 285, 76, 30) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
@@ -191,12 +191,22 @@ public class ZombieSleigher implements Controllable {
     
     public void renderPause(Graphics2D g, float delta) {
     	renderGame(g, delta);
+    	
+    	g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		g.setColor(new Color(0, 0, 0, 120));
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.fillRect(0, 0, 800, 600);
 		
 		resumeButton.render(g);
 		quitButton.render(g);
+		
+		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+		attributes.put(TextAttribute.TRACKING, 0.54);
+		Font font = new Font("helvetica", Font.PLAIN, 30).deriveFont(attributes);
+		g.setFont(font);
+		
+		g.setColor(Color.red);
+		g.drawString("PAUSED", 300 - 2, 280);
     }
     
     /**
@@ -253,6 +263,11 @@ public class ZombieSleigher implements Controllable {
     		switch(key) {
     		case KeyEvent.VK_P:
     			if (gamestate == Gamestate.GAME) gamestate = Gamestate.PAUSE;
+    			else if (gamestate == Gamestate.PAUSE) {
+    				resumeButton.hovering = false;
+    				quitButton.hovering = false;
+    				gamestate = Gamestate.GAME;
+    			}
     			break;
     		}
     	}
