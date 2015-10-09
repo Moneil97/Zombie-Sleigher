@@ -9,6 +9,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Transparency;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.font.TextAttribute;
@@ -25,7 +28,7 @@ import javax.swing.JFrame;
 import com.jackdahms.Controllable;
 import com.jackdahms.ControllableThread;
 
-public class ZombieSleigher implements Controllable{ //we want to make this a canvas and use bufferstrategy, not jpanel
+public class ZombieSleigher implements Controllable {
 
     public static int WIDTH = 800;
     public static int HEIGHT = 600;
@@ -70,6 +73,7 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     	//create the canvas and add it to the frame
     	canvas = new Canvas(config);
     	canvas.setSize(WIDTH, HEIGHT);
+    	canvas.addMouseMotionListener(new MouseMotion());
     	frame.add(canvas, 0); //adds canvas at index 0
     	
     	//create background image and buffer
@@ -95,9 +99,9 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     	
     	gameBackground = load("/res/background.jpg");
     	
-    	menuButtons[0] = new BoxButton("PLAY", 0, 0, 0, 0);
-    	menuButtons[1] = new BoxButton("SHOP", 0, 0, 0, 0);
-    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 0, 0, 0, 0);
+    	menuButtons[0] = new BoxButton("PLAY", 500, 300, 200, 40);
+    	menuButtons[1] = new BoxButton("SHOP", 500, 400, 200, 40);
+    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 500, 500, 200, 40);
     }
     
     public void update() {
@@ -133,6 +137,7 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
 	    	int zheight = 50;
 	    	g.setColor(Color.green);
 	    	g.fillRect(150, 50, zwidth, zheight);
+	    	
     	} else if (gamestate == Gamestate.TITLE) {
     		
     		//the title
@@ -142,11 +147,10 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
     		attributes.put(TextAttribute.TRACKING, 0.3);
     		Font font = new Font("helvetica", Font.PLAIN, 60).deriveFont(attributes);
     		g.setFont(font);
-    		g.drawString("Santa Sleigher", 60, 100);
+    		g.drawString("Zombie Sleigher", 25, 100);
     		
-    		for (BoxButton b : menuButtons) {
+    		for (BoxButton b : menuButtons)
     			b.render(g);
-    		}
     	}
     }
     
@@ -227,6 +231,31 @@ public class ZombieSleigher implements Controllable{ //we want to make this a ca
 
     	} catch (IllegalStateException e) {
     		return true;
+    	}
+    }
+    
+    private class MouseMotion extends MouseMotionAdapter {
+    	public void mouseMoved(MouseEvent e) {
+    		if (gamestate == Gamestate.TITLE) {
+    			for (BoxButton b : menuButtons)
+    				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
+    		}
+    	}
+    }
+    
+    private class Mouse extends MouseAdapter {
+    	public void mousePressed(MouseEvent e) {
+    		if (gamestate == Gamestate.TITLE) {
+    			for (BoxButton b : menuButtons)
+    				b.mousePressed(e.getX(), e.getY());
+    		}
+    	}
+    	
+    	public void mouseReleased(MouseEvent e) {
+    		if (gamestate == Gamestate.TITLE) {
+    			for (BoxButton b : menuButtons)
+    				b.mouseReleased(e.getX(), e.getY());
+    		}
     	}
     }
 

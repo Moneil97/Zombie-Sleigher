@@ -1,6 +1,7 @@
 package sleigher.zombie;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class BoxButton {
@@ -12,7 +13,10 @@ public class BoxButton {
 	Color textColor = Color.red;
 	Color hoverColor = new Color(0, 255, 0, 125);
 	
+	Font font = new Font("arial", Font.PLAIN, 14);
+	
 	boolean hovering = false;
+	boolean pressed = false;
 	
 	String title;
 	
@@ -31,11 +35,31 @@ public class BoxButton {
 		
 		g.setColor(borderColor);
 		g.drawRect(x, y, width, height);
-		
+
+		g.setFont(font);
 		int w = g.getFontMetrics().stringWidth(title);
 		int h = g.getFontMetrics().getHeight();
 		g.setColor(textColor);
-		g.drawString(title, x + width / 2 - w / 2, y + height / 2 - h / 2);
+		g.drawString(title, x + width / 2 - w / 2, y + height / 2 + h / 3);
+	}
+	
+	public void mouseMoved(int ex, int ey) {
+		hovering = false;
+		if (ex > x && ex < x + width)
+			if (ey > y && ey < y + height)
+				hovering = true;
+	}
+	
+	public void mousePressed(int ex, int ey) {
+		if (ex > x && ex < x + width)
+			if (ey > y && ey < y + height)
+				;
+	}
+	
+	public void mouseReleased(int ex, int ey) {
+		if (ex > x && ex < x + width)
+			if (ey > y && ey < y + height)
+				;
 	}
 
 }
