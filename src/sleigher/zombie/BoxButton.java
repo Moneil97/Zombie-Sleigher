@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-public class BoxButton {
+public abstract class BoxButton {
+	
+	abstract void onPress();
 	
 	int x, y;
 	int width, height;
@@ -52,14 +54,18 @@ public class BoxButton {
 	
 	public void mousePressed(int ex, int ey) {
 		if (ex > x && ex < x + width)
-			if (ey > y && ey < y + height)
-				;
+			if (ey > y && ey < y + height){
+				pressed = true;
+				return;
+			}
+		pressed = false;
 	}
 	
 	public void mouseReleased(int ex, int ey) {
 		if (ex > x && ex < x + width)
 			if (ey > y && ey < y + height)
-				;
+				if (pressed)
+					onPress();
 	}
 
 }

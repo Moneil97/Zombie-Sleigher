@@ -47,7 +47,9 @@ public class ZombieSleigher implements Controllable {
     
     private enum Gamestate {
     	TITLE,
-    	GAME
+    	GAME, 
+    	SHOP,
+    	INSTRUCTIONS,
     }
     private Gamestate gamestate = Gamestate.TITLE;
     
@@ -73,7 +75,6 @@ public class ZombieSleigher implements Controllable {
     	//create the canvas and add it to the frame
     	canvas = new Canvas(config);
     	canvas.setSize(WIDTH, HEIGHT);
-    	canvas.addMouseMotionListener(new MouseMotion());
     	frame.add(canvas, 0); //adds canvas at index 0
     	
     	//create background image and buffer
@@ -99,9 +100,28 @@ public class ZombieSleigher implements Controllable {
     	
     	gameBackground = load("/res/background.jpg");
     	
-    	menuButtons[0] = new BoxButton("PLAY", 500, 300, 200, 40);
-    	menuButtons[1] = new BoxButton("SHOP", 500, 400, 200, 40);
-    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 500, 500, 200, 40);
+    	menuButtons[0] = new BoxButton("PLAY", 500, 300, 200, 40){
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.GAME;
+    		}
+    	};
+    	menuButtons[1] = new BoxButton("SHOP", 500, 400, 200, 40){
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.SHOP;
+    		}
+    	};
+    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 500, 500, 200, 40){
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.INSTRUCTIONS;
+    		}
+    	};
+    	
+    	//Needs to be added after buttons are created
+    	canvas.addMouseMotionListener(new MouseMotion());
+    	canvas.addMouseListener(new Mouse());
     }
     
     public void update() {
@@ -236,6 +256,13 @@ public class ZombieSleigher implements Controllable {
     
     private class MouseMotion extends MouseMotionAdapter {
     	public void mouseMoved(MouseEvent e) {
+    		if (gamestate == Gamestate.TITLE) {
+    			for (BoxButton b : menuButtons)
+    				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
+    		}
+    	}
+    	
+    	public void mouseDragged(MouseEvent e) {
     		if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
