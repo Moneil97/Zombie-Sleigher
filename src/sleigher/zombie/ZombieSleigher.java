@@ -9,6 +9,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Transparency;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -138,6 +140,7 @@ public class ZombieSleigher implements Controllable {
     	//Needs to be added after buttons are created
     	canvas.addMouseMotionListener(new MouseMotion());
     	canvas.addMouseListener(new Mouse());
+    	canvas.addKeyListener(new Keyboard());
     }
     
     public void update() {
@@ -147,6 +150,8 @@ public class ZombieSleigher implements Controllable {
     		
     	}
     }
+    
+    
     
     int counter = 0;
     public void renderGame(Graphics2D g, float delta) {
@@ -187,6 +192,10 @@ public class ZombieSleigher implements Controllable {
     		
     		for (BoxButton b : menuButtons)
     			b.render(g);
+    	} else if (gamestate == Gamestate.PAUSE) {
+    		
+    		g.setColor(new Color(0, 0, 0, 120));
+    		g.fillRect(0, 0, WIDTH, HEIGHT);
     	}
     }
     
@@ -230,6 +239,17 @@ public class ZombieSleigher implements Controllable {
     		} else if (gamestate == Gamestate.PAUSE) {
     			resumeButton.mouseReleased(e.getX(), e.getY());
     			quitButton.mouseReleased(e.getX(), e.getY());
+    		}
+    	}
+    }
+    
+    private class Keyboard extends KeyAdapter {
+    	public void keyReleased(KeyEvent e) {
+    		int key = e.getKeyCode();
+    		switch(key) {
+    		case KeyEvent.VK_P:
+    			if (gamestate == Gamestate.GAME) gamestate = Gamestate.PAUSE;
+    			break;
     		}
     	}
     }
