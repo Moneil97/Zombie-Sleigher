@@ -57,6 +57,8 @@ public class ZombieSleigher implements Controllable {
     private BufferedImage gameBackground;
     
     private BoxButton[] menuButtons = new BoxButton[3];
+    private BoxButton resumeButton;
+    private BoxButton quitButton;
     
     public ZombieSleigher() {
     	
@@ -120,6 +122,19 @@ public class ZombieSleigher implements Controllable {
     		}
     	};
     	
+    	resumeButton = new BoxButton("RESUME", 400, 300, 60, 20) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.GAME;
+    		}
+    	};
+    	quitButton = new BoxButton("MENU", 400, 380, 60, 20) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.TITLE;
+    		}
+    	};
+    	
     	//Needs to be added after buttons are created
     	canvas.addMouseMotionListener(new MouseMotion());
     	canvas.addMouseListener(new Mouse());
@@ -129,8 +144,7 @@ public class ZombieSleigher implements Controllable {
     	if (gamestate == Gamestate.GAME) {
     		
     	} else if (gamestate == Gamestate.TITLE) {
-    		//TODO 
-    		//buttons!
+    		
     	}
     }
     
