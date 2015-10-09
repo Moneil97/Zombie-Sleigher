@@ -157,6 +157,7 @@ public class ZombieSleigher implements Controllable {
     	g.drawImage(gameBackground, 0, 0, null);
     	
     	if (gamestate == Gamestate.GAME) {
+    		
 	    	//tilt sleigh right or left based on movement
 	    	int swidth = 50;
 	    	int sheight = 60;
@@ -189,6 +190,54 @@ public class ZombieSleigher implements Controllable {
     	}
     }
     
+    private class MouseMotion extends MouseMotionAdapter {
+    	public void mouseMoved(MouseEvent e) {
+    		if (gamestate == Gamestate.TITLE) {
+    			for (BoxButton b : menuButtons)
+    				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
+    		} else if (gamestate == Gamestate.PAUSE) {
+    			resumeButton.mouseMoved(e.getX(), e.getY());
+    			quitButton.mouseMoved(e.getX(), e.getY());
+    		}
+    	}
+    	
+    	public void mouseDragged(MouseEvent e) {
+    		if (gamestate == Gamestate.TITLE) {
+    			for (BoxButton b : menuButtons)
+    				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
+    		} else if (gamestate == Gamestate.PAUSE) {
+    			resumeButton.mouseMoved(e.getX(), e.getY());
+    			quitButton.mouseMoved(e.getX(), e.getY());
+    		}
+    	}
+    }
+    
+    private class Mouse extends MouseAdapter {
+    	public void mousePressed(MouseEvent e) {
+    		if (gamestate == Gamestate.TITLE) {
+    			for (BoxButton b : menuButtons)
+    				b.mousePressed(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.PAUSE) {
+    			resumeButton.mousePressed(e.getX(), e.getY());
+    			quitButton.mousePressed(e.getX(), e.getY());
+    		}
+    	} 
+    	
+    	public void mouseReleased(MouseEvent e) {
+    		if (gamestate == Gamestate.TITLE) {
+    			for (BoxButton b : menuButtons)
+    				b.mouseReleased(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.PAUSE) {
+    			resumeButton.mouseReleased(e.getX(), e.getY());
+    			quitButton.mouseReleased(e.getX(), e.getY());
+    		}
+    	}
+    }
+    
+    /**
+     * Worker Methods
+     */
+    
     //don't draw here, draw in renderGame
     public void render(float delta) {
     	do {
@@ -205,10 +254,6 @@ public class ZombieSleigher implements Controllable {
     public static void main(String[] args) {
         new ZombieSleigher();
     }
-    
-    /**
-     * Worker Methods
-     */
     
     //when the frame exits
     public void exit() {
@@ -269,36 +314,4 @@ public class ZombieSleigher implements Controllable {
     	}
     }
     
-    private class MouseMotion extends MouseMotionAdapter {
-    	public void mouseMoved(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
-    			for (BoxButton b : menuButtons)
-    				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
-    		}
-    	}
-    	
-    	public void mouseDragged(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
-    			for (BoxButton b : menuButtons)
-    				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
-    		}
-    	}
-    }
-    
-    private class Mouse extends MouseAdapter {
-    	public void mousePressed(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
-    			for (BoxButton b : menuButtons)
-    				b.mousePressed(e.getX(), e.getY());
-    		}
-    	}
-    	
-    	public void mouseReleased(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
-    			for (BoxButton b : menuButtons)
-    				b.mouseReleased(e.getX(), e.getY());
-    		}
-    	}
-    }
-
 }
