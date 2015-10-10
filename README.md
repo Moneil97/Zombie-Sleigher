@@ -1,3 +1,3 @@
 # Zombie-Sleigher
 
-Requires jackdahms/Controllable-Thread to be built
+Make it as far down the slope as you can while blasting zombies from your iconic sleigh!
