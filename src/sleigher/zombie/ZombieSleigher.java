@@ -105,8 +105,9 @@ public class ZombieSleigher implements Controllable {
 
     	gamestate = Gamestate.TITLE;
     	
-    	gameBackground = load("/res/background.jpg");
-    	santa = new Santa(load("/res/santa.jpg"));
+    	String root = "/res/";
+    	gameBackground = load(root + "background.jpg");
+    	santa = new Santa(load(root + "santa.jpg"), 100, 100);
     	
     	instantiateButtons();
     	
@@ -127,6 +128,10 @@ public class ZombieSleigher implements Controllable {
     public void renderGame(Graphics2D g, float delta) {
     	
     	g.drawImage(gameBackground, 0, 0, null);
+    	
+    	
+    	santa.render(g, delta);
+    	
     	
     	//tilt sleigh right or left based on movement
     	int swidth = 50;
