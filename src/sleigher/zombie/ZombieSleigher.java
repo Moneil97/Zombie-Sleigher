@@ -107,7 +107,7 @@ public class ZombieSleigher implements Controllable {
     	
     	String root = "/res/";
     	gameBackground = load(root + "background.jpg");
-    	santa = new Santa(load(root + "santa.jpg"), 100, 100);
+    	santa = new Santa(load(root + "santa.jpg"), 100, 100, 2, 2);
     	
     	instantiateButtons();
     	
@@ -118,14 +118,19 @@ public class ZombieSleigher implements Controllable {
     }
     
     public void update() {
+    	    	
     	if (gamestate == Gamestate.GAME) {
-    		
+    		santa.update();
     	} else if (gamestate == Gamestate.TITLE) {
     		
     	}
     }
     
-    public void renderGame(Graphics2D g, float delta) {
+    private void say(Object o) {
+		System.out.println(o);
+	}
+
+	public void renderGame(Graphics2D g, float delta) {
     	
     	g.drawImage(gameBackground, 0, 0, null);
     	
@@ -273,14 +278,55 @@ public class ZombieSleigher implements Controllable {
     	public void keyReleased(KeyEvent e) {
     		int key = e.getKeyCode();
     		switch(key) {
-    		case KeyEvent.VK_P:
-    			if (gamestate == Gamestate.GAME) gamestate = Gamestate.PAUSE;
-    			else if (gamestate == Gamestate.PAUSE) {
-    				resumeButton.hovering = false;
-    				quitButton.hovering = false;
-    				gamestate = Gamestate.GAME;
-    			}
-    			break;
+	    		case KeyEvent.VK_P:
+	    			if (gamestate == Gamestate.GAME) gamestate = Gamestate.PAUSE;
+	    			else if (gamestate == Gamestate.PAUSE) {
+	    				resumeButton.hovering = false;
+	    				quitButton.hovering = false;
+	    				gamestate = Gamestate.GAME;
+	    			}
+	    			break;
+	    		case KeyEvent.VK_LEFT:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.left = false;
+	    			break;
+	    		case KeyEvent.VK_RIGHT:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.right = false;
+	    			break;
+	    		case KeyEvent.VK_UP:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.up = false;
+	    			break;
+	    		case KeyEvent.VK_DOWN:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.down = false;
+	    			break;
+    		}
+    	}
+    	
+    	
+    	@Override
+    	public void keyPressed(KeyEvent e) {
+    		super.keyPressed(e);
+    		int key = e.getKeyCode();
+    		switch(key) {
+	    		case KeyEvent.VK_LEFT:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.left = true;
+	    			break;
+	    		case KeyEvent.VK_RIGHT:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.right = true;
+	    			break;
+	    		case KeyEvent.VK_UP:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.up = true;
+	    			break;
+	    		case KeyEvent.VK_DOWN:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.down = true;
+	    			break;
     		}
     	}
     }

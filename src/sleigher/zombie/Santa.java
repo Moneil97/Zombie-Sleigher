@@ -18,11 +18,13 @@ public class Santa {
 	
 	BufferedImage image;
 	
-	public Santa(BufferedImage image, float x, float y) {
+	public Santa(BufferedImage image, float x, float y, float xs, float ys) {
 		this.image = image;
 		
 		this.x = x;
 		this.y = y;
+		this.ys= ys;
+		this.xs = xs;
 		width = 50;
 		height = 160;
 	}
