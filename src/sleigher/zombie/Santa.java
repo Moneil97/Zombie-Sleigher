@@ -5,8 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import static java.lang.Math.abs;
 
-public class Santa {
+public class Santa{
 	
 	float x, y;
 	float lastx, lasty;
@@ -48,20 +49,24 @@ public class Santa {
 			vy += (down? ay : -ay);
 		
 		//Friction
-		if (vx != 0f)
-			if (vx > friction)
-				vx -= friction;
-			else if (vx < -friction)
-				vx += friction;
+		if (vx != 0f){
+			float f = friction * (vy != 0 ? abs(vx / vy) : 1);
+			if (vx > f)
+				vx -= f;
+			else if (vx < -f)
+				vx += f;
 			else
 				vx = 0;
-		if (vy != 0f)
-			if (vy > friction)
-				vy -= friction;
-			else if (vy < -friction)
-				vy += friction;
+		}
+		if (vy != 0f){
+			float f = friction * (vx != 0 ? abs(vy / vx) : 1);
+			if (vy > f)
+				vy -= f;
+			else if (vy < -f)
+				vy += f;
 			else
 				vy = 0;
+		}
 		
 				
 		//Check max Velocity
