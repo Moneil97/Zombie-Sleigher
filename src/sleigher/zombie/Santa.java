@@ -32,22 +32,39 @@ public class Santa {
 	/**
 	 * TODO feature creep:
 	 * Figure out best acceleration and max velocity values.
-	 * Friction
+	 * More Natural Friction
 	 * max speed (right now diagonals are faster)
 	 */
 	//Won't work with acceleration implemented
 	float corner = 0.70710678118654752440084436210485f;//45 * Math.cos(45);
+	float friction = .1f;
 	
 	public void update() {
 		
+		//update acceleration
 		if (right || left)
 			vx += (right? ax : -ax);
 		if (up || down)
 			vy += (down? ay : -ay);
 		
-		x += vx;
-		y += vy;
+		//Friction
+		if (vx != 0f)
+			if (vx > friction)
+				vx -= friction;
+			else if (vx < -friction)
+				vx += friction;
+			else
+				vx = 0;
+		if (vy != 0f)
+			if (vy > friction)
+				vy -= friction;
+			else if (vy < -friction)
+				vy += friction;
+			else
+				vy = 0;
 		
+				
+		//Check max Velocity
 		if (vx > maxVx)
 			vx = maxVx;
 		else if (vx < -maxVx)
@@ -56,6 +73,12 @@ public class Santa {
 			vy = maxVy;
 		else if (vy < -maxVy)
 			vy = -maxVy;
+			
+		//update coords
+		x += vx;
+		y += vy;
+		
+		
 
 	}
 	
