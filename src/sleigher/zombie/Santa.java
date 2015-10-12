@@ -2,22 +2,31 @@ package sleigher.zombie;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Santa {
 	
 	float x, y;
+	float lastx, lasty;
 	float xs, ys;
+	
+	int width, height;
 	
 	boolean up, down, left, right;
 	
 	BufferedImage image;
 	
-	public Santa() {
-		//TODO read buffered image
+	public Santa(BufferedImage image) {
+		this.image = image;
+		
+		width = 50;
+		height = 160;
 	}
 	
 	/**
-	 * feature creep:
+	 * TODO feature creep:
 	 * acceleration
 	 * max speed (right now diagonals are faster)
 	 */
@@ -29,11 +38,12 @@ public class Santa {
 	}
 	
 	/**
-	 * feature creep:
+	 * TODO feature creep:
 	 * sleigh slightly turns left or right
+	 * incorporate delta
 	 */
 	public void render(Graphics2D g, float delta) {
-		
+		g.drawImage(image, (int) x, (int) y, width, height, null);
 	}
 
 }
