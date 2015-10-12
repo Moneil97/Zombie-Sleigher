@@ -62,6 +62,8 @@ public class ZombieSleigher implements Controllable {
     private BoxButton resumeButton;
     private BoxButton quitButton;
     
+    private Santa santa;
+    
     public ZombieSleigher() {
     	
     	//create JFrame
@@ -104,38 +106,9 @@ public class ZombieSleigher implements Controllable {
     	gamestate = Gamestate.TITLE;
     	
     	gameBackground = load("/res/background.jpg");
+    	santa = new Santa(load("/res/santa.jpg"));
     	
-    	menuButtons[0] = new BoxButton("PLAY", 500, 200, 200, 40){
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.GAME;
-    		}
-    	};
-    	menuButtons[1] = new BoxButton("SHOP", 500, 260, 200, 40){
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.SHOP;
-    		}
-    	};
-    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 500, 320, 200, 40){
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.INSTRUCTIONS;
-    		}
-    	};
-    	
-    	resumeButton = new BoxButton("RESUME", 300, 285, 100, 30) {
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.GAME;
-    		}
-    	};
-    	quitButton = new BoxButton("MENU", 424, 285, 76, 30) {
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.TITLE;
-    		}
-    	};
+    	instantiateButtons();
     	
     	//Needs to be added after buttons are created
     	canvas.addMouseMotionListener(new MouseMotion());
@@ -188,7 +161,7 @@ public class ZombieSleigher implements Controllable {
 		for (BoxButton b : menuButtons)
 			b.render(g);
     }
-    
+    //TODO on hover over menu, include tidbit saying the current run will be forgotten
     public void renderPause(Graphics2D g, float delta) {
     	renderGame(g, delta);
     	
@@ -207,6 +180,40 @@ public class ZombieSleigher implements Controllable {
 		
 		g.setColor(Color.red);
 		g.drawString("PAUSED", 300 - 2, 280);
+    }
+    
+    private void instantiateButtons() {
+    	menuButtons[0] = new BoxButton("PLAY", 500, 200, 200, 40){
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.GAME;
+    		}
+    	};
+    	menuButtons[1] = new BoxButton("SHOP", 500, 260, 200, 40){
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.SHOP;
+    		}
+    	};
+    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 500, 320, 200, 40){
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.INSTRUCTIONS;
+    		}
+    	};
+    	
+    	resumeButton = new BoxButton("RESUME", 300, 285, 100, 30) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.GAME;
+    		}
+    	};
+    	quitButton = new BoxButton("MENU", 424, 285, 76, 30) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.TITLE;
+    		}
+    	};
     }
     
     /**
@@ -315,7 +322,7 @@ public class ZombieSleigher implements Controllable {
     	try {
 			return ImageIO.read(this.getClass().getResource(path));
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("Could not load image!");
 			BufferedImage missingTexture = create(800, 600, false);
 			
 			//the "missing texture" texture from garry's mod
