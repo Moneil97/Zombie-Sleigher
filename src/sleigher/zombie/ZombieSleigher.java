@@ -234,8 +234,7 @@ public class ZombieSleigher implements Controllable {
     	public void mouseMoved(MouseEvent e) {
     		if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
-    				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
-    		} else if (gamestate == Gamestate.PAUSE) {
+    				b.mouseMoved(e.getX(), e.getY()); 
     			resumeButton.mouseMoved(e.getX(), e.getY());
     			quitButton.mouseMoved(e.getX(), e.getY());
     		}
@@ -244,7 +243,7 @@ public class ZombieSleigher implements Controllable {
     	public void mouseDragged(MouseEvent e) {
     		if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
-    				b.mouseMoved(e.getX(), e.getY()); //TODO throws exceptions before buttons instantiated
+    				b.mouseMoved(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {
     			resumeButton.mouseMoved(e.getX(), e.getY());
     			quitButton.mouseMoved(e.getX(), e.getY());

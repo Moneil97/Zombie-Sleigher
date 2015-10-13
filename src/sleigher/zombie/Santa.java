@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import static java.lang.Math.abs;
+import static java.lang.Math.*;
 
 public class Santa{
 	
@@ -50,7 +50,7 @@ public class Santa{
 		
 		//Friction
 		if (vx != 0f){
-			float f = friction * (vy != 0 ? abs(vx / vy) : 1);
+			float f = friction;// * (vy != 0 ? abs(vx / vy) : 1);
 			if (vx > f)
 				vx -= f;
 			else if (vx < -f)
@@ -59,7 +59,7 @@ public class Santa{
 				vx = 0;
 		}
 		if (vy != 0f){
-			float f = friction * (vx != 0 ? abs(vy / vx) : 1);
+			float f = friction;// * (vx != 0 ? abs(vy / vx) : 1);
 			if (vy > f)
 				vy -= f;
 			else if (vy < -f)
@@ -83,8 +83,6 @@ public class Santa{
 		x += vx;
 		y += vy;
 		
-		
-
 	}
 	
 	/**
