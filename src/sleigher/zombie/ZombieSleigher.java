@@ -21,7 +21,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -57,12 +59,15 @@ public class ZombieSleigher implements Controllable {
     private Gamestate gamestate = Gamestate.TITLE;
     
     private BufferedImage gameBackground;
+    static BufferedImage zombieImage, santaImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
     private BoxButton quitButton;
     
     private Santa santa;
+    
+    private List<Zombie> zombies = new ArrayList<Zombie>();
     
     public ZombieSleigher() {
     	
@@ -107,7 +112,11 @@ public class ZombieSleigher implements Controllable {
     	
     	String root = "/res/";
     	gameBackground = load(root + "background.jpg");
-    	santa = new Santa(load(root + "santa.jpg"), 100, 100);
+    	santaImage = load(root + "santa.jpg");
+    	zombieImage = load(root + "zombie.jpg");
+    	
+    	santa = new Santa(100, 100);
+    	zombies.add(new Zombie(200, 400));
     	
     	instantiateButtons();
     	
@@ -121,6 +130,8 @@ public class ZombieSleigher implements Controllable {
     	    	
     	if (gamestate == Gamestate.GAME) {
     		santa.update();
+    		for (int i=0; i <zombies.size(); i++)
+    			zombies.get(i).update();
     	} else if (gamestate == Gamestate.TITLE) {
     		
     	}
@@ -134,9 +145,9 @@ public class ZombieSleigher implements Controllable {
     	
     	g.drawImage(gameBackground, 0, 0, null);
     	
-    	
     	santa.render(g, delta);
-    	
+    	for (int i=0; i <zombies.size(); i++)
+			zombies.get(i).render(g, delta);
     	
     	//tilt sleigh right or left based on movement
     	int swidth = 50;

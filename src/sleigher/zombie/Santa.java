@@ -19,11 +19,10 @@ public class Santa{
 	
 	boolean up, down, left, right;
 	
-	BufferedImage image;
+	BufferedImage image = ZombieSleigher.santaImage;
 	
-	public Santa(BufferedImage image, float x, float y) {
-		this.image = image;
-		
+	public Santa(float x, float y) {
+
 		this.x = x;
 		this.y = y;
 		width = 50;
