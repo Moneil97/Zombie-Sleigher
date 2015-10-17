@@ -69,6 +69,8 @@ public class ZombieSleigher implements Controllable {
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
     
+    private int hillSpeed = 1;
+    
     public ZombieSleigher() {
     	
     	//create JFrame
@@ -116,7 +118,7 @@ public class ZombieSleigher implements Controllable {
     	zombieImage = load(root + "zombie.jpg");
     	
     	santa = new Santa(100, 100);
-    	zombies.add(new Zombie(200, 400));
+    	zombies.add(new Zombie(200, 400, hillSpeed));
     	
     	instantiateButtons();
     	

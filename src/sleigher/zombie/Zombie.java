@@ -5,19 +5,22 @@ import java.awt.image.BufferedImage;
 
 public class Zombie {
 
-	int x,y;
+	float x, y;
+	float ys;
 	int width, height;
 	BufferedImage image = ZombieSleigher.zombieImage;
 	
-	public Zombie(int x, int y) {
+	public Zombie(int x, int y, int ys) {
 		this.x = x;
 		this.y = y;
+		this.ys = ys;
+		
 		width = 30;
 		height = 60;
 	}
 	
 	public void update(){
-		y--;
+		y -= ys;
 	}
 	
 	public void render(Graphics2D g, float delta) {
