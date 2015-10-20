@@ -124,9 +124,8 @@ public class ZombieSleigher implements Controllable {
     	
     	//and awaaaaay we go!
     	init();
-    	controllableThread.start();
-    	
     	frame.add(canvas, 0);
+    	controllableThread.start();
     }
     
     public void init() {
