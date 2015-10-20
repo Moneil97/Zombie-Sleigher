@@ -3,6 +3,7 @@ package sleigher.zombie;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import com.jackdahms.Controllable;
 import com.jackdahms.ControllableThread;
@@ -84,12 +86,29 @@ public class ZombieSleigher implements Controllable {
         frame.setSize(WIDTH, HEIGHT);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        
+        JPanel bp = new JPanel() {
+        	public void paintComponent(Graphics gr) {
+        		Graphics2D g = (Graphics2D) gr;
+        		g.setColor(Color.white);
+        		g.fillRect(0, 0, 800, 600);
+        		
+                g.setColor(Color.red);
+        		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                g.setFont(new Font("impact", Font.PLAIN, 40));
+                g.drawString("loading...", 
+                		400 - g.getFontMetrics().stringWidth("loading...") / 2, 
+                		300);
+        	}
+        };
+        frame.add(bp);
+        
     	frame.setVisible(true);
     	
     	//create the canvas and add it to the frame
     	canvas = new Canvas(config);
     	canvas.setSize(WIDTH, HEIGHT);
-    	frame.add(canvas, 0); //adds canvas at index 0
+//    	frame.add(canvas, 0); //adds canvas at index 0
     	
     	//create background image and buffer
     	background = create(WIDTH, HEIGHT, false);
