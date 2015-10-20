@@ -101,14 +101,14 @@ public class ZombieSleigher implements Controllable {
                 		300);
         	}
         };
-        frame.add(bp);
+        frame.add(bp, 0);
         
     	frame.setVisible(true);
     	
     	//create the canvas and add it to the frame
     	canvas = new Canvas(config);
     	canvas.setSize(WIDTH, HEIGHT);
-//    	frame.add(canvas, 0); //adds canvas at index 0
+    	frame.add(canvas, 1); //adds canvas at index 0
     	
     	//create background image and buffer
     	background = create(WIDTH, HEIGHT, false);
@@ -117,6 +117,7 @@ public class ZombieSleigher implements Controllable {
     		strategy = canvas.getBufferStrategy();
     	} while (strategy == null);
     	
+    	
     	//Update will be called 60 fps, render will be called default 60 fps
     	controllableThread = new ControllableThread(this);
     	controllableThread.setTargetUps(60);
@@ -124,6 +125,8 @@ public class ZombieSleigher implements Controllable {
     	//and awaaaaay we go!
     	init();
     	controllableThread.start();
+    	
+    	frame.add(canvas, 0);
     }
     
     public void init() {
