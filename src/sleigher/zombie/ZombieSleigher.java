@@ -38,6 +38,7 @@ public class ZombieSleigher implements Controllable {
 
     public static int WIDTH = 800;
     public static int HEIGHT = 600;
+    public static int UPS = 30;
     
     private ControllableThread controllableThread;
     
@@ -70,6 +71,9 @@ public class ZombieSleigher implements Controllable {
     private Santa santa;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
+    private double zombieSpawnChance = 0.0;
+    private double zombieSpawnChanceIncrement = 0.07;
+    private int zombieSpawnRate = UPS / 3;
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
@@ -122,7 +126,7 @@ public class ZombieSleigher implements Controllable {
     	
     	//Update will be called 60 fps, render will be called default 60 fps
     	controllableThread = new ControllableThread(this);
-    	controllableThread.setTargetUps(30);
+    	controllableThread.setTargetUps(UPS);
     	
     	//and awaaaaay we go!
     	//this order is important
@@ -152,32 +156,40 @@ public class ZombieSleigher implements Controllable {
     	canvas.addKeyListener(new Key());
     }
     
+    //max difficulty at 300 seconds
     public void update() {
     	
     	ticks++;
-    	if (ticks % 30 == 0) {
+    	
+    	//every second
+    	if (ticks % UPS == 0) {
     		seconds++;
+    		zombieSpawnChance += zombieSpawnChanceIncrement;
+    	}
+    	
+    	if (ticks % zombieSpawnRate == 0) {
+    		
     	}
     	
     	if (gamestate == Gamestate.GAME) {
     		santa.update();
-    		for (int i=0; i <zombies.size(); i++)
-    			zombies.get(i).update();
+    		for (int i = 0; i <zombies.size(); i++) {
+    			Zombie z = zombies.get(i);
+    			z.update();
+    			if (z.y + z.height < 0)
+    				zombies.remove(i);
+    		}
     	} else if (gamestate == Gamestate.TITLE) {
     		
     	}
     }
-    
-    private void say(Object o) {
-		System.out.println(o);
-	}
 
 	public void renderGame(Graphics2D g, float delta) {
     	
     	g.drawImage(gameBackground, 0, 0, null);
     	
     	santa.render(g, delta);
-    	for (int i=0; i <zombies.size(); i++)
+    	for (int i = 0; i <zombies.size(); i++)
 			zombies.get(i).render(g, delta);
     	
     	//tilt sleigh right or left based on movement
@@ -213,6 +225,7 @@ public class ZombieSleigher implements Controllable {
 		for (BoxButton b : menuButtons)
 			b.render(g);
     }
+    
     //TODO on hover over menu, include tidbit saying the current run will be forgotten
     public void renderPause(Graphics2D g, float delta) {
     	renderGame(g, delta);
@@ -386,6 +399,15 @@ public class ZombieSleigher implements Controllable {
     
     public static void main(String[] args) {
         new ZombieSleigher();
+    }
+   
+    private void say(Object o) {
+		System.out.println(o);
+	}
+    
+    //						[lower, upper)
+    public double getRandomDouble(double lower, double upper) {
+    	return lower + Math.random() * (upper - lower);
     }
     
     //don't draw here, draw in renderGame
