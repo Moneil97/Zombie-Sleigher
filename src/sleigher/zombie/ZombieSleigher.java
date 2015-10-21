@@ -122,7 +122,7 @@ public class ZombieSleigher implements Controllable {
     	
     	//Update will be called 60 fps, render will be called default 60 fps
     	controllableThread = new ControllableThread(this);
-    	controllableThread.setTargetUps(60);
+    	controllableThread.setTargetUps(30);
     	
     	//and awaaaaay we go!
     	//this order is important
@@ -155,7 +155,7 @@ public class ZombieSleigher implements Controllable {
     public void update() {
     	
     	ticks++;
-    	if (ticks % 60 == 0) {
+    	if (ticks % 30 == 0) {
     		seconds++;
     	}
     	
