@@ -71,6 +71,9 @@ public class ZombieSleigher implements Controllable {
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
     
+    private int ticks = 0; //ticks since thread started;
+    private int seconds = 0; //seconds since thread started
+    
     private int hillSpeed = 1;
     
     public ZombieSleigher() {
@@ -117,12 +120,12 @@ public class ZombieSleigher implements Controllable {
     		strategy = canvas.getBufferStrategy();
     	} while (strategy == null);
     	
-    	
     	//Update will be called 60 fps, render will be called default 60 fps
     	controllableThread = new ControllableThread(this);
     	controllableThread.setTargetUps(60);
     	
     	//and awaaaaay we go!
+    	//this order is important
     	init();
     	frame.add(canvas, 0);
     	controllableThread.start();
@@ -150,7 +153,12 @@ public class ZombieSleigher implements Controllable {
     }
     
     public void update() {
-    	    	
+    	
+    	ticks++;
+    	if (ticks % 60 == 0) {
+    		seconds++;
+    	}
+    	
     	if (gamestate == Gamestate.GAME) {
     		santa.update();
     		for (int i=0; i <zombies.size(); i++)
