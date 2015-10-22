@@ -44,11 +44,15 @@ public class Santa{
 		
 		lastx = x;
 		lasty = y;
-				
-		if (right) x += vx;
-		if (left) x -= vx;
-		if (up) y -= vy;
-		if (down) y += vy;
+		
+		if (right)
+			x += up ^ down ? vx*corner:vx;
+		if (left)
+			x -= up ^ down ? vx*corner:vx;
+		if (up) 
+			y -= left ^ right ? vy*corner:vy;
+		if (down) 
+			y += left ^ right ? vy*corner:vy;
 			
 	}
 	
