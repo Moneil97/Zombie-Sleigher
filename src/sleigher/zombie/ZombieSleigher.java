@@ -71,6 +71,7 @@ public class ZombieSleigher implements Controllable {
     private Santa santa;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
+    private int zombieCount = 0;
     private double zombieSpawnChance = 0.0;
     private double zombieSpawnChanceIncrement = 0.02;
     private int zombieSpawnRate = UPS / 2;
@@ -173,6 +174,7 @@ public class ZombieSleigher implements Controllable {
     			//determine which of the fourteen spawn zones
     			//spawn zombie
     	    	zombies.add(new Zombie(200, 400, hillSpeed));
+    	    	zombieCount++;
     		}
     	}
     	
