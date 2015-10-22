@@ -25,72 +25,42 @@ public class Santa{
 
 		this.x = x;
 		this.y = y;
+		lastx = x;
+		lasty = y;
+		vx = 5;
+		vy = 6;
 		width = 50;
 		height = 160;
 	}
 	
 	/**
 	 * TODO feature creep:
-	 * Figure out best acceleration and max velocity values.
-	 * More Natural Friction
-	 * max speed (right now diagonals are faster)
+	 * max speed (right now diagonals are faster) using corner
 	 */
 	//Won't work with acceleration implemented
 	float corner = 0.70710678118654752440084436210485f;//45 * Math.cos(45);
-	float friction = .1f;
 	
 	public void update() {
 		
-		//update acceleration
-		if (right || left)
-			vx += (right? ax : -ax);
-		if (up || down)
-			vy += (down? ay : -ay);
-		
-		//Friction
-		if (vx != 0f){
-			float f = friction;// * (vy != 0 ? abs(vx / vy) : 1);
-			if (vx > f)
-				vx -= f;
-			else if (vx < -f)
-				vx += f;
-			else
-				vx = 0;
-		}
-		if (vy != 0f){
-			float f = friction;// * (vx != 0 ? abs(vy / vx) : 1);
-			if (vy > f)
-				vy -= f;
-			else if (vy < -f)
-				vy += f;
-			else
-				vy = 0;
-		}
-		
+		lastx = x;
+		lasty = y;
 				
-		//Check max Velocity
-		if (vx > maxVx)
-			vx = maxVx;
-		else if (vx < -maxVx)
-			vx = -maxVx;
-		if (vy > maxVy)
-			vy = maxVy;
-		else if (vy < -maxVy)
-			vy = -maxVy;
+		if (right) x += vx;
+		if (left) x -= vx;
+		if (up) y -= vy;
+		if (down) y += vy;
 			
-		//update coords
-		x += vx;
-		y += vy;
-		
 	}
 	
 	/**
 	 * TODO feature creep:
 	 * sleigh slightly turns left or right
-	 * incorporate delta
 	 */
 	public void render(Graphics2D g, float delta) {
-		g.drawImage(image, (int) x, (int) y, width, height, null);
+		int drawx = (int) ((x - lastx) * delta + lastx);
+		int drawy = (int) ((y - lasty) * delta + lasty);
+		
+		g.drawImage(image, drawx, drawy, width, height, null);
 	}
 
 }

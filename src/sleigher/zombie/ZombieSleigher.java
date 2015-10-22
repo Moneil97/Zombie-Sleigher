@@ -175,7 +175,7 @@ public class ZombieSleigher implements Controllable {
     		santa.update();
     		for (int i = 0; i <zombies.size(); i++) {
     			Zombie z = zombies.get(i);
-    			z.update();
+    			z.update(santa.x, santa.y, santa.width, santa.height);
     			if (z.y + z.height < 0)
     				zombies.remove(i);
     		}
