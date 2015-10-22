@@ -16,7 +16,7 @@ public class Zombie {
 		this.y = y;
 		this.hillSpeed = ys;
 		
-		width = 30;
+		width = 40;
 		height = 60;
 	}
 	

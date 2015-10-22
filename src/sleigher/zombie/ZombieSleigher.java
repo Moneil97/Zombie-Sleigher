@@ -72,13 +72,14 @@ public class ZombieSleigher implements Controllable {
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private double zombieSpawnChance = 0.0;
-    private double zombieSpawnChanceIncrement = 0.07;
-    private int zombieSpawnRate = UPS / 3;
+    private double zombieSpawnChanceIncrement = 0.02;
+    private int zombieSpawnRate = UPS / 2;
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
     
     private int hillSpeed = 1;
+    private int distance = 0;
     
     public ZombieSleigher() {
     	
@@ -158,7 +159,7 @@ public class ZombieSleigher implements Controllable {
     
     //max difficulty at 300 seconds
     public void update() {
-    	
+    	distance += hillSpeed;
     	ticks++;
     	
     	//every second
@@ -168,7 +169,10 @@ public class ZombieSleigher implements Controllable {
     	}
     	
     	if (ticks % zombieSpawnRate == 0) {
-    		
+    		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
+    			//spawn zombie
+    	    	zombies.add(new Zombie(200, 400, hillSpeed));
+    		}
     	}
     	
     	if (gamestate == Gamestate.GAME) {
