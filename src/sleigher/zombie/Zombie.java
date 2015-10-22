@@ -7,7 +7,7 @@ public class Zombie {
 
 	float x, y;
 	float hillSpeed;
-	float speed;
+	float xs, ys;
 	int width, height;
 	BufferedImage image = ZombieSleigher.zombieImage;
 	
@@ -24,14 +24,24 @@ public class Zombie {
 		y -= hillSpeed;
 		
 		if (y > santay && y + height < santay + santaheight) {
-			speed = hillSpeed;
+			ys = hillSpeed;
 		} else if (y < santay) {
-			speed = hillSpeed + 2;
+			ys = hillSpeed + 2;
 		} else {
-			speed = hillSpeed - 2;
+			ys = hillSpeed - 2;
 		}
 		
-		y += speed;
+		int gap = 30;
+		if (x + width > santax - gap && x < santax + santawidth + gap) {
+			xs = 0;
+		} else if (x + width < santax - gap) {
+			xs = 2;
+		} else {
+			xs = -2;
+		}
+		
+		x += xs;
+		y += ys;
 	}
 	
 	/**

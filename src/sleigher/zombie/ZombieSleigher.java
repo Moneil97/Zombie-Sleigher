@@ -170,6 +170,7 @@ public class ZombieSleigher implements Controllable {
     	
     	if (ticks % zombieSpawnRate == 0) {
     		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
+    			//determine which of the fourteen spawn zones
     			//spawn zombie
     	    	zombies.add(new Zombie(200, 400, hillSpeed));
     		}
