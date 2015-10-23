@@ -148,8 +148,8 @@ public class ZombieSleigher implements Controllable {
     	
     	String root = "/res/";
     	gameBackground = load(root + "background.jpg");
-    	santaImage = load(root + "santa.jpg");
-    	zombieImage = load(root + "zombie.jpg");
+    	santaImage = load(root + "santa.png");
+    	zombieImage = load(root + "zombie.png");
     	
     	santa = new Santa(100, 100);
     	zombies.add(new Zombie(200, 400, hillSpeed));
