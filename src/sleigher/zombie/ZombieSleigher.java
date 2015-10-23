@@ -81,6 +81,8 @@ public class ZombieSleigher implements Controllable {
     
     private int hillSpeed = 1;
     private int distance = 0;
+    private int currentDistance = 0;
+    private int bestDistance = 0;
     
     public ZombieSleigher() {
     	
@@ -176,6 +178,11 @@ public class ZombieSleigher implements Controllable {
     	
     	if (gamestate == Gamestate.GAME) {
     		santa.update();
+    		
+    		//track best distance this run
+    		currentDistance = currentDistance > distance + (int) santa.x + (int) santa.height ? 
+    				currentDistance : distance + (int) santa.x + (int) santa.height;
+    		
     		for (int i = 0; i <zombies.size(); i++) {
     			Zombie z = zombies.get(i);
     			z.update(santa.x, santa.y, santa.width, santa.height);
