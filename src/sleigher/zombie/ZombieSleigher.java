@@ -157,8 +157,7 @@ public class ZombieSleigher implements Controllable {
     	canvas.addMouseListener(new Mouse());
     	canvas.addKeyListener(new Key());
     }
-    
-    //max difficulty at 300 seconds
+        
     public void update() {
     	distance += hillSpeed;
     	ticks++;
@@ -171,10 +170,7 @@ public class ZombieSleigher implements Controllable {
     	
     	if (ticks % zombieSpawnRate == 0) {
     		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
-    			//determine which of the fourteen spawn zones
-    			//spawn zombie
-    	    	zombies.add(new Zombie(200, 400, hillSpeed));
-    	    	zombieCount++;
+    			spawnZombie();
     		}
     	}
     	
@@ -406,6 +402,21 @@ public class ZombieSleigher implements Controllable {
     
     public static void main(String[] args) {
         new ZombieSleigher();
+    }
+    
+    public void spawnZombie() {
+    	//determine which of the fourteen spawn zones
+		int zone = (int) getRandomDouble(0.0, 10.0);
+		
+		if (zone < 3) {
+			zombies.add(new Zombie(850, 50 + 200 * zone, hillSpeed));
+		} else if (zone < 7) {
+			zombies.add(new Zombie(50 + 200 * (zone - 3), 650, hillSpeed));
+		} else {
+			zombies.add(new Zombie(-100, 50 + 200 * (zone - 7), hillSpeed));
+		}
+		
+    	zombieCount++;
     }
    
     private void say(Object o) {
