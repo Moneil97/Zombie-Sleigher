@@ -84,6 +84,8 @@ public class ZombieSleigher implements Controllable {
     private int currentDistance = 0;
     private int bestDistance = 0;
     
+    private boolean gameOver;
+    
     public ZombieSleigher() {
     	
     	//create JFrame
@@ -188,6 +190,11 @@ public class ZombieSleigher implements Controllable {
     			z.update(santa.x, santa.y, santa.width, santa.height);
     			if (z.y + z.height < 0)
     				zombies.remove(i);
+    		}
+    		
+    		if (gameOver) {
+    			gamestate = Gamestate.TITLE;
+    			bestDistance = bestDistance > currentDistance ? bestDistance : currentDistance;
     		}
     	} else if (gamestate == Gamestate.TITLE) {
     		
