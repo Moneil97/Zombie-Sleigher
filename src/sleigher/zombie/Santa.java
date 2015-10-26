@@ -15,6 +15,8 @@ public class Santa{
 	float vx = 0, vy = 0;
 	float maxVx = 6, maxVy = 4;
 	
+	float health;
+	
 	int width, height;
 	
 	boolean up, down, left, right;
@@ -29,6 +31,9 @@ public class Santa{
 		lasty = y;
 		vx = 5;
 		vy = 6;
+		
+		health = 100;
+		
 		width = 50;
 		height = 160;
 	}

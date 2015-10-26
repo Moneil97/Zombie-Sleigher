@@ -199,6 +199,12 @@ public class ZombieSleigher implements Controllable {
 			zombies.get(i).render(g, delta);
 
     	santa.render(g, delta);
+    	
+    	g.setFont(new Font("helvetica", Font.PLAIN, 20));
+    	g.setColor(Color.red);
+    	g.drawString("HEALTH ", 400 - (g.getFontMetrics().stringWidth("HEALTH ") + 100) / 2, 20);
+    
+    	g.drawRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 15, 5, 100, 20);
     }
     
     public void renderTitle(Graphics2D g, float delta) {
