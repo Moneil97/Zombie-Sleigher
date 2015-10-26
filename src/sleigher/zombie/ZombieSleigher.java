@@ -208,14 +208,8 @@ public class ZombieSleigher implements Controllable {
 		//the title
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
-//		g.setColor(Color.red);
-//		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-//		attributes.put(TextAttribute.TRACKING, 0.3);
-//		Font font = new Font("helvetica", Font.PLAIN, 60).deriveFont(attributes);
-//		g.setFont(font);
-//		g.drawString("Zombie Sleigher", 25, 100);
-		
 		g.drawImage(titleImage, 50, 30, 400, 200, null);
+		g.drawImage(santaTitleImage, 520, 30, 200, 50, null);
 		
 		for (BoxButton b : menuButtons)
 			b.render(g);
@@ -252,19 +246,19 @@ public class ZombieSleigher implements Controllable {
     }
     
     private void instantiateButtons() {
-    	menuButtons[0] = new BoxButton("PLAY", 500, 200, 200, 40){
+    	menuButtons[0] = new BoxButton("PLAY", 520, 80, 200, 40){
     		@Override
     		void onPress() {
     			gamestate = Gamestate.GAME;
     		}
     	};
-    	menuButtons[1] = new BoxButton("SHOP", 500, 260, 200, 40){
+    	menuButtons[1] = new BoxButton("SHOP", 520, 135, 200, 40){
     		@Override
     		void onPress() {
     			gamestate = Gamestate.SHOP;
     		}
     	};
-    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 500, 320, 200, 40){
+    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 520, 190, 200, 40){
     		@Override
     		void onPress() {
     			gamestate = Gamestate.INSTRUCTIONS;
