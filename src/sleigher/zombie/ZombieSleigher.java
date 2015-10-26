@@ -80,8 +80,8 @@ public class ZombieSleigher implements Controllable {
     private int seconds = 0; //seconds since thread started
     
     private int hillSpeed = 1;
+    private int hillDistance = 0;
     private int distance = 0;
-    private int currentDistance = 0;
     private int bestDistance = 0;
     
     private boolean gameOver;
@@ -100,28 +100,12 @@ public class ZombieSleigher implements Controllable {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         
-        JPanel bp = new JPanel() {
-        	public void paintComponent(Graphics gr) {
-        		Graphics2D g = (Graphics2D) gr;
-        		g.setColor(Color.white);
-        		g.fillRect(0, 0, 800, 600);
-        		
-                g.setColor(Color.red);
-        		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                g.setFont(new Font("impact", Font.PLAIN, 40));
-                g.drawString("loading...", 
-                		400 - g.getFontMetrics().stringWidth("loading...") / 2, 
-                		300);
-        	}
-        };
-        frame.add(bp, 0);
-        
     	frame.setVisible(true);
     	
     	//create the canvas and add it to the frame
     	canvas = new Canvas(config);
     	canvas.setSize(WIDTH, HEIGHT);
-    	frame.add(canvas, 1); //adds canvas at index 0
+    	frame.add(canvas, 0); //adds canvas at index 0
     	
     	//create background image and buffer
     	background = create(WIDTH, HEIGHT, false);
@@ -130,14 +114,12 @@ public class ZombieSleigher implements Controllable {
     		strategy = canvas.getBufferStrategy();
     	} while (strategy == null);
     	
-    	//Update will be called 60 fps, render will be called default 60 fps
+    	//and awaaaaay we go!
+    	init();
+
+    	//Update will be called UPS
     	controllableThread = new ControllableThread(this);
     	controllableThread.setTargetUps(UPS);
-    	
-    	//and awaaaaay we go!
-    	//this order is important
-    	init();
-    	frame.add(canvas, 0);
     	controllableThread.start();
     }
     
@@ -163,7 +145,7 @@ public class ZombieSleigher implements Controllable {
     }
         
     public void update() {
-    	distance += hillSpeed;
+    	hillDistance += hillSpeed;
     	ticks++;
     	
     	//every second
@@ -182,8 +164,8 @@ public class ZombieSleigher implements Controllable {
     		santa.update();
     		
     		//track best distance this run
-    		currentDistance = currentDistance > distance + (int) santa.x + (int) santa.height ? 
-    				currentDistance : distance + (int) santa.x + (int) santa.height;
+    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
+    				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
     		for (int i = 0; i <zombies.size(); i++) {
     			Zombie z = zombies.get(i);
@@ -194,7 +176,7 @@ public class ZombieSleigher implements Controllable {
     		
     		if (gameOver) {
     			gamestate = Gamestate.TITLE;
-    			bestDistance = bestDistance > currentDistance ? bestDistance : currentDistance;
+    			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
     	} else if (gamestate == Gamestate.TITLE) {
     		
@@ -203,7 +185,8 @@ public class ZombieSleigher implements Controllable {
 
 	public void renderGame(Graphics2D g, float delta) {
     	
-    	g.drawImage(gameBackground, 0, 0, null);
+    	g.drawImage(gameBackground, 0, -hillDistance % gameBackground.getHeight(), null);
+    	g.drawImage(gameBackground, 0, HEIGHT - hillDistance % gameBackground.getHeight(), null);
     	
     	for (int i = 0; i <zombies.size(); i++)
 			zombies.get(i).render(g, delta);
