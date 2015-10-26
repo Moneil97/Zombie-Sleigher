@@ -62,7 +62,10 @@ public class ZombieSleigher implements Controllable {
     private Gamestate gamestate = Gamestate.TITLE;
     
     private BufferedImage gameBackground;
-    static BufferedImage zombieImage, santaImage;
+    static BufferedImage zombieImage;
+    static BufferedImage santaImage;
+    static BufferedImage titleImage;
+    static BufferedImage santaTitleImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -132,6 +135,8 @@ public class ZombieSleigher implements Controllable {
     	gameBackground = load(root + "background.jpg");
     	santaImage = load(root + "santa.png");
     	zombieImage = load(root + "zombie.png");
+    	titleImage = load(root + "title.png");
+    	santaTitleImage = load(root + "santa_Title.png");
     	
     	santa = new Santa(100, 100);
     	zombies.add(new Zombie(200, 400, hillSpeed));
@@ -176,7 +181,7 @@ public class ZombieSleigher implements Controllable {
     		}
     		
     		if (gameOver) {
-    			//TODO display game over image
+    			//TODO display gameOver image
     			gamestate = Gamestate.TITLE;
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
@@ -202,18 +207,20 @@ public class ZombieSleigher implements Controllable {
 
 		//the title
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		g.setColor(Color.red);
-		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-		attributes.put(TextAttribute.TRACKING, 0.3);
-		Font font = new Font("helvetica", Font.PLAIN, 60).deriveFont(attributes);
-		g.setFont(font);
-		g.drawString("Zombie Sleigher", 25, 100);
+		
+//		g.setColor(Color.red);
+//		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+//		attributes.put(TextAttribute.TRACKING, 0.3);
+//		Font font = new Font("helvetica", Font.PLAIN, 60).deriveFont(attributes);
+//		g.setFont(font);
+//		g.drawString("Zombie Sleigher", 25, 100);
+		
+		g.drawImage(titleImage, 50, 30, 400, 200, null);
 		
 		for (BoxButton b : menuButtons)
 			b.render(g);
     }
     
-    //TODO on hover over menu, include tidbit saying the current run will be forgotten
     public void renderPause(Graphics2D g, float delta) {
     	renderGame(g, delta);
     	
