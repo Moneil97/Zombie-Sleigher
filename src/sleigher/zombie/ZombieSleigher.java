@@ -205,25 +205,10 @@ public class ZombieSleigher implements Controllable {
     	
     	g.drawImage(gameBackground, 0, 0, null);
     	
-    	santa.render(g, delta);
     	for (int i = 0; i <zombies.size(); i++)
 			zombies.get(i).render(g, delta);
-    	
-    	//tilt sleigh right or left based on movement
-    	int swidth = 50;
-    	int sheight = 60;
-    	g.setColor(Color.red);
-    	g.fillRect(50, 50, swidth, sheight);
-    	
-    	int rwidth = swidth;
-    	int rheight = 100;
-    	g.setColor(Color.blue);
-    	g.fillRect(50, 50 + sheight, rwidth, rheight);
-    	
-    	int zwidth = 40;
-    	int zheight = 50;
-    	g.setColor(Color.green);
-    	g.fillRect(150, 50, zwidth, zheight);
+
+    	santa.render(g, delta);
     }
     
     public void renderTitle(Graphics2D g, float delta) {
