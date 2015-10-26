@@ -204,7 +204,7 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(Color.red);
     	g.drawString("HEALTH ", 400 - (g.getFontMetrics().stringWidth("HEALTH ") + 100) / 2, 20);
     
-    	g.drawRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 15, 5, 100, 20);
+    	g.drawRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, 100, 17);
     }
     
     public void renderTitle(Graphics2D g, float delta) {
