@@ -145,22 +145,23 @@ public class ZombieSleigher implements Controllable {
     }
         
     public void update() {
-    	hillDistance += hillSpeed;
-    	ticks++;
-    	
-    	//every second
-    	if (ticks % UPS == 0) {
-    		seconds++;
-    		zombieSpawnChance += zombieSpawnChanceIncrement;
-    	}
-    	
-    	if (ticks % zombieSpawnRate == 0) {
-    		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
-    			spawnZombie();
-    		}
-    	}
     	
     	if (gamestate == Gamestate.GAME) {
+
+        	hillDistance += hillSpeed;
+        	ticks++;
+        	
+        	if (ticks % UPS == 0) {
+        		seconds++;
+        		zombieSpawnChance += zombieSpawnChanceIncrement;
+        	}
+        	
+        	if (ticks % zombieSpawnRate == 0) {
+        		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
+        			spawnZombie();
+        		}
+        	}
+        	
     		santa.update();
     		
     		//track best distance this run
@@ -175,6 +176,7 @@ public class ZombieSleigher implements Controllable {
     		}
     		
     		if (gameOver) {
+    			//TODO display game over image
     			gamestate = Gamestate.TITLE;
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
@@ -221,6 +223,7 @@ public class ZombieSleigher implements Controllable {
 		g.fillRect(0, 0, 800, 600);
 		
 		resumeButton.render(g);
+		System.out.println(resumeButton.hovering);
 		quitButton.render(g);
 		
 		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
@@ -275,6 +278,7 @@ public class ZombieSleigher implements Controllable {
     		if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mouseMoved(e.getX(), e.getY()); 
+    		} else if (gamestate == Gamestate.PAUSE) {
     			resumeButton.mouseMoved(e.getX(), e.getY());
     			quitButton.mouseMoved(e.getX(), e.getY());
     		}
