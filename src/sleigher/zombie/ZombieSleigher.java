@@ -223,8 +223,17 @@ public class ZombieSleigher implements Controllable {
 		g.fillRect(0, 0, 800, 600);
 		
 		resumeButton.render(g);
-		System.out.println(resumeButton.hovering);
 		quitButton.render(g);
+		
+
+		if (quitButton.hovering) {
+			g.setColor(Color.red);
+			g.setFont(new Font("helvetica", Font.PLAIN, 16));
+			g.drawString("If you quit, your progress", 300, 335);
+			
+			
+			g.drawString("will not be saved", 400 - g.getFontMetrics().stringWidth("will not be saved") / 2, 355);
+		}
 		
 		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
 		attributes.put(TextAttribute.TRACKING, 0.54);
@@ -261,7 +270,7 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.GAME;
     		}
     	};
-    	quitButton = new BoxButton("MENU", 424, 285, 76, 30) {
+    	quitButton = new BoxButton("QUIT", 424, 285, 76, 30) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
