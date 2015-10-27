@@ -8,5 +8,9 @@ public class Tree {
 	float hillSpeed;
 	
 	BufferedImage image = ZombieSleigher.treeImage;
+	
+	public Tree() {
+		
+	}
 
 }

@@ -80,7 +80,11 @@ public class ZombieSleigher implements Controllable {
     private double zombieSpawnChanceIncrement = 0.02;
     private int zombieSpawnRate = UPS / 2;
     
-    
+    private List<Tree> trees = new ArrayList<Tree>();
+    private int treeCount = 0;
+    private double treeSpawnChance = 0.0;
+    private double treeSpawnChanceIncrement = 0.02;
+    private int treeSpawnRate = 0;
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
