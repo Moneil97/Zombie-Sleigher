@@ -171,7 +171,13 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % zombieSpawnRate == 0) {
         		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
-        			spawnZombie();
+        			spawnZombie(); //TODO move spawn zones to zombie constructor
+        		}
+        	}
+        	
+        	if (ticks % treeSpawnRate == 0) {
+        		if (treeSpawnChance > getRandomDouble(0.0, 1.0)) {
+        			//TODO add new tree
         		}
         	}
         	
