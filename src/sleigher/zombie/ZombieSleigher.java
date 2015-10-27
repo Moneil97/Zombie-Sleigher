@@ -66,6 +66,7 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage santaImage;
     static BufferedImage titleImage;
     static BufferedImage santaTitleImage;
+    static BufferedImage treeImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -78,6 +79,8 @@ public class ZombieSleigher implements Controllable {
     private double zombieSpawnChance = 0.0;
     private double zombieSpawnChanceIncrement = 0.02;
     private int zombieSpawnRate = UPS / 2;
+    
+    
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
@@ -137,6 +140,7 @@ public class ZombieSleigher implements Controllable {
     	zombieImage = load(root + "zombie.png");
     	titleImage = load(root + "title.png");
     	santaTitleImage = load(root + "santa_Title.png");
+    	treeImage = load(root + "tree.png");
     	
     	santa = new Santa(100, 100);
     	zombies.add(new Zombie(200, 400, hillSpeed));
@@ -171,7 +175,7 @@ public class ZombieSleigher implements Controllable {
     		
     		for (int i = 0; i <zombies.size(); i++) {
     			Zombie z = zombies.get(i);
-    			z.update(santa.x, santa.y, santa.width, santa.height);
+    			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
     			if (z.y + z.height < 0)
     				zombies.remove(i);
     		}
