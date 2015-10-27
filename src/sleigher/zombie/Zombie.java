@@ -20,7 +20,8 @@ public class Zombie {
 		height = 60;
 	}
 	
-	public void update(float santax, float santay, int santawidth, int santaheight){
+	public void update(int hillSpeed, float santax, float santay, int santawidth, int santaheight) {
+		this.hillSpeed = hillSpeed;
 		y -= hillSpeed;
 		
 		if (y > santay && y + height < santay + santaheight) {
