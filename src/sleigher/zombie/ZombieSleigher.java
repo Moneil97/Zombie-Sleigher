@@ -169,16 +169,19 @@ public class ZombieSleigher implements Controllable {
         	
     		santa.update();
     		
-    		//track best distance this run
-    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
-    				distance : hillDistance + (int) santa.x + (int) santa.height;
-    		
     		for (int i = 0; i <zombies.size(); i++) {
     			Zombie z = zombies.get(i);
     			z.update(santa.x, santa.y, santa.width, santa.height);
     			if (z.y + z.height < 0)
     				zombies.remove(i);
     		}
+    		
+    		//TODO collision detection
+    		
+    		
+    		//track best distance this run
+    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
+    				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
     		if (gameOver) {
     			//TODO display gameOver image
@@ -204,6 +207,10 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(Color.red);
     	g.drawString("HEALTH ", 400 - (g.getFontMetrics().stringWidth("HEALTH ") + 100) / 2, 20);
     
+    	g.setColor(new Color(0, 255, 0, 125));
+    	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, (int) santa.health, 17);
+    	
+    	g.setColor(Color.red);
     	g.drawRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, 100, 17);
     }
     
