@@ -11,6 +11,7 @@ public class Zombie {
 	float xs, ys;
 	int width, height;
 	boolean dead;
+	float collisionDamage;
 	Rectangle bounds;
 	
 	BufferedImage image = ZombieSleigher.zombieImage;
@@ -19,6 +20,7 @@ public class Zombie {
 	public Zombie(float ys) {
 		int zone = (int) getRandomDouble(0.0, 10.0);
 		
+		collisionDamage = 5;
 		dead = false;
 		
 		if (zone < 3) {
@@ -44,25 +46,27 @@ public class Zombie {
 		this.hillSpeed = hillSpeed;
 		y -= hillSpeed;
 		
-		if (y > santay && y + height < santay + santaheight) {
-			ys = hillSpeed;
-		} else if (y < santay) {
-			ys = hillSpeed + 2;
-		} else {
-			ys = hillSpeed - 2;
+		if (!dead) {
+			if (y > santay && y + height < santay + santaheight) {
+				ys = hillSpeed;
+			} else if (y < santay) {
+				ys = hillSpeed + 2;
+			} else {
+				ys = hillSpeed - 2;
+			}
+			
+			int gap = 30;
+			if (x + width > santax - gap && x < santax + santawidth + gap) {
+				xs = 0;
+			} else if (x + width < santax - gap) {
+				xs = 2;
+			} else {
+				xs = -2;
+			}
+			
+			x += xs;
+			y += ys;
 		}
-		
-		int gap = 30;
-		if (x + width > santax - gap && x < santax + santawidth + gap) {
-			xs = 0;
-		} else if (x + width < santax - gap) {
-			xs = 2;
-		} else {
-			xs = -2;
-		}
-		
-		x += xs;
-		y += ys;
 		
 		bounds = new Rectangle((int) x, (int) y, width, height);
 	}

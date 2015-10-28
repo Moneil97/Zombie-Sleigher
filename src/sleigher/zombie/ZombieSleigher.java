@@ -194,6 +194,8 @@ public class ZombieSleigher implements Controllable {
     			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
     			
     			if (santa.bounds.intersects(z.bounds)) {
+    				if (!z.dead)
+    					santa.health -= z.collisionDamage;
     				z.dead = true;
     			}
     			
