@@ -10,11 +10,16 @@ public class Zombie {
 	float hillSpeed;
 	float xs, ys;
 	int width, height;
+	boolean dead;
 	Rectangle bounds;
+	
 	BufferedImage image = ZombieSleigher.zombieImage;
+	BufferedImage deadImage = ZombieSleigher.zombieDeadImage;
 	
 	public Zombie(float ys) {
 		int zone = (int) getRandomDouble(0.0, 10.0);
+		
+		dead = false;
 		
 		if (zone < 3) {
 			x = 850;
@@ -67,7 +72,11 @@ public class Zombie {
 	 * incorporate delta
 	 */
 	public void render(Graphics2D g, float delta) {
-		g.drawImage(image, (int) x, (int) y, width, height, null);
+		if (dead) {
+			g.drawImage(deadImage, (int) x, (int) y, width, height, null);
+		} else {
+			g.drawImage(image, (int) x, (int) y, width, height, null);
+		}
 	}
 	
 	//	[lower, upper)

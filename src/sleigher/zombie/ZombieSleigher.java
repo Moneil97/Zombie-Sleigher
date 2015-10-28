@@ -63,6 +63,7 @@ public class ZombieSleigher implements Controllable {
     
     private BufferedImage gameBackground;
     static BufferedImage zombieImage;
+    static BufferedImage zombieDeadImage;
     static BufferedImage santaImage;
     static BufferedImage titleImage;
     static BufferedImage santaTitleImage;
@@ -82,9 +83,9 @@ public class ZombieSleigher implements Controllable {
     
     private List<Tree> trees = new ArrayList<Tree>();
     private int treeCount = 0;
-    private double treeSpawnChance = 0.0;
+    private double treeSpawnChance = 0.3;
     private double treeSpawnChanceIncrement = 0.02;
-    private int treeSpawnRate = UPS / 2;
+    private int treeSpawnRate = UPS * 2;
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
@@ -145,6 +146,7 @@ public class ZombieSleigher implements Controllable {
     	titleImage = load(root + "title.png");
     	santaTitleImage = load(root + "santa_Title.png");
     	treeImage = load(root + "tree.png");
+    	zombieDeadImage = load(root + "zombie_Dead.png");
     	
     	santa = new Santa(100, 100);
     	
@@ -167,12 +169,12 @@ public class ZombieSleigher implements Controllable {
         		seconds++;
         		hillSpeed += 0.5;
         		zombieSpawnChance += zombieSpawnChanceIncrement;
+        		treeSpawnChance += zombieSpawnChanceIncrement;
         	}
         	
         	if (ticks % zombieSpawnRate == 0) {
         		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
         			zombies.add(new Zombie(hillSpeed));
-        			
         	    	zombieCount++;
         		}
         	}
@@ -180,16 +182,31 @@ public class ZombieSleigher implements Controllable {
         	if (ticks % treeSpawnRate == 0) {
         		if (treeSpawnChance > getRandomDouble(0.0, 1.0)) {
         			//TODO add new tree
+        			trees.add(new Tree());
+        			treeCount++;
         		}
         	}
         	
     		santa.update();
     		
-    		for (int i = 0; i <zombies.size(); i++) {
+    		for (int i = 0; i < zombies.size(); i++) {
     			Zombie z = zombies.get(i);
     			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
+    			
+    			if (santa.bounds.intersects(z.bounds)) {
+    				z.dead = true;
+    			}
+    			
     			if (z.y + z.height < 0)
     				zombies.remove(i);
+    		}
+    		
+    		for (int i = 0; i < trees.size(); i++) {
+    			Tree t = trees.get(i);
+    			t.update(hillSpeed);
+    			
+    			if (t.y + t.height < 0)
+    				trees.remove(i);
     		}
     		
     		//TODO collision detection
@@ -255,13 +272,10 @@ public class ZombieSleigher implements Controllable {
 		resumeButton.render(g);
 		quitButton.render(g);
 		
-
 		if (quitButton.hovering) {
 			g.setColor(Color.red);
 			g.setFont(new Font("helvetica", Font.PLAIN, 16));
 			g.drawString("If you quit, your progress", 300, 335);
-			
-			
 			g.drawString("will not be saved", 400 - g.getFontMetrics().stringWidth("will not be saved") / 2, 355);
 		}
 		
