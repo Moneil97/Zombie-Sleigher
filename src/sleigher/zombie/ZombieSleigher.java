@@ -76,13 +76,13 @@ public class ZombieSleigher implements Controllable {
     private Santa santa;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
-    private int zombieCount = 0;
+    private int zombiesKilled = 0;
     private double zombieSpawnChance = 0.0;
     private double zombieSpawnChanceIncrement = 0.02;
     private int zombieSpawnRate = UPS / 2;
     
     private List<Tree> trees = new ArrayList<Tree>();
-    private int treeCount = 0;
+    private int treesDodged = 0;
     private double treeSpawnChance = 0.3;
     private double treeSpawnChanceIncrement = 0.02;
     private int treeSpawnRate = UPS * 2;
@@ -175,15 +175,13 @@ public class ZombieSleigher implements Controllable {
         	if (ticks % zombieSpawnRate == 0) {
         		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
         			zombies.add(new Zombie(hillSpeed));
-        	    	zombieCount++;
         		}
         	}
         	
         	if (ticks % treeSpawnRate == 0) {
         		if (treeSpawnChance > getRandomDouble(0.0, 1.0)) {
-        			//TODO add new tree
         			trees.add(new Tree());
-        			treeCount++;
+        			treesDodged++;
         		}
         	}
         	
