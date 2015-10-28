@@ -57,7 +57,8 @@ public class ZombieSleigher implements Controllable {
     	GAME, 
     	SHOP,
     	INSTRUCTIONS,
-    	PAUSE
+    	PAUSE,
+    	GAMEOVER
     }
     private Gamestate gamestate = Gamestate.TITLE;
     
@@ -145,7 +146,7 @@ public class ZombieSleigher implements Controllable {
     	zombieImage = load(root + "zombie.png");
     	titleImage = load(root + "title.png");
     	santaTitleImage = load(root + "santa_Title.png");
-    	treeImage = load(root + "tree.png");
+    	treeImage = load(root + "tree1.png");
     	zombieDeadImage = load(root + "zombie_Dead.png");
     	
     	santa = new Santa(100, 100);
@@ -161,15 +162,16 @@ public class ZombieSleigher implements Controllable {
     public void update() {
     	
     	if (gamestate == Gamestate.GAME) {
-
+    		
         	hillDistance += hillSpeed;
         	ticks++;
         	
         	if (ticks % UPS == 0) {
         		seconds++;
+        		//TODO why is this fucking up the trees
         		hillSpeed += 0.5;
         		zombieSpawnChance += zombieSpawnChanceIncrement;
-        		treeSpawnChance += zombieSpawnChanceIncrement;
+        		treeSpawnChance += treeSpawnChanceIncrement;
         	}
         	
         	if (ticks % zombieSpawnRate == 0) {
@@ -181,7 +183,6 @@ public class ZombieSleigher implements Controllable {
         	if (ticks % treeSpawnRate == 0) {
         		if (treeSpawnChance > getRandomDouble(0.0, 1.0)) {
         			trees.add(new Tree());
-        			treesDodged++;
         		}
         	}
         	
@@ -191,10 +192,10 @@ public class ZombieSleigher implements Controllable {
     			Zombie z = zombies.get(i);
     			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
     			
-    			if (santa.bounds.intersects(z.bounds)) {
-    				if (!z.dead)
-    					santa.health -= z.collisionDamage;
+    			if (!z.dead && santa.bounds.intersects(z.bounds)) {
+    				santa.health -= z.collisionDamage;
     				z.dead = true;
+    				zombiesKilled++;
     			}
     			
     			if (z.y + z.height < 0)
@@ -205,19 +206,23 @@ public class ZombieSleigher implements Controllable {
     			Tree t = trees.get(i);
     			t.update(hillSpeed);
     			
-    			if (t.y + t.height < 0)
+    			if (t.y + t.height < 0) {
     				trees.remove(i);
+    				treesDodged++;
+    			}
     		}
     		
-    		//TODO collision detection
-    		
+    		if (santa.health <= 0) {
+    			gameOver = true;
+    		}
     		
     		//track best distance this run
     		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
     				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
     		if (gameOver) {
-    			//TODO display gameOver image
+    			//TODO display gameOver image "you've been sleighed"
+    			//TODO gameover gamestate
     			gamestate = Gamestate.TITLE;
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
@@ -231,8 +236,11 @@ public class ZombieSleigher implements Controllable {
     	g.drawImage(gameBackground, 0, -hillDistance % gameBackground.getHeight(), null);
     	g.drawImage(gameBackground, 0, HEIGHT - hillDistance % gameBackground.getHeight(), null);
     	
-    	for (int i = 0; i <zombies.size(); i++)
+    	for (int i = 0; i < zombies.size(); i++)
 			zombies.get(i).render(g, delta);
+    	
+    	for (int i = 0; i < trees.size(); i++)
+    		trees.get(i).render(g, delta);
 
     	santa.render(g, delta);
     	

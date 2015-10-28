@@ -18,20 +18,20 @@ public class Zombie {
 	BufferedImage deadImage = ZombieSleigher.zombieDeadImage;
 	
 	public Zombie(float ys) {
-		int zone = (int) getRandomDouble(0.0, 10.0);
+		int zone = (int) getRandomDouble(0.0, 5.0);
 		
 		collisionDamage = 5;
 		dead = false;
 		
-		if (zone < 3) {
+		if (zone < 1) { //lower right of the screen
 			x = 850;
-			y = 50 + 200 * zone;
-		} else if (zone < 7) {
-			x = 50 + 200 * (zone - 3);
-			y = 650;
-		} else {
+			y = 300 + (float) getRandomDouble(0.0, 250.0);
+		} else if (zone < 2) {
 			x = -100;
-			y = 50 + 200 * (zone - 7);
+			y = 300 + (float) getRandomDouble(0.0, 250.0);
+		} else { //bottom of the screen
+			x = (float) getRandomDouble(100.0, 650.0);
+			y = 700;
 		}
 		
 		this.hillSpeed = ys;
