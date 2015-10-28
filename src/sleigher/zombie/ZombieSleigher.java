@@ -84,7 +84,7 @@ public class ZombieSleigher implements Controllable {
     private int treeCount = 0;
     private double treeSpawnChance = 0.0;
     private double treeSpawnChanceIncrement = 0.02;
-    private int treeSpawnRate = 0;
+    private int treeSpawnRate = UPS / 2;
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
@@ -147,7 +147,6 @@ public class ZombieSleigher implements Controllable {
     	treeImage = load(root + "tree.png");
     	
     	santa = new Santa(100, 100);
-    	zombies.add(new Zombie(200, 400, hillSpeed));
     	
     	instantiateButtons();
     	
