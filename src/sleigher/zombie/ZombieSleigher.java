@@ -89,7 +89,7 @@ public class ZombieSleigher implements Controllable {
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
     
-    private int hillSpeed = 1;
+    private float hillSpeed = 1;
     private int hillDistance = 0;
     private int distance = 0;
     private int bestDistance = 0;
@@ -165,12 +165,15 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % UPS == 0) {
         		seconds++;
+        		hillSpeed += 0.5;
         		zombieSpawnChance += zombieSpawnChanceIncrement;
         	}
         	
         	if (ticks % zombieSpawnRate == 0) {
         		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
-        			spawnZombie(); //TODO move spawn zones to zombie constructor
+        			zombies.add(new Zombie(hillSpeed));
+        			
+        	    	zombieCount++;
         		}
         	}
         	
@@ -424,21 +427,6 @@ public class ZombieSleigher implements Controllable {
     
     public static void main(String[] args) {
         new ZombieSleigher();
-    }
-    
-    public void spawnZombie() {
-    	//determine which of the fourteen spawn zones
-		int zone = (int) getRandomDouble(0.0, 10.0);
-		
-		if (zone < 3) {
-			zombies.add(new Zombie(850, 50 + 200 * zone, hillSpeed));
-		} else if (zone < 7) {
-			zombies.add(new Zombie(50 + 200 * (zone - 3), 650, hillSpeed));
-		} else {
-			zombies.add(new Zombie(-100, 50 + 200 * (zone - 7), hillSpeed));
-		}
-		
-    	zombieCount++;
     }
    
     private void say(Object o) {

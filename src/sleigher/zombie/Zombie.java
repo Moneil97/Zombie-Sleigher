@@ -1,6 +1,7 @@
 package sleigher.zombie;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Zombie {
@@ -9,18 +10,32 @@ public class Zombie {
 	float hillSpeed;
 	float xs, ys;
 	int width, height;
+	Rectangle bounds;
 	BufferedImage image = ZombieSleigher.zombieImage;
 	
-	public Zombie(int x, int y, int ys) {
-		this.x = x;
-		this.y = y;
+	public Zombie(float ys) {
+		int zone = (int) getRandomDouble(0.0, 10.0);
+		
+		if (zone < 3) {
+			x = 850;
+			y = 50 + 200 * zone;
+		} else if (zone < 7) {
+			x = 50 + 200 * (zone - 3);
+			y = 650;
+		} else {
+			x = -100;
+			y = 50 + 200 * (zone - 7);
+		}
+		
 		this.hillSpeed = ys;
+		
+		bounds = new Rectangle((int) x, (int) y, width, height);
 		
 		width = 40;
 		height = 60;
 	}
 	
-	public void update(int hillSpeed, float santax, float santay, int santawidth, int santaheight) {
+	public void update(float hillSpeed, float santax, float santay, int santawidth, int santaheight) {
 		this.hillSpeed = hillSpeed;
 		y -= hillSpeed;
 		
@@ -43,6 +58,8 @@ public class Zombie {
 		
 		x += xs;
 		y += ys;
+		
+		bounds = new Rectangle((int) x, (int) y, width, height);
 	}
 	
 	/**
@@ -51,6 +68,11 @@ public class Zombie {
 	 */
 	public void render(Graphics2D g, float delta) {
 		g.drawImage(image, (int) x, (int) y, width, height, null);
+	}
+	
+	//	[lower, upper)
+	public double getRandomDouble(double lower, double upper) {
+		return lower + Math.random() * (upper - lower);
 	}
 
 }
