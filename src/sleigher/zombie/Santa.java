@@ -1,10 +1,12 @@
 package sleigher.zombie;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
 import static java.lang.Math.*;
 
 public class Santa{
@@ -21,6 +23,8 @@ public class Santa{
 	
 	boolean up, down, left, right;
 	
+	Rectangle bounds;
+	
 	BufferedImage image = ZombieSleigher.santaImage;
 	
 	public Santa(float x, float y) {
@@ -31,6 +35,8 @@ public class Santa{
 		lasty = y;
 		vx = 5;
 		vy = 6;
+		
+		bounds = new Rectangle((int) x, (int) y, width, height);
 		
 		health = 100;
 		
@@ -59,6 +65,7 @@ public class Santa{
 		if (down) 
 			y += left ^ right ? vy*corner:vy;
 			
+		bounds = new Rectangle((int) x, (int) y, width, height);
 	}
 	
 	/**
