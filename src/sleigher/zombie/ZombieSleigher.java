@@ -69,12 +69,12 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage titleImage;
     static BufferedImage santaTitleImage;
     static BufferedImage treeImage;
-    static BufferedImage treeOtherImage; //TODO add tree image
+    static BufferedImage treeOtherImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
     private BoxButton quitButton;
-    private BoxButton menuButton; //TODO menu button from gameover screen
+    private BoxButton menuButton;
     
     private Santa santa;
     
@@ -161,6 +161,18 @@ public class ZombieSleigher implements Controllable {
     	canvas.addMouseListener(new Mouse());
     	canvas.addKeyListener(new Key());
     }
+    
+    /**
+     * TODO (not feature creep, actual things we have to add)
+     * end-of-run stats
+     * shop
+     * instruction screen
+     */
+    
+    /**
+     * TODO (feature creep)
+     * alternate tree images
+     */
         
     public void update() {
     	
@@ -225,7 +237,6 @@ public class ZombieSleigher implements Controllable {
     		
     		if (gameOver) {
     			//TODO display gameOver image "you've been sleighed"
-    			//TODO gameover gamestate
     			gamestate = Gamestate.GAMEOVER;
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
@@ -268,7 +279,6 @@ public class ZombieSleigher implements Controllable {
     	
     	g.drawImage(gameBackground, 0, 0, null);
 
-		//the title
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
 		g.drawImage(titleImage, 50, 30, 400, 200, null);
