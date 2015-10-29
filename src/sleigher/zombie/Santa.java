@@ -76,12 +76,8 @@ public class Santa{
 		int drawx = (int) ((x - lastx) * delta + lastx);
 		int drawy = (int) ((y - lasty) * delta + lasty);
 		
-		if (ticks % ZombieSleigher.UPS < 10)
-			g.drawImage(images[0], drawx, drawy, width, height, null);
-		else if (ticks % ZombieSleigher.UPS < 20)
-			g.drawImage(images[1], drawx, drawy, width, height, null);
-		else if (ticks % ZombieSleigher.UPS <= 30)
-			g.drawImage(images[2], drawx, drawy, width, height, null);
+		g.drawImage(images[(ticks % 8) / 2], drawx, drawy, width, height, null);
+		
 		
 	}
 
