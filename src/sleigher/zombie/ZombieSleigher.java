@@ -61,8 +61,8 @@ public class ZombieSleigher implements Controllable {
     private BufferedImage gameBackground;
     static BufferedImage zombieImage;
     static BufferedImage zombieDeadImage;
-    //static BufferedImage santaImage;
     static BufferedImage santaImages[] = new BufferedImage[4];
+    static BufferedImage santaArmImage;
     static BufferedImage titleImage;
     static BufferedImage santaTitleImage;
     static BufferedImage treeImage;
@@ -144,6 +144,7 @@ public class ZombieSleigher implements Controllable {
     	
     	for (int i=1; i <=4; i++)
     		santaImages[i-1] = load(root + "santa" + i + ".png");
+    	santaArmImage = load(root + "santa_Arm.png");
     	zombieImage = load(root + "zombie.png");
     	zombieDeadImage = load(root + "zombie_Dead.png");
     	titleImage = load(root + "title.png");
@@ -163,6 +164,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (not feature creep, actual things we have to add)
+     * weapons
      * end-of-run stats
      * shop
      * instruction screen
@@ -172,6 +174,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * powerups
      * alternate tree images
      */
         
