@@ -73,6 +73,7 @@ public class ZombieSleigher implements Controllable {
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
     private BoxButton quitButton;
+    private BoxButton menuButton; //TODO menu button from gameover screen
     
     private Santa santa;
     
@@ -168,7 +169,7 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % UPS == 0) {
         		seconds++;
-        		//TODO why is this fucking up the trees
+        		//TODO why is the speed increment fucking up the trees
         		hillSpeed += 0.5;
         		zombieSpawnChance += zombieSpawnChanceIncrement;
         		treeSpawnChance += treeSpawnChanceIncrement;
@@ -226,6 +227,8 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
+    	} else if (gamestate == Gamestate.GAMEOVER) {
+    		
     	} else if (gamestate == Gamestate.TITLE) {
     		
     	}
@@ -294,6 +297,15 @@ public class ZombieSleigher implements Controllable {
 		
 		g.setColor(Color.red);
 		g.drawString("PAUSED", 300 - 2, 280);
+    }
+    
+    public void renderGameover(Graphics2D g, float delta) {
+    	renderGame(g, delta);
+    	
+    	g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+		g.setColor(new Color(0, 0, 0, 120));
+		g.fillRect(0, 0, 800, 600);
     }
     
     private void instantiateButtons() {
@@ -469,7 +481,9 @@ public class ZombieSleigher implements Controllable {
 				renderGame(backgroundGraphics, delta);
 			} else if (gamestate == Gamestate.PAUSE) {
 				renderPause(backgroundGraphics, delta);
-			} else if (gamestate == Gamestate.TITLE) {
+			} else if (gamestate == Gamestate.GAMEOVER) {
+				renderGameover(backgroundGraphics, delta);
+    		} else if (gamestate == Gamestate.TITLE) {
 				renderTitle(backgroundGraphics, delta);
 			} else if (gamestate == Gamestate.SHOP) {
 				
