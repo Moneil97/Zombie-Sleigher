@@ -312,6 +312,8 @@ public class ZombieSleigher implements Controllable {
 
 		g.setColor(new Color(0, 0, 0, 120));
 		g.fillRect(0, 0, 800, 600);
+		
+		menuButton.render(g);
     }
     
     private void instantiateButtons() {
@@ -346,6 +348,12 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
+    	menuButton = new BoxButton("MENU", 300, 300, 200, 40) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.TITLE;
+    		}
+    	};
     }
     
     /**
@@ -360,6 +368,8 @@ public class ZombieSleigher implements Controllable {
     		} else if (gamestate == Gamestate.PAUSE) {
     			resumeButton.mouseMoved(e.getX(), e.getY());
     			quitButton.mouseMoved(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.GAMEOVER) {
+    			menuButton.mouseMoved(e.getX(), e.getY());
     		}
     	}
     	
@@ -370,6 +380,8 @@ public class ZombieSleigher implements Controllable {
     		} else if (gamestate == Gamestate.PAUSE) {
     			resumeButton.mouseMoved(e.getX(), e.getY());
     			quitButton.mouseMoved(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.GAMEOVER) {
+    			menuButton.mouseMoved(e.getX(), e.getY());
     		}
     	}
     }
@@ -382,6 +394,8 @@ public class ZombieSleigher implements Controllable {
     		} else if (gamestate == Gamestate.PAUSE) {
     			resumeButton.mousePressed(e.getX(), e.getY());
     			quitButton.mousePressed(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.GAMEOVER) {
+    			menuButton.mousePressed(e.getX(), e.getY());
     		}
     	} 
     	
@@ -392,6 +406,8 @@ public class ZombieSleigher implements Controllable {
     		} else if (gamestate == Gamestate.PAUSE) {
     			resumeButton.mouseReleased(e.getX(), e.getY());
     			quitButton.mouseReleased(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.GAMEOVER) {
+    			menuButton.mouseReleased(e.getX(), e.getY());
     		}
     	}
     }
@@ -428,6 +444,9 @@ public class ZombieSleigher implements Controllable {
 	    			if (gamestate == Gamestate.GAME)
 	    				santa.down = false;
 	    			break;
+	    		case KeyEvent.VK_COMMA:
+	    			if (gamestate == Gamestate.GAME)
+	    				santa.health -= 10;
     		}
     	}
     	
