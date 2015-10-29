@@ -3,7 +3,6 @@ package sleigher.zombie;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -20,8 +19,6 @@ import java.awt.event.WindowEvent;
 import java.awt.font.TextAttribute;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +26,6 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import com.jackdahms.Controllable;
 import com.jackdahms.ControllableThread;

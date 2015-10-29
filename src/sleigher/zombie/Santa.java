@@ -44,11 +44,6 @@ public class Santa{
 		height = 160;
 	}
 	
-	/**
-	 * TODO feature creep:
-	 * max speed (right now diagonals are faster) using corner
-	 */
-	//Won't work with acceleration implemented
 	float corner = 0.70710678118654752440084436210485f;//45 * Math.cos(45);
 	
 	public void update() {
@@ -57,28 +52,22 @@ public class Santa{
 		lasty = y;
 		
 		if (right)
-			x += up ^ down ? vx*corner:vx;
+			x += up ^ down ? vx * corner : vx;
 		if (left)
-			x -= up ^ down ? vx*corner:vx;
+			x -= up ^ down ? vx * corner : vx;
 		if (up) 
-			y -= left ^ right ? vy*corner:vy;
+			y -= left ^ right ? vy * corner : vy;
 		if (down) 
-			y += left ^ right ? vy*corner:vy;
+			y += left ^ right ? vy * corner : vy;
 			
 		bounds = new Rectangle((int) x, (int) y, width, height);
 	}
 	
-	/**
-	 * TODO feature creep:
-	 * sleigh slightly turns left or right
-	 */
 	public void render(Graphics2D g, float delta, int ticks) {
 		int drawx = (int) ((x - lastx) * delta + lastx);
 		int drawy = (int) ((y - lasty) * delta + lasty);
 		
 		g.drawImage(images[(ticks % 8) / 2], drawx, drawy, width, height, null);
-		
-		
 	}
 
 }
