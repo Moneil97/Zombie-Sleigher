@@ -65,7 +65,8 @@ public class ZombieSleigher implements Controllable {
     private BufferedImage gameBackground;
     static BufferedImage zombieImage;
     static BufferedImage zombieDeadImage;
-    static BufferedImage santaImage;
+    //static BufferedImage santaImage;
+    static BufferedImage santaImages[] = new BufferedImage[4];
     static BufferedImage titleImage;
     static BufferedImage santaTitleImage;
     static BufferedImage treeImage;
@@ -144,7 +145,9 @@ public class ZombieSleigher implements Controllable {
     	
     	String root = "/res/";
     	gameBackground = load(root + "background.jpg");
-    	santaImage = load(root + "santa.png");
+    	
+    	for (int i=1; i <=4; i++)
+    		santaImages[i-1] = load(root + "santa" + i + ".png");
     	zombieImage = load(root + "zombie.png");
     	titleImage = load(root + "title.png");
     	santaTitleImage = load(root + "santa_Title.png");
@@ -247,7 +250,7 @@ public class ZombieSleigher implements Controllable {
     	for (int i = 0; i < trees.size(); i++)
     		trees.get(i).render(g, delta);
 
-    	santa.render(g, delta);
+    	santa.render(g, delta, ticks);
     	
     	g.setFont(new Font("helvetica", Font.PLAIN, 20));
     	g.setColor(Color.red);

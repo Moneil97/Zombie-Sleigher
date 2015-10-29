@@ -25,7 +25,7 @@ public class Santa{
 	
 	Rectangle bounds;
 	
-	BufferedImage image = ZombieSleigher.santaImage;
+	BufferedImage images[] = ZombieSleigher.santaImages;
 	
 	public Santa(float x, float y) {
 
@@ -72,11 +72,17 @@ public class Santa{
 	 * TODO feature creep:
 	 * sleigh slightly turns left or right
 	 */
-	public void render(Graphics2D g, float delta) {
+	public void render(Graphics2D g, float delta, int ticks) {
 		int drawx = (int) ((x - lastx) * delta + lastx);
 		int drawy = (int) ((y - lasty) * delta + lasty);
 		
-		g.drawImage(image, drawx, drawy, width, height, null);
+		if (ticks % ZombieSleigher.UPS < 10)
+			g.drawImage(images[0], drawx, drawy, width, height, null);
+		else if (ticks % ZombieSleigher.UPS < 20)
+			g.drawImage(images[1], drawx, drawy, width, height, null);
+		else if (ticks % ZombieSleigher.UPS <= 30)
+			g.drawImage(images[2], drawx, drawy, width, height, null);
+		
 	}
 
 }
