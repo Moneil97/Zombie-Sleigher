@@ -8,7 +8,6 @@ public class Tree {
 	
 	float x, y;
 	int width, height;
-	float hillSpeed;
 	float collisionDamage;
 	Rectangle bounds;
 	BufferedImage image = ZombieSleigher.treeImage;
@@ -26,7 +25,6 @@ public class Tree {
 	}
 	
 	public void update(float hillSpeed) {
-		this.hillSpeed = hillSpeed;
 		
 		y -= hillSpeed;
 		

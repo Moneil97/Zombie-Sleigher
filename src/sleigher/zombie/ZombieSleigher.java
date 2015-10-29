@@ -146,11 +146,11 @@ public class ZombieSleigher implements Controllable {
     	gameBackground = load(root + "background.jpg");
     	santaImage = load(root + "santa.png");
     	zombieImage = load(root + "zombie.png");
+    	zombieDeadImage = load(root + "zombie_Dead.png");
     	titleImage = load(root + "title.png");
     	santaTitleImage = load(root + "santa_Title.png");
     	treeImage = load(root + "tree1.png");
     	treeOtherImage = load(root + "tree2.png");
-    	zombieDeadImage = load(root + "zombie_Dead.png");
     	
     	santa = new Santa(100, 100);
     	
@@ -226,11 +226,15 @@ public class ZombieSleigher implements Controllable {
     		if (gameOver) {
     			//TODO display gameOver image "you've been sleighed"
     			//TODO gameover gamestate
-    			gamestate = Gamestate.TITLE;
+    			gamestate = Gamestate.GAMEOVER;
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
+    	} else if (gamestate == Gamestate.PAUSE) {
+    		santa.lastx = santa.x;
+    		santa.lasty = santa.y;
     	} else if (gamestate == Gamestate.GAMEOVER) {
-    		
+    		santa.lastx = santa.x;
+    		santa.lasty = santa.y;
     	} else if (gamestate == Gamestate.TITLE) {
     		
     	}
