@@ -170,6 +170,8 @@ public class ZombieSleigher implements Controllable {
      * end-of-run stats
      * shop
      * instruction screen
+     * make images transparent
+     * fix trees
      */
     
     /**
