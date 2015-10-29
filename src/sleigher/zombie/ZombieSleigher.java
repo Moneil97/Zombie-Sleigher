@@ -69,6 +69,7 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage titleImage;
     static BufferedImage santaTitleImage;
     static BufferedImage treeImage;
+    static BufferedImage treeOtherImage; //TODO add tree image
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -148,6 +149,7 @@ public class ZombieSleigher implements Controllable {
     	titleImage = load(root + "title.png");
     	santaTitleImage = load(root + "santa_Title.png");
     	treeImage = load(root + "tree1.png");
+    	treeOtherImage = load(root + "tree2.png");
     	zombieDeadImage = load(root + "zombie_Dead.png");
     	
     	santa = new Santa(100, 100);
