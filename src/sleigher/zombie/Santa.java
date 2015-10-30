@@ -67,7 +67,8 @@ public class Santa{
 		int drawx = (int) ((x - lastx) * delta + lastx);
 		int drawy = (int) ((y - lasty) * delta + lasty);
 		
-		g.drawImage(images[(ticks % 8) / 2], drawx, drawy, width, height, null);
+		//the higher those two magic numbers, the slower. the second one should be 1/4 of the first b/c there are 4 frames
+		g.drawImage(images[(ticks % (8)) / 2], drawx, drawy, width, height, null);
 	}
 
 }
