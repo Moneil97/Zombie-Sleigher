@@ -63,7 +63,7 @@ public class Santa{
 		bounds = new Rectangle((int) x, (int) y, width, height);
 	}
 	
-	public void render(Graphics2D g, float delta, int ticks) {
+	public void render(Graphics2D g, int mx, int my, float delta, int ticks) {
 		int drawx = (int) ((x - lastx) * delta + lastx);
 		int drawy = (int) ((y - lasty) * delta + lasty);
 		

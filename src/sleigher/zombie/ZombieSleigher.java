@@ -269,7 +269,7 @@ public class ZombieSleigher implements Controllable {
     	for (int i = 0; i < trees.size(); i++)
     		trees.get(i).render(g, delta);
 
-    	santa.render(g, delta, ticks);
+    	santa.render(g, mx, my, delta, ticks);
     	
     	g.setFont(new Font("helvetica", Font.PLAIN, 20));
     	g.setColor(Color.red);
