@@ -80,14 +80,15 @@ public class Santa{
 		if (mx > drawx + width / 2) {
 			//right shoulder
 			double angle;
-			if (mx - rightAnchorX == 0) {
+			double dy = my - anchorY;
+			double dx = mx - rightAnchorX;
+			if (dx == 0) {
 				angle = Math.PI / 2;
 			} else {
-				angle = Math.tan((my - anchorY) / (mx - rightAnchorX));
+				angle = Math.tan(dy / dx);
 			}
 			
 			g.translate(rightAnchorX, anchorY);
-			System.out.println(angle);
 			g.rotate(angle);
 			g.drawImage(armImage, -1, -1, 20, 7, null);
 			g.rotate(-angle);
