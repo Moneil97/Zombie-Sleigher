@@ -155,7 +155,7 @@ public class ZombieSleigher implements Controllable {
     	treeImage = load(root + "tree1.png");
     	treeOtherImage = load(root + "tree2.png");
     	
-    	santa = new Santa(100, 100);
+    	//santa = new Santa(100, 100);
     	
     	instantiateButtons();
     	
@@ -333,10 +333,23 @@ public class ZombieSleigher implements Controllable {
 		menuButton.render(g);
     }
     
+    private void gameReset(){
+    	santa = new Santa(100,100);
+		gameOver = false;
+		trees.clear();
+		zombies.clear();
+		treeSpawnChance = 0.3;
+		zombieSpawnChance = 0.0;
+		hillSpeed = 1;
+		hillDistance = 0;
+		distance = 0;
+    }
+    
     private void instantiateButtons() {
     	menuButtons[0] = new BoxButton("PLAY", 520, 80, 200, 40){
     		@Override
     		void onPress() {
+    			gameReset();
     			gamestate = Gamestate.GAME;
     		}
     	};
@@ -498,6 +511,12 @@ public class ZombieSleigher implements Controllable {
 	    		case KeyEvent.VK_S:
 	    			if (gamestate == Gamestate.GAME)
 	    				santa.down = true;
+	    			break;
+	    		case KeyEvent.VK_MINUS:
+	    			santa.health--;
+	    			break;
+	    		case KeyEvent.VK_PLUS:
+	    			santa.health++;
 	    			break;
     		}
     	}
