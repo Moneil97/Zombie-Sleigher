@@ -25,6 +25,7 @@ public class Santa{
 	
 	Rectangle bounds;
 	
+	BufferedImage armImage = ZombieSleigher.santaArmImage;
 	BufferedImage images[] = ZombieSleigher.santaImages;
 	
 	public Santa(float x, float y) {
@@ -69,6 +70,19 @@ public class Santa{
 		
 		//the higher those two magic numbers, the slower. the second one should be 1/4 of the first b/c there are 4 frames
 		g.drawImage(images[(ticks % (8)) / 2], drawx, drawy, width, height, null);
+		
+		int leftShoulderX = drawx;
+		int rightShoulderX = drawx + width;
+		int shoulderY = drawy + height / 2;
+		
+		//TODO rotate towards cursor
+		if (mx > drawx + width / 2) {
+			//right shoulder
+			g.drawImage(armImage, rightShoulderX, shoulderY, 30, 10, null);
+		} else {
+			//left shoulder
+			g.drawImage(armImage, leftShoulderX, shoulderY, 30, 10, null);
+		}
 	}
 
 }
