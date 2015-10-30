@@ -79,13 +79,17 @@ public class Santa{
 		//TODO rotate towards cursor
 		if (mx > drawx + width / 2) {
 			//right shoulder
-			//TODO this will throw a divide by zero error
-			double angle = Math.tan((my - anchorY) / (mx - rightAnchorX));
+			double angle;
+			if (mx - rightAnchorX == 0) {
+				angle = Math.PI / 2;
+			} else {
+				angle = Math.tan((my - anchorY) / (mx - rightAnchorX));
+			}
 			
 			g.translate(rightAnchorX, anchorY);
 			System.out.println(angle);
 			g.rotate(angle);
-			g.drawImage(armImage, -2, -2, 20, 7, null);
+			g.drawImage(armImage, -1, -1, 20, 7, null);
 			g.rotate(-angle);
 			g.translate(-rightAnchorX, -anchorY);
 		} else {
