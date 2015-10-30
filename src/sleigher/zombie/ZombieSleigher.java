@@ -95,6 +95,9 @@ public class ZombieSleigher implements Controllable {
     private int distance = 0;
     private int bestDistance = 0;
     
+    private int mx;
+    private int my;
+    
     private boolean gameOver;
     
     public ZombieSleigher() {
@@ -376,7 +379,10 @@ public class ZombieSleigher implements Controllable {
     
     private class MouseMotion extends MouseMotionAdapter {
     	public void mouseMoved(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
+    		if (gamestate == Gamestate.GAME) {
+    			mx = e.getX();
+    			my = e.getY();
+    		} else if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mouseMoved(e.getX(), e.getY()); 
     		} else if (gamestate == Gamestate.PAUSE) {
@@ -388,7 +394,10 @@ public class ZombieSleigher implements Controllable {
     	}
     	
     	public void mouseDragged(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
+    		if (gamestate == Gamestate.GAME) {
+    			mx = e.getX();
+    			my = e.getY();
+    		} else if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mouseMoved(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {
