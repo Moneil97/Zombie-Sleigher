@@ -85,7 +85,8 @@ public class Santa{
 			if (dx == 0) {
 				angle = Math.PI / 2;
 			} else {
-				angle = Math.tan(dy / dx);
+				angle = Math.atan(dy / dx);
+				System.out.println(Math.toDegrees(angle));
 			}
 			
 			g.translate(rightAnchorX, anchorY);
