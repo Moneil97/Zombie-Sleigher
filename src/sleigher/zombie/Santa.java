@@ -43,8 +43,8 @@ public class Santa{
 		
 		health = 100;
 		
-		width = 50;
-		height = 160;
+		width = (int)(18*2.5);//50;
+		height = (int)(83*2.5);//160;
 	}
 	
 	float corner = 0.70710678118654752440084436210485f;//45 * Math.cos(45);
