@@ -26,7 +26,8 @@ public class Santa{
 	
 	Rectangle bounds;
 	
-	BufferedImage armImage = ZombieSleigher.santaArmImage;
+	BufferedImage leftArmImage = ZombieSleigher.santaLeftArmImage;
+	BufferedImage rightArmImage = ZombieSleigher.santaRightArmImage;
 	BufferedImage images[] = ZombieSleigher.santaImages;
 	
 	public Santa(float x, float y) {
@@ -91,7 +92,7 @@ public class Santa{
 			
 			g.translate(rightAnchorX, anchorY);
 			g.rotate(angle);
-			g.drawImage(armImage, -1, -1, 20, 7, null);
+			g.drawImage(rightArmImage, -1, -1, 20, 7, null);
 			g.rotate(-angle);
 			g.translate(-rightAnchorX, -anchorY);
 		} else {

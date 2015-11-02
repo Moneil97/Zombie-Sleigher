@@ -62,7 +62,8 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage zombieImage;
     static BufferedImage zombieDeadImage;
     static BufferedImage santaImages[] = new BufferedImage[4];
-    static BufferedImage santaArmImage;
+    static BufferedImage santaLeftArmImage;
+    static BufferedImage santaRightArmImage;
     static BufferedImage titleImage;
     static BufferedImage santaTitleImage;
     static BufferedImage treeImage;
@@ -148,7 +149,8 @@ public class ZombieSleigher implements Controllable {
     	
     	for (int i=1; i <=4; i++)
     		santaImages[i-1] = load(root + "santa" + i + ".png");
-    	santaArmImage = load(root + "santa_Arm.png");
+    	santaLeftArmImage = load(root + "santa_Arm_Left.png");
+    	santaRightArmImage = load(root + "santa_Arm_Right.png");
     	zombieImage = load(root + "zombie.png");
     	zombieDeadImage = load(root + "zombie_Dead.png");
     	titleImage = load(root + "title.png");
