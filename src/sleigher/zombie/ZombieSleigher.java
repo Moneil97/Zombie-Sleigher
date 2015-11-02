@@ -67,6 +67,7 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage santaTitleImage;
     static BufferedImage treeImage;
     static BufferedImage treeOtherImage;
+    static BufferedImage shopTitleImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -154,6 +155,7 @@ public class ZombieSleigher implements Controllable {
     	santaTitleImage = load(root + "santa_Title.png");
     	treeImage = load(root + "tree1.png");
     	treeOtherImage = load(root + "tree2.png");
+    	shopTitleImage = load(root + "shop_Title.png");
     	
     	//santa = new Santa(100, 100);
     	
@@ -182,7 +184,8 @@ public class ZombieSleigher implements Controllable {
      */
         
     public void update() {
-    	
+    	//TODO reset during gameover after any key pressed
+    	//TODO change keylistener to listen by gamestate, not key 
     	if (gamestate == Gamestate.GAME) {
     		
         	hillDistance += hillSpeed;
@@ -250,6 +253,8 @@ public class ZombieSleigher implements Controllable {
     	} else if (gamestate == Gamestate.PAUSE) {
     		santa.lastx = santa.x;
     		santa.lasty = santa.y;
+    	} else if (gamestate == Gamestate.SHOP) {
+    	
     	} else if (gamestate == Gamestate.GAMEOVER) {
     		santa.lastx = santa.x;
     		santa.lasty = santa.y;
