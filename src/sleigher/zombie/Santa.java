@@ -72,9 +72,9 @@ public class Santa{
 		//the higher those two magic numbers, the slower. the second one should be 1/4 of the first b/c there are 4 frames
 		g.drawImage(images[(ticks % (8)) / 2], drawx, drawy, width, height, null);
 		
-		double rightAnchorX = drawx + width / 2 + 10;
-		double leftAnchorX = drawx + 2;
-		double anchorY = drawy + 62;
+		double rightAnchorX = drawx + width;
+		double leftAnchorX = drawx;
+		double anchorY = drawy;
 		
 		//TODO rotate towards cursor
 		if (mx > drawx + width / 2) {

@@ -456,38 +456,40 @@ public class ZombieSleigher implements Controllable {
     private class Key extends KeyAdapter {
     	public void keyReleased(KeyEvent e) {
     		int key = e.getKeyCode();
-    		switch(key) {
-	    		case KeyEvent.VK_P:
-	    			if (gamestate == Gamestate.GAME) gamestate = Gamestate.PAUSE;
-	    			else if (gamestate == Gamestate.PAUSE) {
-	    				resumeButton.hovering = false;
-	    				quitButton.hovering = false;
-	    				gamestate = Gamestate.GAME;
-	    			}
-	    			break;
-	    		case KeyEvent.VK_LEFT:
-	    		case KeyEvent.VK_A:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.left = false;
-	    			break;
-	    		case KeyEvent.VK_RIGHT:
-	    		case KeyEvent.VK_D:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.right = false;
-	    			break;
-	    		case KeyEvent.VK_UP:
-	    		case KeyEvent.VK_W:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.up = false;
-	    			break;
-	    		case KeyEvent.VK_DOWN:
-	    		case KeyEvent.VK_S:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.down = false;
-	    			break;
-	    		case KeyEvent.VK_COMMA:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.health -= 10;
+    		if (gamestate == Gamestate.GAME) {
+	    		switch(key) {
+		    		case KeyEvent.VK_P:
+		    			if (gamestate == Gamestate.GAME) gamestate = Gamestate.PAUSE;
+		    			else if (gamestate == Gamestate.PAUSE) {
+		    				resumeButton.hovering = false;
+		    				quitButton.hovering = false;
+		    				gamestate = Gamestate.GAME;
+		    			}
+		    			break;
+		    		case KeyEvent.VK_LEFT:
+		    		case KeyEvent.VK_A:
+		    			if (gamestate == Gamestate.GAME)
+		    				santa.left = false;
+		    			break;
+		    		case KeyEvent.VK_RIGHT:
+		    		case KeyEvent.VK_D:
+		    			if (gamestate == Gamestate.GAME)
+		    				santa.right = false;
+		    			break;
+		    		case KeyEvent.VK_UP:
+		    		case KeyEvent.VK_W:
+		    			if (gamestate == Gamestate.GAME)
+		    				santa.up = false;
+		    			break;
+		    		case KeyEvent.VK_DOWN:
+		    		case KeyEvent.VK_S:
+		    			if (gamestate == Gamestate.GAME)
+		    				santa.down = false;
+		    			break;
+		    		case KeyEvent.VK_COMMA:
+		    			if (gamestate == Gamestate.GAME)
+		    				santa.health -= 10;
+	    		}
     		}
     	}
     	
