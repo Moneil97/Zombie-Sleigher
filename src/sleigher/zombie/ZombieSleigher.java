@@ -352,47 +352,6 @@ public class ZombieSleigher implements Controllable {
 		distance = 0;
     }
     
-    private void instantiateButtons() {
-    	menuButtons[0] = new BoxButton("PLAY", 520, 80, 200, 40){
-    		@Override
-    		void onPress() {
-    			gameReset();
-    			gamestate = Gamestate.GAME;
-    		}
-    	};
-    	menuButtons[1] = new BoxButton("SHOP", 520, 135, 200, 40){
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.SHOP;
-    		}
-    	};
-    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 520, 190, 200, 40){
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.INSTRUCTIONS;
-    		}
-    	};
-    	
-    	resumeButton = new BoxButton("RESUME", 300, 285, 100, 30) {
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.GAME;
-    		}
-    	};
-    	quitButton = new BoxButton("QUIT", 424, 285, 76, 30) {
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.TITLE;
-    		}
-    	};
-    	menuButton = new BoxButton("MENU", 300, 300, 200, 40) {
-    		@Override
-    		void onPress() {
-    			gamestate = Gamestate.TITLE;
-    		}
-    	};
-    }
-    
     /**
      * Input Adapter Classes
      */
@@ -627,6 +586,48 @@ public class ZombieSleigher implements Controllable {
     	} catch (IllegalStateException e) {
     		return true;
     	}
+    }
+    
+
+    private void instantiateButtons() {
+    	menuButtons[0] = new BoxButton("PLAY", 520, 80, 200, 40){
+    		@Override
+    		void onPress() {
+    			gameReset();
+    			gamestate = Gamestate.GAME;
+    		}
+    	};
+    	menuButtons[1] = new BoxButton("SHOP", 520, 135, 200, 40){
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.SHOP;
+    		}
+    	};
+    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 520, 190, 200, 40){
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.INSTRUCTIONS;
+    		}
+    	};
+    	
+    	resumeButton = new BoxButton("RESUME", 300, 285, 100, 30) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.GAME;
+    		}
+    	};
+    	quitButton = new BoxButton("QUIT", 424, 285, 76, 30) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.TITLE;
+    		}
+    	};
+    	menuButton = new BoxButton("MENU", 300, 300, 200, 40) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.TITLE;
+    		}
+    	};
     }
     
 }
