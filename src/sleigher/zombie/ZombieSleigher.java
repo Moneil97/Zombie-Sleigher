@@ -446,7 +446,7 @@ public class ZombieSleigher implements Controllable {
     				break;
     			}
     		} else if (gamestate == Gamestate.GAMEOVER) {
-    			//if any key is presseddsdafasdf
+    			//if any key is pressed
     			gamestate = Gamestate.TITLE;
     		}
     	}
