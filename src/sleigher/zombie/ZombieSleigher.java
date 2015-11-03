@@ -500,26 +500,23 @@ public class ZombieSleigher implements Controllable {
     	public void keyPressed(KeyEvent e) {
     		super.keyPressed(e);
     		int key = e.getKeyCode();
-    		switch(key) {
+    		if (gamestate == Gamestate.GAME) {
+	    		switch(key) {
 	    		case KeyEvent.VK_LEFT:
 	    		case KeyEvent.VK_A:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.left = true;
+	    			santa.left = true;
 	    			break;
 	    		case KeyEvent.VK_RIGHT:
 	    		case KeyEvent.VK_D:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.right = true;
+	    			santa.right = true;
 	    			break;
 	    		case KeyEvent.VK_UP:
 	    		case KeyEvent.VK_W:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.up = true;
+	    			santa.up = true;
 	    			break;
 	    		case KeyEvent.VK_DOWN:
 	    		case KeyEvent.VK_S:
-	    			if (gamestate == Gamestate.GAME)
-	    				santa.down = true;
+	    			santa.down = true;
 	    			break;
 	    		case KeyEvent.VK_MINUS:
 	    			santa.health--;
@@ -527,6 +524,7 @@ public class ZombieSleigher implements Controllable {
 	    		case KeyEvent.VK_PLUS:
 	    			santa.health++;
 	    			break;
+	    		}
     		}
     	}
     }
