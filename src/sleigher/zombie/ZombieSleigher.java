@@ -186,8 +186,6 @@ public class ZombieSleigher implements Controllable {
      */
         
     public void update() {
-    	//TODO reset during gameover after any key pressed
-    	//TODO change keylistener to listen by gamestate, not key 
     	if (gamestate == Gamestate.GAME) {
     		
         	hillDistance += hillSpeed;
@@ -292,8 +290,6 @@ public class ZombieSleigher implements Controllable {
     public void renderTitle(Graphics2D g, float delta) {
     	
     	g.drawImage(gameBackground, 0, 0, null);
-
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
 		g.drawImage(titleImage, 50, 30, 400, 200, null);
 		g.drawImage(santaTitleImage, 520, 30, 200, 50, null);
@@ -304,8 +300,6 @@ public class ZombieSleigher implements Controllable {
     
     public void renderPause(Graphics2D g, float delta) {
     	renderGame(g, delta);
-    	
-    	g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		g.setColor(new Color(0, 0, 0, 120));
 		g.fillRect(0, 0, 800, 600);
@@ -331,8 +325,6 @@ public class ZombieSleigher implements Controllable {
     
     public void renderGameover(Graphics2D g, float delta) {
     	renderGame(g, delta);
-    	
-    	g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		g.setColor(new Color(0, 0, 0, 120));
 		g.fillRect(0, 0, 800, 600);
@@ -515,7 +507,10 @@ public class ZombieSleigher implements Controllable {
     	do {
 			Graphics2D bg = getBuffer();
 			
-	    	backgroundGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	    	backgroundGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, 
+	    			RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	    	backgroundGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	    			RenderingHints.VALUE_ANTIALIAS_ON);
 			
 			if (gamestate == Gamestate.GAME) {
 				renderGame(backgroundGraphics, delta);
