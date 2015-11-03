@@ -446,9 +446,16 @@ public class ZombieSleigher implements Controllable {
 	    			break;
 	    		}
     		} else if (gamestate == Gamestate.PAUSE) {
-				resumeButton.hovering = false;
-				quitButton.hovering = false;
-				gamestate = Gamestate.GAME;
+    			switch (key) {
+    			case KeyEvent.VK_P:
+    				resumeButton.hovering = false;
+    				quitButton.hovering = false;
+    				gamestate = Gamestate.GAME;
+    				break;
+    			}
+    		} else if (gamestate == Gamestate.GAMEOVER) {
+    			//if any key is pressed
+    			gamestate = Gamestate.TITLE;
     		}
     	}
     	
@@ -507,6 +514,8 @@ public class ZombieSleigher implements Controllable {
     public void render(float delta) {
     	do {
 			Graphics2D bg = getBuffer();
+			
+	    	backgroundGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			
 			if (gamestate == Gamestate.GAME) {
 				renderGame(backgroundGraphics, delta);
