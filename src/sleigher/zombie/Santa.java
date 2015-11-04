@@ -83,11 +83,17 @@ public class Santa{
 			double angle;
 			double dy = my - anchorY;
 			double dx = mx - rightAnchorX;
+			
 			if (dx == 0) {
-				angle = Math.PI / 2;
-			} else {
-				angle = Math.atan(dy / dx);
-				System.out.println(Math.toDegrees(angle));
+				if (dy > 0) angle = Math.PI / 2; //if cursor is below
+				else angle = -Math.PI / 2;
+			} else { 
+				if (dx < 0) { //if cursor is between anchor and middle of sleigh
+					if (dy > 0) angle = -Math.PI - Math.atan(dx / dy); //yes, I know dx / dy. That's correct
+					else angle = Math.PI + Math.atan(dx / dy);
+				} else {
+					angle = Math.atan(dy / dx);
+				}
 			}
 			
 			g.translate(rightAnchorX, anchorY);
