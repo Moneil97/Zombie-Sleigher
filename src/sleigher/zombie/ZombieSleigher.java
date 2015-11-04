@@ -159,9 +159,7 @@ public class ZombieSleigher implements Controllable {
     	treeImage = load(root + "tree1.png");
     	treeOtherImage = load(root + "tree2.png");
     	shopTitleImage = load(root + "shop_Title.png");
-    	sleighed = load(root + "sleighed.png");
-    	
-    	//santa = new Santa(100, 100);
+    	sleighed = load(root + "sleighed.png"); //TODO make background transparent
     	
     	instantiateButtons();
     	
@@ -218,7 +216,7 @@ public class ZombieSleigher implements Controllable {
     		
     		for (int i = 0; i < zombies.size(); i++) {
     			Zombie z = zombies.get(i);
-    			//TODO some zombies get bouncy on the left side
+    			
     			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
     			
     			if (!z.dead && santa.bounds.intersects(z.bounds)) {
@@ -250,7 +248,6 @@ public class ZombieSleigher implements Controllable {
     				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
     		if (gameOver) {
-    			//TODO display gameOver image "you've been sleighed"
     			gamestate = Gamestate.GAMEOVER;
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
@@ -332,10 +329,10 @@ public class ZombieSleigher implements Controllable {
     public void renderGameover(Graphics2D g, float delta) {
     	renderGame(g, delta);
     	
-    	g.drawImage(sleighed, 200, 60, 100*4, 60*4, null);
-
 		g.setColor(new Color(0, 0, 0, 120));
 		g.fillRect(0, 0, 800, 600);
+    	
+    	g.drawImage(sleighed, 200, 60, 100*4, 60*4, null);
 		
 		menuButton.render(g);
     }
