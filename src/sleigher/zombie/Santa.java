@@ -41,8 +41,10 @@ public class Santa{
 		
 		health = 100;
 		
-		width = (int)(18*2.5);//50;
-		height = (int)(83*2.5);//160;
+//		width = (int)(18*2.5);//50;
+//		height = (int)(83*2.5);//160;
+		width = 50;
+		height = 140;
 
 		bounds = new Rectangle((int) x, (int) y, width, height);
 	}
