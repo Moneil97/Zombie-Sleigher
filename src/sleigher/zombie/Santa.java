@@ -75,14 +75,15 @@ public class Santa{
 		//the higher those two magic numbers, the slower. the second one should be 1/4 of the first b/c there are 4 frames
 		g.drawImage(images[(ticks % (8)) / 2], drawx, drawy, width, height, null);
 		
-		double rightAnchorX = drawx + width;
-		double leftAnchorX = drawx;
-		double anchorY = drawy;
+		double rightAnchorX = drawx + width - width * 0.3;
+		double leftAnchorX = drawx + width * 0.3;
+		double anchorY = drawy + height * 0.39 + 1;
+		
+		double angle;
+		double dy = anchorY - my;
 		
 		if (mx > drawx + width / 2) {
 			//right shoulder
-			double angle;
-			double dy = anchorY - my;
 			double dx = mx - rightAnchorX;
 			
 			if (dx == 0) { //avoid divide by zero error
@@ -99,13 +100,11 @@ public class Santa{
 			
 			g.translate(rightAnchorX, anchorY);
 			g.rotate(angle);
-			g.drawImage(rightArmImage, -1, -1, 20, 7, null);
+			g.drawImage(rightArmImage, -2, -2, 20, 7, null);
 			g.rotate(-angle);
 			g.translate(-rightAnchorX, -anchorY);
 		} else {
 			//left shoulder
-			double angle;
-			double dy = anchorY - my;
 			double dx = mx - leftAnchorX;
 			
 			if (dx == 0) { //avoid divide by zero error
@@ -122,7 +121,7 @@ public class Santa{
 			
 			g.translate(leftAnchorX, anchorY);
 			g.rotate(angle);
-			g.drawImage(leftArmImage, -1, -1, 20, 7, null);
+			g.drawImage(leftArmImage, -3, -3, 20, 7, null);
 			g.rotate(-angle);
 			g.translate(-leftAnchorX, -anchorY);
 		}
