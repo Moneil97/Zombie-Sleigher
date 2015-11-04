@@ -39,15 +39,15 @@ public class Santa{
 		vx = 5;
 		vy = 6;
 		
-		bounds = new Rectangle((int) x, (int) y, width, height);
-		
 		health = 100;
 		
 		width = (int)(18*2.5);//50;
 		height = (int)(83*2.5);//160;
+
+		bounds = new Rectangle((int) x, (int) y, width, height);
 	}
 	
-	float corner = 0.70710678118654752440084436210485f;//45 * Math.cos(45);
+	float corner = 0.70710678118654752440084436210485f;//45 * cos(45);
 	
 	public void update() {
 		
@@ -77,22 +77,21 @@ public class Santa{
 		double leftAnchorX = drawx;
 		double anchorY = drawy;
 		
-		//TODO rotate towards cursor
 		if (mx > drawx + width / 2) {
 			//right shoulder
 			double angle;
-			double dy = my - anchorY;
+			double dy = anchorY - my;
 			double dx = mx - rightAnchorX;
 			
-			if (dx == 0) {
-				if (dy > 0) angle = Math.PI / 2; //if cursor is below
-				else angle = -Math.PI / 2;
+			if (dx == 0) { //avoid divide by zero error
+				if (dy < 0) angle = PI / 2; //if cursor is below
+				else angle = -PI / 2;
 			} else { 
 				if (dx < 0) { //if cursor is between anchor and middle of sleigh
-					if (dy > 0) angle = -Math.PI - Math.atan(dx / dy); //yes, I know dx / dy. That's correct
-					else angle = Math.PI + Math.atan(dx / dy);
+					if (dy < 0) angle = PI / 2 + atan(dx / dy); //yes, I know dx / dy. That's correct
+					else angle = -PI / 2 + atan(dx / dy);
 				} else {
-					angle = Math.atan(dy / dx);
+					angle = -atan(dy / dx);
 				}
 			}
 			
@@ -103,7 +102,27 @@ public class Santa{
 			g.translate(-rightAnchorX, -anchorY);
 		} else {
 			//left shoulder
-//			g.drawImage(armImage, leftShoulderX, shoulderY, 30, 10, null);
+			double angle;
+			double dy = anchorY - my;
+			double dx = mx - leftAnchorX;
+			
+			if (dx == 0) { //avoid divide by zero error
+				if (dy < 0) angle = PI / 2; //if cursor is below
+				else angle = -PI / 2;
+			} else { 
+				if (dx < 0) { //if cursor is between anchor and middle of sleigh
+					if (dy < 0) angle = PI / 2 + atan(dx / dy); //yes, I know dx / dy. That's correct
+					else angle = -PI / 2 + atan(dx / dy);
+				} else {
+					angle = -atan(dy / dx);
+				}
+			}
+			
+			g.translate(leftAnchorX, anchorY);
+			g.rotate(angle);
+			g.drawImage(leftArmImage, -1, -1, 20, 7, null);
+			g.rotate(-angle);
+			g.translate(-leftAnchorX, -anchorY);
 		}
 	}
 
