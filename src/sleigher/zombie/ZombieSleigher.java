@@ -69,6 +69,7 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage treeImage;
     static BufferedImage treeOtherImage;
     static BufferedImage shopTitleImage;
+    static BufferedImage sleighed;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -158,6 +159,7 @@ public class ZombieSleigher implements Controllable {
     	treeImage = load(root + "tree1.png");
     	treeOtherImage = load(root + "tree2.png");
     	shopTitleImage = load(root + "shop_Title.png");
+    	sleighed = load(root + "sleighed.png");
     	
     	//santa = new Santa(100, 100);
     	
@@ -323,8 +325,12 @@ public class ZombieSleigher implements Controllable {
 		g.drawString("PAUSED", 300 - 2, 280);
     }
     
+    
+    
     public void renderGameover(Graphics2D g, float delta) {
     	renderGame(g, delta);
+    	
+    	g.drawImage(sleighed, 200, 60, 100*4, 60*4, null);
 
 		g.setColor(new Color(0, 0, 0, 120));
 		g.fillRect(0, 0, 800, 600);
@@ -626,7 +632,7 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	menuButton = new BoxButton("MENU", 300, 300, 200, 40) {
+    	menuButton = new BoxButton("MENU", 300, 350, 200, 40) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
