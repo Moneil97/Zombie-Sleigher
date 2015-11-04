@@ -65,6 +65,7 @@ public class Santa{
 		if (down) 
 			y += left ^ right ? vy * corner : vy;
 			
+		//TODO change bounds to be a polygon more fitting of the shape
 		bounds = new Rectangle((int) x, (int) y, width, height);
 	}
 	

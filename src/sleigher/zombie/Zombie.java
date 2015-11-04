@@ -46,23 +46,17 @@ public class Zombie {
 		this.hillSpeed = hillSpeed;
 		y -= hillSpeed;
 		
+		float anchorx = x + width / 2;
+		float anchory = y + height / 2;
+		
 		if (!dead) {
-			if (y > santay && y + height < santay + santaheight) {
-				ys = hillSpeed;
-			} else if (y < santay) {
-				ys = hillSpeed + 2;
-			} else {
-				ys = hillSpeed - 2;
-			}
+			if (anchory > santay + santaheight) ys = hillSpeed - 2;
+			else if (anchory < santay) ys = hillSpeed + 2;
+			else ys = hillSpeed;
 			
-			int gap = 30;
-			if (x + width > santax - gap && x < santax + santawidth + gap) {
-				xs = 0;
-			} else if (x + width < santax - gap) {
-				xs = 2;
-			} else {
-				xs = -2;
-			}
+			if (anchorx > santax + santawidth) xs = -2;
+			else if (anchorx < santax) xs = 2;
+			else xs = 0;
 			
 			x += xs;
 			y += ys;

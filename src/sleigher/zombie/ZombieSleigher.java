@@ -185,6 +185,7 @@ public class ZombieSleigher implements Controllable {
      * TODO (feature creep)
      * powerups
      * alternate tree images
+     * zombies catch on fire when hit by engine flame
      */
         
     public void update() {
