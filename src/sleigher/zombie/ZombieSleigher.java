@@ -74,7 +74,8 @@ public class ZombieSleigher implements Controllable {
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
     private BoxButton quitButton;
-    private BoxButton menuButton;
+    private BoxButton gameoverButton;
+    private BoxButton instructionsButton;
     
     private Santa santa;
     
@@ -159,7 +160,7 @@ public class ZombieSleigher implements Controllable {
     	treeImage = load(root + "tree1.png");
     	treeOtherImage = load(root + "tree2.png");
     	shopTitleImage = load(root + "shop_Title.png");
-    	sleighed = load(root + "sleighed.png"); //TODO make background transparent
+    	sleighed = load(root + "sleighed.png");
     	
     	instantiateButtons();
     	
@@ -176,11 +177,17 @@ public class ZombieSleigher implements Controllable {
      * shop
      * instruction screen
      * make images transparent
-     * fix trees
+     */
+    
+    /** TODO bug fixes
+     * make sleighed.png transparent
+     * trees jumping up as a result a hillspeed increments
+     * distance stops counting when traveling at diagonal
      */
     
     /**
      * TODO (feature creep)
+     * dashed line follows best distance
      * powerups
      * alternate tree images
      * zombies catch on fire when hit by engine flame
@@ -247,9 +254,10 @@ public class ZombieSleigher implements Controllable {
     		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
     				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
+			bestDistance = bestDistance > distance ? bestDistance : distance;
+    		
     		if (gameOver) {
     			gamestate = Gamestate.GAMEOVER;
-    			bestDistance = bestDistance > distance ? bestDistance : distance;
     		}
     	} else if (gamestate == Gamestate.PAUSE) {
     		santa.lastx = santa.x;
@@ -280,6 +288,12 @@ public class ZombieSleigher implements Controllable {
     	g.setFont(new Font("helvetica", Font.PLAIN, 20));
     	g.setColor(Color.red);
     	g.drawString("HEALTH ", 400 - (g.getFontMetrics().stringWidth("HEALTH ") + 100) / 2, 20);
+    	
+    	g.setFont(new Font("helvetica", Font.PLAIN, 18));
+    	g.drawString("DISTANCE: " + distance, 
+    			200 - (g.getFontMetrics().stringWidth("DISTANCE: " + distance)) / 2, 20);
+    	g.drawString("RECORD: " + bestDistance, 
+    			600 - (g.getFontMetrics().stringWidth("RECORD: " + bestDistance)) / 2, 20);
     
     	g.setColor(new Color(0, 255, 0, 125));
     	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, (int) santa.health, 17);
@@ -324,8 +338,6 @@ public class ZombieSleigher implements Controllable {
 		g.drawString("PAUSED", 300 - 2, 280);
     }
     
-    
-    
     public void renderGameover(Graphics2D g, float delta) {
     	renderGame(g, delta);
     	
@@ -334,11 +346,20 @@ public class ZombieSleigher implements Controllable {
     	
     	g.drawImage(sleighed, 200, 60, 100*4, 60*4, null);
 		
-		menuButton.render(g);
+		gameoverButton.render(g);
+    }
+    
+    public void renderInstructions(Graphics2D g, float delta) {
+
+    	g.drawImage(gameBackground, 0, 0, null);
+    	
+    	g.setColor(Color.red);
+    	g.setFont(new Font("helvetica", Font.BOLD, 20));
+    	g.drawString("INSTRUCTIONS", 400 - g.getFontMetrics().stringWidth("INSTRUCTIONS") / 2, 30);
     }
     
     private void gameReset(){
-    	santa = new Santa(100,100);
+    	santa = new Santa(375,150);
 		gameOver = false;
 		trees.clear();
 		zombies.clear();
@@ -365,7 +386,7 @@ public class ZombieSleigher implements Controllable {
     			resumeButton.mouseMoved(e.getX(), e.getY());
     			quitButton.mouseMoved(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.GAMEOVER) {
-    			menuButton.mouseMoved(e.getX(), e.getY());
+    			gameoverButton.mouseMoved(e.getX(), e.getY());
     		}
     	}
     	
@@ -380,7 +401,9 @@ public class ZombieSleigher implements Controllable {
     			resumeButton.mouseMoved(e.getX(), e.getY());
     			quitButton.mouseMoved(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.GAMEOVER) {
-    			menuButton.mouseMoved(e.getX(), e.getY());
+    			gameoverButton.mouseMoved(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.INSTRUCTIONS) {
+    			instructionsButton.mouseMoved(e.getX(), e.getY());
     		}
     	}
     }
@@ -394,7 +417,9 @@ public class ZombieSleigher implements Controllable {
     			resumeButton.mousePressed(e.getX(), e.getY());
     			quitButton.mousePressed(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.GAMEOVER) {
-    			menuButton.mousePressed(e.getX(), e.getY());
+    			gameoverButton.mousePressed(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.INSTRUCTIONS) {
+    			instructionsButton.mousePressed(e.getX(), e.getY());
     		}
     	} 
     	
@@ -406,8 +431,11 @@ public class ZombieSleigher implements Controllable {
     			resumeButton.mouseReleased(e.getX(), e.getY());
     			quitButton.mouseReleased(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.GAMEOVER) {
-    			menuButton.mouseReleased(e.getX(), e.getY());
+    			gameoverButton.mouseReleased(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.INSTRUCTIONS) {
+    			instructionsButton.mouseReleased(e.getX(), e.getY());
     		}
+    			
     	}
     }
     
@@ -528,7 +556,7 @@ public class ZombieSleigher implements Controllable {
 			} else if (gamestate == Gamestate.SHOP) {
 				
 			} else if (gamestate == Gamestate.INSTRUCTIONS) {
-				
+				renderInstructions(backgroundGraphics, delta);
 			}
 			
 			bg.drawImage(background, 0, 0, 800, 600, null);
@@ -631,7 +659,13 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	menuButton = new BoxButton("MENU", 300, 350, 200, 40) {
+    	gameoverButton = new BoxButton("MENU", 300, 350, 200, 40) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.TITLE;
+    		}
+    	};
+    	instructionsButton = new BoxButton("MENU", 300, 350, 200, 40) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;

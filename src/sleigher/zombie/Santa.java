@@ -1,6 +1,7 @@
 package sleigher.zombie;
 
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -126,6 +127,10 @@ public class Santa{
 			g.rotate(-angle);
 			g.translate(-leftAnchorX, -anchorY);
 		}
+	}
+	
+	public Polygon getBounds() {
+		return null;
 	}
 
 }
