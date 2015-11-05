@@ -192,11 +192,12 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * sound
      * make sleigh stay on screen
      * add instructions
      * speed increases damage done by zombies
      * weapons
-     * add more and polish end-of-run stats
+     * add more stats
      * shop
      * instruction screen
      * make images transparent
@@ -281,8 +282,10 @@ public class ZombieSleigher implements Controllable {
 //    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
 //    				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
+    		//put this here, not in the gameover gamestate because it only needs to happen once
     		if (gameOver) {
     			gamestate = Gamestate.GAMEOVER;
+    			
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     			
     			//TODO add units to stats, like seconds and meters
@@ -401,6 +404,10 @@ public class ZombieSleigher implements Controllable {
 		g.drawString("PAUSED", 300 - 2, 280);
     }
     
+    public void renderShop(Graphics2D g, float delta) {
+    	
+    }
+    
     public void renderGameover(Graphics2D g, float delta) {
     	renderGame(g, delta);
     	
@@ -425,6 +432,7 @@ public class ZombieSleigher implements Controllable {
     }
     
     private void gameReset(){
+    	//TODO make sure to reset all stat variables, not just the stats themselves
     	santa = new Santa(375,150);
 		gameOver = false;
 		trees.clear();
@@ -551,10 +559,7 @@ public class ZombieSleigher implements Controllable {
     				gamestate = Gamestate.GAME;
     				break;
     			}
-    		} else if (gamestate == Gamestate.GAMEOVER) {
-    			//if any key is pressed
-    			gamestate = Gamestate.TITLE;
-    		}
+    		} 
     	}
     	
     	
@@ -627,7 +632,7 @@ public class ZombieSleigher implements Controllable {
     		} else if (gamestate == Gamestate.TITLE) {
 				renderTitle(backgroundGraphics, delta);
 			} else if (gamestate == Gamestate.SHOP) {
-				
+				renderShop(backgroundGraphics, delta);
 			} else if (gamestate == Gamestate.INSTRUCTIONS) {
 				renderInstructions(backgroundGraphics, delta);
 			}
@@ -732,7 +737,7 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	gameoverButton = new BoxButton("MENU", 300, 350, 200, 40) {
+    	gameoverButton = new BoxButton("BACK TO MENU", 300, 350, 200, 40) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
