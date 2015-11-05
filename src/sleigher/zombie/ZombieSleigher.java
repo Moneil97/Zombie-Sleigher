@@ -311,19 +311,22 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(Color.white);
     	g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		g.drawImage(titleImage, 50, 30, 400, 200, null);
-		g.drawImage(santaTitleImage, 520, 30, 200, 50, null);
+		g.drawImage(titleImage, 50, 30, 420, 200, null);
+		g.drawImage(santaTitleImage, 520, 30, 230, 50, null);
 		
 		for (BoxButton b : menuButtons)
 			b.render(g);
 		
 		g.setColor(Color.red);
 		g.setFont(new Font("helvetica", Font.PLAIN, 16));
+		g.drawString("Previous Run Stats", 90, 280);
 		
 		//TODO realign box with buttons
-		g.drawLine(50, 275, 50, 525); //left
-		g.drawLine(50, 525, 750, 525); //bottom
-		g.drawLine(750, 275, 750, 525);
+		g.drawLine(50, 275, 80, 275); //top, left half
+		g.drawLine(248, 275, 750, 275); //top, right half
+		g.drawLine(50, 275, 50, 530); //left
+		g.drawLine(50, 530, 750, 530); //bottom
+		g.drawLine(750, 275, 750, 530); //right
     }
     
     public void renderPause(Graphics2D g, float delta) {
@@ -363,8 +366,6 @@ public class ZombieSleigher implements Controllable {
     }
     
     public void renderInstructions(Graphics2D g, float delta) {
-
-    	g.drawImage(gameBackground, 0, 0, null);
     	
     	g.setColor(Color.red);
     	g.setFont(new Font("helvetica", Font.BOLD, 20));
@@ -646,20 +647,20 @@ public class ZombieSleigher implements Controllable {
     
 
     private void instantiateButtons() {
-    	menuButtons[0] = new BoxButton("PLAY", 520, 80, 200, 40){
+    	menuButtons[0] = new BoxButton("PLAY", 520, 80, 230, 40){
     		@Override
     		void onPress() {
     			gameReset();
     			gamestate = Gamestate.GAME;
     		}
     	};
-    	menuButtons[1] = new BoxButton("SHOP", 520, 135, 200, 40){
+    	menuButtons[1] = new BoxButton("SHOP", 520, 135, 230, 40){
     		@Override
     		void onPress() {
     			gamestate = Gamestate.SHOP;
     		}
     	};
-    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 520, 190, 200, 40){
+    	menuButtons[2] = new BoxButton("INSTRUCTIONS", 520, 190, 230, 40){
     		@Override
     		void onPress() {
     			gamestate = Gamestate.INSTRUCTIONS;
