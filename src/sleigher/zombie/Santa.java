@@ -29,6 +29,8 @@ public class Santa{
 	
 	Polygon bounds;
 	
+	Rectangle rightBound, topBound, leftBound, bottomBound;
+	
 	BufferedImage leftArmImage = ZombieSleigher.santaLeftArmImage;
 	BufferedImage rightArmImage = ZombieSleigher.santaRightArmImage;
 	BufferedImage images[] = ZombieSleigher.santaImages;
@@ -47,6 +49,11 @@ public class Santa{
 		width = (int) (18 * scalex);
 		height = (int) (83 * scaley);
 		
+		rightBound = new Rectangle(0, 0, 0, 600);
+		topBound = new Rectangle(0, 0, 800, 0);
+		leftBound = new Rectangle(800, 0, 800, 600);
+		bottomBound = new Rectangle(0, 600, 800, 600);
+		
 		bounds = getBounds();
 	}
 	
@@ -57,13 +64,13 @@ public class Santa{
 		lastx = x;
 		lasty = y;
 		
-		if (right)
+		if (right && x + width < 800)
 			x += up ^ down ? vx * corner : vx;
-		if (left)
+		if (left && x > 0)
 			x -= up ^ down ? vx * corner : vx;
-		if (up) 
+		if (up && y > 0) 
 			y -= left ^ right ? vy * corner : vy;
-		if (down) 
+		if (down && y + height < 600) 
 			y += left ^ right ? vy * corner : vy;
 			
 		//TODO change bounds to be a polygon more fitting of the shape

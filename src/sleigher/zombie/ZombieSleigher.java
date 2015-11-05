@@ -104,18 +104,20 @@ public class ZombieSleigher implements Controllable {
     
     private boolean gameOver;
     
-    int statSize = 9;
+    int statSize = 11;
     private int[] statValues = new int[statSize];
     
-    private String[] statNames = {"Distance traveled: ",
-    		"Furthest distance traveled: ",
-    		"Total distance traveled: ",
-    		"Kamizombies killed: ",
-    		"Total kamizombies killed: ",
-    		"Bullets fired: ",
-    		"Accuracy: ",
-    		"Trees dodged: ",
-    		"Time of run: "
+    private String[] statNames = {"Distance traveled: ",	//1
+    		"Furthest distance traveled: ",	//2
+    		"Total distance traveled: ",	//3
+    		"Kamizombies killed: ",			//4
+    		"Total kamizombies killed: ",	//5
+    		"Bullets fired: ",				//6
+    		"Trees dodged: ",				//7
+    		"Accuracy: ",					//8
+    		"Overall Accuracy: ",			//9
+    		"Time of run: ",				//10
+    		"Total sesstion time: "			//11
     };
     
     public ZombieSleigher() {
@@ -200,7 +202,8 @@ public class ZombieSleigher implements Controllable {
      * make images transparent
      */
     
-    /** TODO bug fixes
+    /** TODO known bugs
+     * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * trees + zombies jumping up as a result a hillspeed increments
      */
     
@@ -274,7 +277,7 @@ public class ZombieSleigher implements Controllable {
     		}
     		
     		//track best distance this run
-    		distance = hillDistance;
+    		distance = hillDistance / 10;
 //    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
 //    				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
@@ -293,10 +296,11 @@ public class ZombieSleigher implements Controllable {
     			statValues[4] += zombiesKilled;	//total kamizombies killed
     			
     			statValues[5] = 0;				//bullets fired
-    			statValues[6] = 0;				//accuracy
+    			statValues[6] = treesDodged;	//trees dodged
     			
-    			statValues[7] = treesDodged;	//number of trees dodged
-    			statValues[8] = seconds;		//time of run
+    			statValues[7] = 0;				//number of trees dodged
+    			statValues[8] = 0;				//lifetime accuracy
+    			statValues[9] = seconds;		//time of run
     		}
     	} else if (gamestate == Gamestate.PAUSE) {
     		santa.lastx = santa.x;
@@ -329,8 +333,7 @@ public class ZombieSleigher implements Controllable {
     	g.drawString("HEALTH ", 400 - (g.getFontMetrics().stringWidth("HEALTH ") + 100) / 2, 20);
     	
     	g.setFont(new Font("helvetica", Font.PLAIN, 18));
-    	g.drawString("DISTANCE: " + distance, 
-    			600 - (g.getFontMetrics().stringWidth("DISTANCE: " + distance)) / 2, 20);
+    	g.drawString("" + distance, 790 - (g.getFontMetrics().stringWidth("" + distance)), santa.y + santa.height / 2);
     
     	g.setColor(new Color(0, 255, 0, 125));
     	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, (int) santa.health, 17);
@@ -431,6 +434,9 @@ public class ZombieSleigher implements Controllable {
 		hillSpeed = 1;
 		hillDistance = 0;
 		distance = 0;
+		
+		zombiesKilled = 0;
+		treesDodged = 0;
     }
     
     /**
