@@ -308,13 +308,22 @@ public class ZombieSleigher implements Controllable {
     
     public void renderTitle(Graphics2D g, float delta) {
     	
-    	g.drawImage(gameBackground, 0, 0, null);
+    	g.setColor(Color.white);
+    	g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		g.drawImage(titleImage, 50, 30, 400, 200, null);
 		g.drawImage(santaTitleImage, 520, 30, 200, 50, null);
 		
 		for (BoxButton b : menuButtons)
 			b.render(g);
+		
+		g.setColor(Color.red);
+		g.setFont(new Font("helvetica", Font.PLAIN, 16));
+		
+		//TODO realign box with buttons
+		g.drawLine(50, 275, 50, 525); //left
+		g.drawLine(50, 525, 750, 525); //bottom
+		g.drawLine(750, 275, 750, 525);
     }
     
     public void renderPause(Graphics2D g, float delta) {
