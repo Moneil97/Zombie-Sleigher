@@ -278,10 +278,10 @@ public class ZombieSleigher implements Controllable {
 //    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
 //    				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
-			bestDistance = bestDistance > distance ? bestDistance : distance;
-    		
     		if (gameOver) {
     			gamestate = Gamestate.GAMEOVER;
+    			bestDistance = bestDistance > distance ? bestDistance : distance;
+    			
     			//TODO add units to stats, like seconds and meters
     			//TODO when distance is big, change to km
     			//make sure this is in order that matches with statNames
@@ -330,9 +330,7 @@ public class ZombieSleigher implements Controllable {
     	
     	g.setFont(new Font("helvetica", Font.PLAIN, 18));
     	g.drawString("DISTANCE: " + distance, 
-    			200 - (g.getFontMetrics().stringWidth("DISTANCE: " + distance)) / 2, 20);
-    	g.drawString("RECORD: " + bestDistance, 
-    			600 - (g.getFontMetrics().stringWidth("RECORD: " + bestDistance)) / 2, 20);
+    			600 - (g.getFontMetrics().stringWidth("DISTANCE: " + distance)) / 2, 20);
     
     	g.setColor(new Color(0, 255, 0, 125));
     	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, (int) santa.health, 17);
