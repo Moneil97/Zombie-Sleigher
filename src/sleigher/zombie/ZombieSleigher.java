@@ -172,6 +172,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (not feature creep, actual things we have to add)
+     * speed increases damage done by zombies
      * weapons
      * end-of-run stats
      * shop
@@ -187,6 +188,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * more zombie species
      * dashed line follows best distance
      * powerups
      * alternate tree images
