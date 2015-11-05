@@ -104,6 +104,20 @@ public class ZombieSleigher implements Controllable {
     
     private boolean gameOver;
     
+    int statSize = 9;
+    private int[] statValues = new int[statSize];
+    
+    private String[] statNames = {"Distance traveled: ",
+    		"Furthest distance traveled: ",
+    		"Total distance traveled: ",
+    		"Kamizombies killed: ",
+    		"Total kamizombies killed: ",
+    		"Bullets fired: ",
+    		"Accuracy: ",
+    		"Trees dodged: ",
+    		"Time of run: "
+    };
+    
     public ZombieSleigher() {
     	
     	//create JFrame
@@ -143,6 +157,10 @@ public class ZombieSleigher implements Controllable {
     
     public void init() {
     	backgroundGraphics = (Graphics2D) background.getGraphics();
+    	
+    	for (int i = 0; i < statSize; i++) {
+    		statValues[i] = 0;
+    	}
 
     	gamestate = Gamestate.TITLE;
     	
@@ -171,7 +189,8 @@ public class ZombieSleigher implements Controllable {
     }
     
     /**
-     * TODO (not feature creep, actual things we have to add)
+     * TODO (actual things we have to add)
+     * make sleigh stay on screen
      * add instructions
      * speed increases damage done by zombies
      * weapons
@@ -183,12 +202,13 @@ public class ZombieSleigher implements Controllable {
     
     /** TODO bug fixes
      * make sleighed.png transparent
-     * trees jumping up as a result a hillspeed increments
-     * distance stops counting when traveling at diagonal
+     * trees + zombies jumping up as a result a hillspeed increments
+     * distance stops counting when traveling in the beginning
      */
     
     /**
      * TODO (feature creep)
+     * grenades
      * more zombie species
      * dashed line follows best distance
      * powerups
@@ -205,7 +225,7 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % UPS == 0) {
         		seconds++;
-        		//TODO why is the speed increment fucking up the trees
+        		//TODO why is the speed increment fucking up the trees and the zombies
         		hillSpeed += 0.5;
         		zombieSpawnChance += zombieSpawnChanceIncrement;
         		treeSpawnChance += treeSpawnChanceIncrement;
@@ -262,6 +282,21 @@ public class ZombieSleigher implements Controllable {
     		
     		if (gameOver) {
     			gamestate = Gamestate.GAMEOVER;
+    			//TODO add units to stats, like seconds and meters
+    			//TODO when distance is big, change to km
+    			//make sure this is in order that matches with statNames
+    			statValues[0] = distance;		//previous distance
+    			statValues[1] = bestDistance;	//record distance
+    			statValues[2] += distance;		//furthest distance traveled
+    			
+    			statValues[3] = zombiesKilled;	//kamizombies killed
+    			statValues[4] += zombiesKilled;	//total kamizombies killed
+    			
+    			statValues[5] = 0;				//bullets fired
+    			statValues[6] = 0;				//accuracy
+    			
+    			statValues[7] = treesDodged;	//number of trees dodged
+    			statValues[8] = seconds;		//time of run
     		}
     	} else if (gamestate == Gamestate.PAUSE) {
     		santa.lastx = santa.x;
@@ -318,14 +353,26 @@ public class ZombieSleigher implements Controllable {
 			b.render(g);
 		
 		g.setColor(Color.red);
-		g.setFont(new Font("helvetica", Font.PLAIN, 16));
+		g.setFont(new Font("helvetica", Font.BOLD, 16));
 		g.drawString("Previous Run Stats", 90, 280);
 		
 		g.drawLine(50, 275, 80, 275); //top, left half
-		g.drawLine(248, 275, 750, 275); //top, right half
+		g.drawLine(265, 275, 750, 275); //top, right half
 		g.drawLine(50, 275, 50, 530); //left
 		g.drawLine(50, 530, 750, 530); //bottom
 		g.drawLine(750, 275, 750, 530); //right
+		
+		int firstColumnSize = 7; //number of statistics that appear in the first column
+		//TODO adjust the x values of the 4 columns
+		g.setFont(new Font("helvetica", Font.PLAIN, 16));
+		for (int i = 0; i < firstColumnSize; i++) {
+			g.drawString(statNames[i], 80, 310 + i * 32);
+			g.drawString("" + statValues[i], 350, 310 + i * 32);
+		}
+		for (int i = firstColumnSize; i < statSize; i++) {
+			g.drawString(statNames[i], 500, 310 + (i - firstColumnSize) * 32);
+			g.drawString("" + statValues[i], 650, 310 + (i - firstColumnSize) * 32);
+		}
     }
     
     public void renderPause(Graphics2D g, float delta) {
