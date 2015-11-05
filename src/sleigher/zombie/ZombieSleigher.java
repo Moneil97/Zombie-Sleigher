@@ -191,6 +191,7 @@ public class ZombieSleigher implements Controllable {
      * powerups
      * alternate tree images
      * zombies catch on fire when hit by engine flame
+     * key bindings not key listener
      */
         
     public void update() {
@@ -356,6 +357,8 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(Color.red);
     	g.setFont(new Font("helvetica", Font.BOLD, 20));
     	g.drawString("INSTRUCTIONS", 400 - g.getFontMetrics().stringWidth("INSTRUCTIONS") / 2, 30);
+    	
+    	instructionsButton.render(g);
     }
     
     private void gameReset(){
@@ -387,6 +390,8 @@ public class ZombieSleigher implements Controllable {
     			quitButton.mouseMoved(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.GAMEOVER) {
     			gameoverButton.mouseMoved(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.INSTRUCTIONS) {
+    			instructionsButton.mouseMoved(e.getX(), e.getY());
     		}
     	}
     	
@@ -445,6 +450,7 @@ public class ZombieSleigher implements Controllable {
     		if (gamestate == Gamestate.GAME) {
 	    		switch(key) {
 	    		case KeyEvent.VK_P:
+	    		case KeyEvent.VK_ESCAPE:
 	    			gamestate = Gamestate.PAUSE;
 	    			break;
 	    		case KeyEvent.VK_LEFT:
@@ -473,6 +479,7 @@ public class ZombieSleigher implements Controllable {
     		} else if (gamestate == Gamestate.PAUSE) {
     			switch (key) {
     			case KeyEvent.VK_P:
+    			case KeyEvent.VK_ESCAPE:
     				resumeButton.hovering = false;
     				quitButton.hovering = false;
     				gamestate = Gamestate.GAME;
