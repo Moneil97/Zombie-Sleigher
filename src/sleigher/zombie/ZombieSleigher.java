@@ -321,7 +321,6 @@ public class ZombieSleigher implements Controllable {
 		g.setFont(new Font("helvetica", Font.PLAIN, 16));
 		g.drawString("Previous Run Stats", 90, 280);
 		
-		//TODO realign box with buttons
 		g.drawLine(50, 275, 80, 275); //top, left half
 		g.drawLine(248, 275, 750, 275); //top, right half
 		g.drawLine(50, 275, 50, 530); //left
@@ -366,6 +365,9 @@ public class ZombieSleigher implements Controllable {
     }
     
     public void renderInstructions(Graphics2D g, float delta) {
+    	
+    	g.setColor(Color.WHITE);
+    	g.fillRect(0, 0, WIDTH, HEIGHT);
     	
     	g.setColor(Color.red);
     	g.setFont(new Font("helvetica", Font.BOLD, 20));

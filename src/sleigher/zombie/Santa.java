@@ -20,12 +20,14 @@ public class Santa{
 	float maxVx = 6, maxVy = 4;
 	
 	float health;
+	float scalex = 2.5f;
+	float scaley = 1.6f;
 	
 	int width, height;
 	
 	boolean up, down, left, right;
 	
-	Rectangle bounds;
+	Polygon bounds;
 	
 	BufferedImage leftArmImage = ZombieSleigher.santaLeftArmImage;
 	BufferedImage rightArmImage = ZombieSleigher.santaRightArmImage;
@@ -42,12 +44,10 @@ public class Santa{
 		
 		health = 100;
 		
-//		width = (int)(18*2.5);//50;
-//		height = (int)(83*2.5);//160;
-		width = 50;
-		height = 140;
-
-		bounds = new Rectangle((int) x, (int) y, width, height);
+		width = (int) (18 * scalex);
+		height = (int) (83 * scaley);
+		
+		bounds = getBounds();
 	}
 	
 	float corner = 0.70710678118654752440084436210485f;//45 * cos(45);
@@ -67,7 +67,7 @@ public class Santa{
 			y += left ^ right ? vy * corner : vy;
 			
 		//TODO change bounds to be a polygon more fitting of the shape
-		bounds = new Rectangle((int) x, (int) y, width, height);
+		bounds = getBounds();
 	}
 	
 	public void render(Graphics2D g, int mx, int my, float delta, int ticks) {
@@ -130,7 +130,17 @@ public class Santa{
 	}
 	
 	public Polygon getBounds() {
-		return null;
+		int[] x = {0,  17, 17, 9,  8,  0};
+		int[] y = {17, 17, 48, 82, 82, 48};
+		for (int i = 0; i < x.length; i++) {
+			x[i] *= scalex;
+			x[i] += this.x;
+			
+			y[i] *= scaley;
+			y[i] += this.y;
+		}
+		
+		return new Polygon(x, y, x.length);
 	}
 
 }
