@@ -672,7 +672,7 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	instructionsButton = new BoxButton("MENU", 300, 350, 200, 40) {
+    	instructionsButton = new BoxButton("BACK TO MENU", 300, 40, 200, 30) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
