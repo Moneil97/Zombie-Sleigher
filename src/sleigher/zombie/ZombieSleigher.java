@@ -363,15 +363,15 @@ public class ZombieSleigher implements Controllable {
 		g.drawLine(750, 275, 750, 530); //right
 		
 		int firstColumnSize = 7; //number of statistics that appear in the first column
-		//TODO adjust the x values of the 4 columns
+		
 		g.setFont(new Font("helvetica", Font.PLAIN, 16));
 		for (int i = 0; i < firstColumnSize; i++) {
 			g.drawString(statNames[i], 80, 310 + i * 32);
-			g.drawString("" + statValues[i], 350, 310 + i * 32);
+			g.drawString("" + statValues[i], 320, 310 + i * 32);
 		}
 		for (int i = firstColumnSize; i < statSize; i++) {
-			g.drawString(statNames[i], 500, 310 + (i - firstColumnSize) * 32);
-			g.drawString("" + statValues[i], 650, 310 + (i - firstColumnSize) * 32);
+			g.drawString(statNames[i], 430, 310 + (i - firstColumnSize) * 32);
+			g.drawString("" + statValues[i], 670, 310 + (i - firstColumnSize) * 32);
 		}
     }
     
