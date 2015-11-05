@@ -9,6 +9,9 @@ public class Tree {
 	float x, y;
 	int width, height;
 	float collisionDamage;
+	
+	boolean dead;
+	
 	Rectangle bounds;
 	BufferedImage image = ZombieSleigher.treeImage;
 	
@@ -17,7 +20,7 @@ public class Tree {
 		
 		x = (float) getRandomDouble(100.0, 650.0);
 		y = 700;
-		
+				
 		bounds = new Rectangle((int) x, (int) y, width, height);
 		
 		width = 40;

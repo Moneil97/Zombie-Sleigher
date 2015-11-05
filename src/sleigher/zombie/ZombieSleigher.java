@@ -193,7 +193,6 @@ public class ZombieSleigher implements Controllable {
     /**
      * TODO (actual things we have to add)
      * sound
-     * make sleigh stay on screen
      * add instructions
      * speed increases damage done by zombies
      * weapons
@@ -269,7 +268,7 @@ public class ZombieSleigher implements Controllable {
     			
     			if (t.y + t.height < 0) {
     				trees.remove(i);
-    				treesDodged++;
+    				if (!t.dead) treesDodged++;
     			}
     		}
     		
