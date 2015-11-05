@@ -172,6 +172,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (not feature creep, actual things we have to add)
+     * add instructions
      * speed increases damage done by zombies
      * weapons
      * end-of-run stats
