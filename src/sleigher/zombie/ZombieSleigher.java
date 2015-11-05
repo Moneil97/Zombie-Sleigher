@@ -194,16 +194,14 @@ public class ZombieSleigher implements Controllable {
      * add instructions
      * speed increases damage done by zombies
      * weapons
-     * end-of-run stats
+     * add more and polish end-of-run stats
      * shop
      * instruction screen
      * make images transparent
      */
     
     /** TODO bug fixes
-     * make sleighed.png transparent
      * trees + zombies jumping up as a result a hillspeed increments
-     * distance stops counting when traveling in the beginning
      */
     
     /**
@@ -215,6 +213,7 @@ public class ZombieSleigher implements Controllable {
      * alternate tree images
      * zombies catch on fire when hit by engine flame
      * key bindings not key listener
+     * make distance based on sleigh position on hill, not just hill
      */
         
     public void update() {
@@ -275,8 +274,9 @@ public class ZombieSleigher implements Controllable {
     		}
     		
     		//track best distance this run
-    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
-    				distance : hillDistance + (int) santa.x + (int) santa.height;
+    		distance = hillDistance;
+//    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
+//    				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
 			bestDistance = bestDistance > distance ? bestDistance : distance;
     		
