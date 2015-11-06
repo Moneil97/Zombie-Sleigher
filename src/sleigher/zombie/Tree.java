@@ -21,6 +21,7 @@ public class Tree {
 		x = (float) getRandomDouble(100.0, 650.0);
 		y = 700;
 				
+		//TODO make a polygon, not a rectangle
 		bounds = new Rectangle((int) x, (int) y, width, height);
 		
 		width = 40;
