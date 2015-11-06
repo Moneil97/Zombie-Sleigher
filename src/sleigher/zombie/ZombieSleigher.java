@@ -78,6 +78,7 @@ public class ZombieSleigher implements Controllable {
     private BoxButton instructionsButton;
     
     private Santa santa;
+    private boolean godMode = false;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private int zombiesKilled = 0;
@@ -266,7 +267,7 @@ public class ZombieSleigher implements Controllable {
     			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
     			
     			if (!z.dead && santa.bounds.intersects(z.bounds)) {
-    				santa.health -= z.collisionDamage;
+    				if (!godMode) santa.health -= z.collisionDamage;
     				z.dead = true;
     				zombiesKilled++;
     			}
@@ -565,7 +566,11 @@ public class ZombieSleigher implements Controllable {
 	    		case KeyEvent.VK_PERIOD:
 	    			santa.health += 10;
 	    			break;
-	    		}
+	    		case KeyEvent.VK_G:
+	    			godMode = !godMode;
+	    			break;
+	    		}		
+	    		
     		} else if (gamestate == Gamestate.PAUSE) {
     			switch (key) {
     			case KeyEvent.VK_P:
