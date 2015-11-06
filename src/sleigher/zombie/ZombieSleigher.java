@@ -96,6 +96,7 @@ public class ZombieSleigher implements Controllable {
     private int seconds = 0; //seconds since thread started
     
     private float hillSpeed = 1;
+    private float maxHillSpeed = 30;
     private float hillSpeedIncrement = 0.0f;
     private float hillDistance = 0;
     private int distance = 0;
@@ -204,7 +205,6 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
-     * make hill speed
      * sound
      * add instructions
      * speed increases damage done by zombies
@@ -212,13 +212,11 @@ public class ZombieSleigher implements Controllable {
      * add more stats
      * shop
      * instruction screen
-     * make images transparent
      */
     
     /** TODO known bugs
-     * at the faster the speed, the further beneath santa the zombies stop
+     * trees and dead zombies jump by a few pixels intermittently
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
-     * trees + zombies jumping up as a result a hillspeed increments
      */
     
     /**
@@ -243,7 +241,7 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % UPS == 0) {
         		seconds++;
-        		hillSpeed += hillSpeedIncrement;
+        		if (hillSpeed < maxHillSpeed) hillSpeed += hillSpeedIncrement;
         		
         		zombieSpawnChance += zombieSpawnChanceIncrement;
         		treeSpawnChance += treeSpawnChanceIncrement;

@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 
 public class Tree {
 	
-	float x, y;
-	float lasty; //no lastx because no horizontal movement
+	double x, y;
+	double lasty; //no lastx because no horizontal movement
 	int width, height;
 	float collisionDamage;
 	
