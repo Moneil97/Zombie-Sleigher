@@ -44,22 +44,20 @@ public class Zombie {
 	
 	public void update(float hillSpeed, float santax, float santay, int santawidth, int santaheight) {
 		this.hillSpeed = hillSpeed;
-		y -= hillSpeed;
-		
-		float anchorx = x + width / 2;
-		float anchory = y + height / 2;
 		
 		if (!dead) {
-			if (anchory > santay + santaheight) ys = hillSpeed - 2;
-			else if (anchory < santay) ys = hillSpeed + 2;
-			else ys = hillSpeed;
+			if (y+ height > santay + santaheight) ys = -2;
+			else if (y + height / 2 < santay) ys = 2;
+			else ys = 0;
 			
-			if (anchorx > santax + santawidth) xs = -2;
-			else if (anchorx < santax) xs = 2;
+			if (x + width / 2 > santax + santawidth) xs = -2;
+			else if (x + width / 2 < santax) xs = 2;
 			else xs = 0;
 			
 			x += xs;
 			y += ys;
+		} else {
+			y -= hillSpeed;
 		}
 		
 		bounds = new Rectangle((int) x, (int) y, width, height);

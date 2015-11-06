@@ -214,7 +214,7 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
-     * at slightly high speeds, zombies coming from the bottom stop just before hitting reindeer
+     * at the faster the speed, the further beneath santa the zombies stop
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * trees + zombies jumping up as a result a hillspeed increments
      */
@@ -240,8 +240,8 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % UPS == 0) {
         		seconds++;
-        		//TODO why is the speed increment fucking up the trees and the zombies
         		hillSpeed += 0.5;
+        		System.out.println(hillSpeed);
         		zombieSpawnChance += zombieSpawnChanceIncrement;
         		treeSpawnChance += treeSpawnChanceIncrement;
         	}
@@ -259,7 +259,7 @@ public class ZombieSleigher implements Controllable {
         	}
         	
     		santa.update();
-    		
+        	
     		for (int i = 0; i < zombies.size(); i++) {
     			Zombie z = zombies.get(i);
     			
