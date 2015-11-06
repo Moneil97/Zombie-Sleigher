@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 public class Tree {
 	
 	float x, y;
+	float lasty; //no lastx because no horizontal movement
 	int width, height;
 	float collisionDamage;
 	
@@ -30,13 +31,16 @@ public class Tree {
 	
 	public void update(float hillSpeed) {
 		
+		lasty = y;
+		
 		y -= hillSpeed;
 		
 		bounds = new Rectangle((int) x, (int) y, width, height);
 	}
 	
 	public void render(Graphics2D g, float delta) {
-		g.drawImage(image, (int) x, (int) y, width, height, null);
+		int drawy = (int) ((y - lasty) * delta + lasty);
+		g.drawImage(image, (int) x, drawy, width, height, null);
 	}
 	
 	//	[lower, upper)

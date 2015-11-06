@@ -89,13 +89,13 @@ public class ZombieSleigher implements Controllable {
     private int treesDodged = 0;
     private double treeSpawnChance = 0.3;
     private double treeSpawnChanceIncrement = 0.02;
-    private int treeSpawnRate = UPS * 2;
+    private int treeSpawnRate = UPS  / 30;
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
     
     private float hillSpeed = 1;
-    private int hillDistance = 0;
+    private float hillDistance = 0;
     private int distance = 0;
     private int bestDistance = 0;
     
@@ -290,7 +290,7 @@ public class ZombieSleigher implements Controllable {
     		}
     		
     		//track best distance this run
-    		distance = hillDistance / 10;
+    		distance = (int) hillDistance / 10;
 //    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
 //    				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
@@ -334,8 +334,8 @@ public class ZombieSleigher implements Controllable {
 
 	public void renderGame(Graphics2D g, float delta) {
     	
-    	g.drawImage(gameBackground, 0, -hillDistance % gameBackground.getHeight(), null);
-    	g.drawImage(gameBackground, 0, HEIGHT - hillDistance % gameBackground.getHeight(), null);
+    	g.drawImage(gameBackground, 0, -(int)hillDistance % gameBackground.getHeight(), null);
+    	g.drawImage(gameBackground, 0, HEIGHT - (int)hillDistance % gameBackground.getHeight(), null);
     	
     	for (int i = 0; i < zombies.size(); i++)
 			zombies.get(i).render(g, delta);
