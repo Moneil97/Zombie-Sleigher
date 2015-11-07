@@ -119,8 +119,8 @@ public class ZombieSleigher implements Controllable {
     private String[] statNames = {"Distance traveled: ",	//1
     		"Furthest distance traveled: ",	//2
     		"Total distance traveled: ",	//3
-    		"Kamizombies killed: ",			//4
-    		"Total kamizombies killed: ",	//5
+    		"Zombies killed: ",			//4
+    		"Total zombies killed: ",	//5
     		"Bullets fired: ",				//6
     		"Trees dodged: ",				//7
     		"Accuracy: ",					//8
@@ -225,6 +225,7 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
+     * trees and dead zombies jitter down
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * above issue may be operating system dependent
      */
