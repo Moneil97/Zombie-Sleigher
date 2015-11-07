@@ -91,7 +91,7 @@ public class ZombieSleigher implements Controllable {
     private int treesDodged = 0;
     private double treeSpawnChance = 0.3;
     private double treeSpawnChanceIncrement = 0.02;
-    private int treeSpawnRate = UPS / 30;
+    private int treeSpawnRate = UPS * 2;
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
@@ -225,8 +225,8 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
-     * trees and dead zombies jump by a few pixels intermittently
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
+     * above issue may be operating system dependent
      */
     
     /**
@@ -255,8 +255,6 @@ public class ZombieSleigher implements Controllable {
         		hillY[k] = base + (HEIGHT * (i - bgIndex));
         	}
         	
-        	System.out.println(hillY[0] + " " + hillY[1] + " " + hillY[2]);
-        	
         	ticks++;
         	
         	if (ticks % UPS == 0) {
@@ -276,7 +274,7 @@ public class ZombieSleigher implements Controllable {
         	if (ticks % treeSpawnRate == 0) {
         		if (treeSpawnChance > getRandomDouble(0.0, 1.0)) {
         			//TODO jitter seems to go away with this if statement in place
-        			if (trees.size() < 1) trees.add(new Tree());
+        			trees.add(new Tree());
         		}
         	}
         	
@@ -484,7 +482,7 @@ public class ZombieSleigher implements Controllable {
 		zombies.clear();
 		treeSpawnChance = 0.3;
 		zombieSpawnChance = 0.0;
-		hillSpeed = 10;
+		hillSpeed = 5;
 		hillDistance = 0;
 		distance = 0;
 		

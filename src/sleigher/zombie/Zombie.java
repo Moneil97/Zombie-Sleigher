@@ -72,6 +72,7 @@ public class Zombie {
 	 * incorporate delta
 	 */
 	public void render(Graphics2D g, float delta) {
+		
 		int drawx = (int) ((x - lastx) * delta + lastx);
 		int drawy = (int) ((y - lasty) * delta + lasty);
 		
