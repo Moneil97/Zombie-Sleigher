@@ -1,5 +1,6 @@
 package sleigher.zombie;
 
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
@@ -58,7 +59,7 @@ public class ZombieSleigher implements Controllable {
     }
     private Gamestate gamestate = Gamestate.TITLE;
     
-    private BufferedImage gameBackground;
+    private BufferedImage[] gameBackground = new BufferedImage[3];
     static BufferedImage zombieImage;
     static BufferedImage zombieDeadImage;
     static BufferedImage santaImages[] = new BufferedImage[4];
@@ -90,7 +91,7 @@ public class ZombieSleigher implements Controllable {
     private int treesDodged = 0;
     private double treeSpawnChance = 0.3;
     private double treeSpawnChanceIncrement = 0.02;
-    private int treeSpawnRate = UPS * 2;
+    private int treeSpawnRate = UPS / 30;
     
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
@@ -101,6 +102,10 @@ public class ZombieSleigher implements Controllable {
     private float hillDistance = 0;
     private int distance = 0;
     private int bestDistance = 0;
+    
+    private int bgIndex = 0;
+    private float hillY[] = new float[3];
+    private float lastHillY[] = new float[3];
     
     private int mx;
     private int my;
@@ -179,8 +184,13 @@ public class ZombieSleigher implements Controllable {
 
     	gamestate = Gamestate.TITLE;
     	
+    	for (int i = 0; i < 3; i++) { 
+    		hillY[i] = HEIGHT * i;
+    		lastHillY[i] = hillY[i];
+    	}
+    	
     	String root = "/res/";
-    	gameBackground = load(root + "background.jpg");
+    	for (int i = 0; i < 3; i++) gameBackground[i] = load(root + "background.jpg");
     	
     	for (int i=1; i <=4; i++)
     		santaImages[i-1] = load(root + "santa" + i + ".png");
@@ -237,6 +247,16 @@ public class ZombieSleigher implements Controllable {
     		
         	hillDistance += hillSpeed;
         	
+        	float base = -hillDistance % gameBackground[0].getHeight();
+        	if (base == 0) bgIndex = (bgIndex + 1) % 3;
+        	for (int i = bgIndex; i < bgIndex + 3; i++) {
+        		int k = i % 3;
+        		lastHillY[k] = hillY[k];
+        		hillY[k] = base + (HEIGHT * (i - bgIndex));
+        	}
+        	
+        	System.out.println(hillY[0] + " " + hillY[1] + " " + hillY[2]);
+        	
         	ticks++;
         	
         	if (ticks % UPS == 0) {
@@ -255,7 +275,8 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % treeSpawnRate == 0) {
         		if (treeSpawnChance > getRandomDouble(0.0, 1.0)) {
-        			trees.add(new Tree());
+        			//TODO jitter seems to go away with this if statement in place
+        			if (trees.size() < 1) trees.add(new Tree());
         		}
         	}
         	
@@ -328,6 +349,7 @@ public class ZombieSleigher implements Controllable {
     		}
     		santa.lastx = santa.x;
     		santa.lasty = santa.y;
+    		
     	} else if (gamestate == Gamestate.TITLE) {
     		
     	}
@@ -335,8 +357,11 @@ public class ZombieSleigher implements Controllable {
 
 	public void renderGame(Graphics2D g, float delta) {
 		
-    	g.drawImage(gameBackground, 0, -(int)hillDistance % gameBackground.getHeight(), null);
-    	g.drawImage(gameBackground, 0, HEIGHT - (int)hillDistance % gameBackground.getHeight(), null);
+		for (int i = bgIndex; i < bgIndex + 2; i++) {
+			int k = i % 3;
+			int draw = (int) ((hillY[k] - lastHillY[k]) * delta + lastHillY[k]);
+			g.drawImage(gameBackground[k], 0, draw, null);
+		}
     	
     	for (int i = 0; i < zombies.size(); i++)
 			zombies.get(i).render(g, delta);
@@ -354,7 +379,6 @@ public class ZombieSleigher implements Controllable {
     	g.drawString("" + distance + "m", 
     			790 - (g.getFontMetrics().stringWidth("" + distance + "m")), santa.y + santa.height / 2);
     	
-    
     	g.setColor(new Color(0, 255, 0, 125));
     	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, (int) santa.health, 17);
     	
@@ -398,6 +422,8 @@ public class ZombieSleigher implements Controllable {
     
     public void renderPause(Graphics2D g, float delta) {
     	renderGame(g, delta);
+    	
+    	resetLastPositions();
 
 		g.setColor(new Color(0, 0, 0, 120));
 		g.fillRect(0, 0, 800, 600);
@@ -428,6 +454,8 @@ public class ZombieSleigher implements Controllable {
     public void renderGameover(Graphics2D g, float delta) {
     	renderGame(g, delta);
     	
+    	resetLastPositions();
+    	
 		g.setColor(new Color(0, 0, 0, 170));
 		g.fillRect(0, 0, 800, 600);
     	
@@ -456,12 +484,27 @@ public class ZombieSleigher implements Controllable {
 		zombies.clear();
 		treeSpawnChance = 0.3;
 		zombieSpawnChance = 0.0;
-		hillSpeed = 5;
+		hillSpeed = 10;
 		hillDistance = 0;
 		distance = 0;
 		
 		zombiesKilled = 0;
 		treesDodged = 0;
+    }
+    
+    private void resetLastPositions() {
+    	santa.lastx = santa.x;
+    	santa.lasty = santa.y;
+    	
+    	for (int i = 0; i < 3; i++) lastHillY[i] = hillY[i];
+    	
+    	for (Tree t : trees) 
+    		t.lasty = t.y;
+    	
+    	for (Zombie z : zombies) {
+    		z.lastx = z.x;
+    		z.lasty = z.y;
+    	}
     }
     
     /**

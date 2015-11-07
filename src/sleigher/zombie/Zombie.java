@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 public class Zombie {
 
 	float x, y;
+	float lastx, lasty;
 	float hillSpeed;
 	float xs, ys;
 	int width, height;
@@ -45,6 +46,9 @@ public class Zombie {
 	public void update(float hillSpeed, float santax, float santay, int santawidth, int santaheight) {
 		this.hillSpeed = hillSpeed;
 		
+		lastx = x;
+		lasty = y;
+		
 		if (!dead) {
 			if (y+ height > santay + santaheight) ys = -2;
 			else if (y + height / 2 < santay) ys = 2;
@@ -68,10 +72,13 @@ public class Zombie {
 	 * incorporate delta
 	 */
 	public void render(Graphics2D g, float delta) {
+		int drawx = (int) ((x - lastx) * delta + lastx);
+		int drawy = (int) ((y - lasty) * delta + lasty);
+		
 		if (dead) {
-			g.drawImage(deadImage, (int) x, (int) y, width, height, null);
+			g.drawImage(deadImage, drawx, drawy, width, height, null);
 		} else {
-			g.drawImage(image, (int) x, (int) y, width, height, null);
+			g.drawImage(image, drawx, drawy, width, height, null);
 		}
 	}
 	
