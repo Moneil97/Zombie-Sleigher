@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -111,6 +112,8 @@ public class ZombieSleigher implements Controllable {
     private int my;
     
     private boolean gameOver;
+    
+    private List<String> instructions = new ArrayList<String>();
     
     int statSize = 11;
     private int[] statValues = new int[statSize];
@@ -204,6 +207,10 @@ public class ZombieSleigher implements Controllable {
     	treeOtherImage = load(root + "tree2.png");
     	shopTitleImage = load(root + "shop_Title.png");
     	sleighed = load(root + "sleighed.png");
+    	
+    	//I can't believe I'm actually using this. I've never used it outside of AP comp sciS
+    	Scanner s = new Scanner(getClass().getResourceAsStream(root + "instructions.txt"));
+    	while (s.hasNextLine()) instructions.add(s.nextLine());
     	
     	instantiateButtons();
     	
@@ -471,6 +478,14 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(Color.red);
     	g.setFont(new Font("helvetica", Font.BOLD, 20));
     	g.drawString("INSTRUCTIONS", 400 - g.getFontMetrics().stringWidth("INSTRUCTIONS") / 2, 30);
+    	
+    	g.setFont(new Font("helvetica", Font.PLAIN, 16));
+    	for (int i = 0; i < instructions.size(); i++) {
+    		String s = instructions.get(i);
+    		int x = WIDTH / 2 - g.getFontMetrics().stringWidth(s) / 2;
+    		int y = 110 + (g.getFontMetrics().getHeight() + 2) * i;
+    		g.drawString(s, x, y);
+    	}
     	
     	instructionsButton.render(g);
     }
