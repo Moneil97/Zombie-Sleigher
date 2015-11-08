@@ -223,12 +223,11 @@ public class ZombieSleigher implements Controllable {
     /**
      * TODO (actual things we have to add)
      * sound
-     * add instructions
      * speed increases damage done by zombies
      * weapons
      * add more stats
      * shop
-     * instruction screen
+     * precents
      */
     
     /** TODO known bugs
@@ -501,7 +500,7 @@ public class ZombieSleigher implements Controllable {
 		hillSpeed = 5;
 		hillDistance = 0;
 		distance = 0;
-		
+		seconds = 0;
 		zombiesKilled = 0;
 		treesDodged = 0;
     }
