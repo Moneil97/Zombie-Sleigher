@@ -105,6 +105,9 @@ public class ZombieSleigher implements Controllable {
     private int distance = 0;
     private int bestDistance = 0;
     
+    private int precents = 0;
+    private int savedPrecents = 0;
+    
     private int bgIndex = 0;
     private float hillY[] = new float[3];
     private float lastHillY[] = new float[3];
@@ -116,7 +119,7 @@ public class ZombieSleigher implements Controllable {
     
     private List<String> instructions = new ArrayList<String>();
     
-    int statSize = 11;
+    int statSize = 14;
     private int[] statValues = new int[statSize];
     private String[] statUnits = new String[statSize];
     
@@ -130,7 +133,10 @@ public class ZombieSleigher implements Controllable {
     		"Accuracy: ",					//8
     		"Overall Accuracy: ",			//9
     		"Time of run: ",				//10
-    		"Total play time: "				//11
+    		"Total play time: ",			//11
+    		"Precents earned: ",			//12
+    		"Precents currently owned: ",	//13
+    		"Total precents earned: "		//14
     };
     
     public ZombieSleigher() {
@@ -337,6 +343,7 @@ public class ZombieSleigher implements Controllable {
     	} else if (gamestate == Gamestate.GAMEOVER) {
     		if (gameOver) {
     			bestDistance = bestDistance > distance ? bestDistance : distance;
+    			savedPrecents += precents;
     			
     			//make sure this is in order that matches with statNames
     			statValues[0] = distance;		//previous distance
@@ -349,10 +356,15 @@ public class ZombieSleigher implements Controllable {
     			statValues[5] = 0;				//bullets fired
     			statValues[6] = treesDodged;	//trees dodged
     			
-    			statValues[7] = 0;				//number of trees dodged
+    			statValues[7] = 0;				//accuracy of run
     			statValues[8] = 0;				//lifetime accuracy
+    			
     			statValues[9] = seconds;		//time of run
     			statValues[10] += seconds;		//total play time
+    			
+    			statValues[11] = precents;		//precents earned that run
+    			statValues[12] = savedPrecents;	//saved precents
+    			statValues[13] += precents;		//lifetime precents earned
     			
     			gameOver = false;
     		}
@@ -366,6 +378,7 @@ public class ZombieSleigher implements Controllable {
 
 	public void renderGame(Graphics2D g, float delta) {
 		
+		//only draw two backgrounds at a time so delta doesn't fuck up when you move the top background to the bottom
 		for (int i = bgIndex; i < bgIndex + 2; i++) {
 			int k = i % 3;
 			int draw = (int) ((hillY[k] - lastHillY[k]) * delta + lastHillY[k]);
@@ -380,19 +393,27 @@ public class ZombieSleigher implements Controllable {
 
     	santa.render(g, mx, my, delta, ticks);
     	
-    	g.setFont(new Font("helvetica", Font.PLAIN, 20));
+    	//distance
     	g.setColor(Color.red);
-    	g.drawString("HEALTH ", 400 - (g.getFontMetrics().stringWidth("HEALTH ") + 100) / 2, 20);
-    	
     	g.setFont(new Font("helvetica", Font.PLAIN, 18));
     	g.drawString("" + distance + "m", 
     			790 - (g.getFontMetrics().stringWidth("" + distance + "m")), santa.y + santa.height / 2);
     	
-    	g.setColor(new Color(0, 255, 0, 125));
-    	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, (int) santa.health, 17);
+    	//health label
+    	g.setFont(new Font("helvetica", Font.PLAIN, 20));
+    	g.drawString("HEALTH ", 400 - (g.getFontMetrics().stringWidth("HEALTH ") + 100) / 2, 23);
     	
+    	//health bar
+    	g.setColor(new Color(0, 255, 0, 125));
+    	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 32, 5, (int) santa.health, 20);
     	g.setColor(Color.red);
-    	g.drawRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 30, 4, 100, 17);
+    	g.drawRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 32, 5, 100, 20);
+    	
+    	//precents
+    	g.drawImage(precentImage, 767, 5, 25, 25, null);
+    	g.setColor(new Color(150, 50, 150));
+    	g.setFont(new Font("helvetica", Font.PLAIN, 22));
+    	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
     }
     
     public void renderTitle(Graphics2D g, float delta) {
