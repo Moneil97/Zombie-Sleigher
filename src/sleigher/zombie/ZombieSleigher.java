@@ -228,6 +228,14 @@ public class ZombieSleigher implements Controllable {
     	canvas.addKeyListener(new Key());
     }
     
+    /** TODO (in class, things we need to discuss together)
+     * shop layout
+     * actual upgrades
+     * weapon implementation, weapon class and subclasses
+     * weapon stats
+     * weapon upgrades
+     */
+    
     /**
      * TODO (actual things we have to add)
      * sound
