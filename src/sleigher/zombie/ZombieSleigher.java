@@ -61,6 +61,7 @@ public class ZombieSleigher implements Controllable {
     private Gamestate gamestate = Gamestate.TITLE;
     
     private BufferedImage[] gameBackground = new BufferedImage[3];
+    static BufferedImage precentImage;
     static BufferedImage zombieImage;
     static BufferedImage zombieDeadImage;
     static BufferedImage santaImages[] = new BufferedImage[4];
@@ -71,7 +72,7 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage treeImage;
     static BufferedImage treeOtherImage;
     static BufferedImage shopTitleImage;
-    static BufferedImage sleighed;
+    static BufferedImage sleighedImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -206,7 +207,8 @@ public class ZombieSleigher implements Controllable {
     	treeImage = load(root + "tree1.png");
     	treeOtherImage = load(root + "tree2.png");
     	shopTitleImage = load(root + "shop_Title.png");
-    	sleighed = load(root + "sleighed.png");
+    	sleighedImage = load(root + "sleighed.png");
+    	precentImage = load(root + "precent.png");
     	
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sciS
     	Scanner s = new Scanner(getClass().getResourceAsStream(root + "instructions.txt"));
@@ -238,6 +240,8 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * precents drop and must be collected?
+     * precents fly towards counter
      * grenades
      * more zombie species
      * dashed line follows best distance
@@ -464,7 +468,7 @@ public class ZombieSleigher implements Controllable {
 		g.setColor(new Color(0, 0, 0, 170));
 		g.fillRect(0, 0, 800, 600);
     	
-    	g.drawImage(sleighed, 200, 60, 100*4, 60*4, null);
+    	g.drawImage(sleighedImage, 200, 60, 100*4, 60*4, null);
 		
 		gameoverButton.render(g);
     }
