@@ -5,9 +5,6 @@ import java.awt.image.BufferedImage;
 
 public class Weapon {
 	
-	float x, y;
-	int width, height;
-	
 	//in shots per second
 	float rateOfFire;
 	float damage;
@@ -21,7 +18,7 @@ public class Weapon {
 	}
 	
 	public void render(Graphics2D g, float delta) {
-		g.drawImage(image, (int) x, (int) y, width, height, null);
+		
 	}
 
 }

@@ -200,9 +200,6 @@ public class ZombieSleigher implements Controllable {
 
     	gamestate = Gamestate.TITLE;
     	
-    	pistol = new Pistol();
-    	weapon = pistol;
-    	
     	for (int i = 0; i < 3; i++) { 
     		hillY[i] = HEIGHT * i;
     		lastHillY[i] = hillY[i];
@@ -227,6 +224,9 @@ public class ZombieSleigher implements Controllable {
     	pistolImage = load(root + "pistol.png");
     	rifleImage = load(root + "rifle.png");
     	bazookaImage = load(root + "bazooka.png");
+    	
+    	pistol = new Pistol();
+    	weapon = pistol;
     	
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sciS
     	Scanner s = new Scanner(getClass().getResourceAsStream(root + "instructions.txt"));
@@ -253,7 +253,7 @@ public class ZombieSleigher implements Controllable {
      * sound
      * speed increases damage done by zombies
      * weapons
-     * add more stats
+     * weapon animations
      * shop
      * precents
      */
