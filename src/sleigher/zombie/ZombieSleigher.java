@@ -73,6 +73,9 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage treeOtherImage;
     static BufferedImage shopTitleImage;
     static BufferedImage sleighedImage;
+    static BufferedImage pistolImage;
+    static BufferedImage rifleImage;
+    static BufferedImage bazookaImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -215,6 +218,9 @@ public class ZombieSleigher implements Controllable {
     	shopTitleImage = load(root + "shop_Title.png");
     	sleighedImage = load(root + "sleighed.png");
     	precentImage = load(root + "precent.png");
+    	pistolImage = load(root + "pistol.png");
+    	rifleImage = load(root + "rifle.png");
+    	bazookaImage = load(root + "bazooka.png");
     	
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sciS
     	Scanner s = new Scanner(getClass().getResourceAsStream(root + "instructions.txt"));
