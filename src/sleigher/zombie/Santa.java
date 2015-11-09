@@ -19,6 +19,8 @@ public class Santa{
 	float vx = 0, vy = 0;
 	float maxVx = 6, maxVy = 4;
 	
+	Weapon weapon;
+	
 	float health;
 	float scalex = 2.5f;
 	float scaley = 1.6f;
@@ -35,8 +37,9 @@ public class Santa{
 	BufferedImage rightArmImage = ZombieSleigher.santaRightArmImage;
 	BufferedImage images[] = ZombieSleigher.santaImages;
 	
-	public Santa(float x, float y) {
+	public Santa(Weapon weapon, float x, float y) {
 
+		this.weapon = weapon;
 		this.x = x;
 		this.y = y;
 		lastx = x;

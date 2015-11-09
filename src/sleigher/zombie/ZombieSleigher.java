@@ -86,6 +86,9 @@ public class ZombieSleigher implements Controllable {
     private Santa santa;
     private boolean godMode = false;
     
+    private Weapon weapon;
+    private Pistol pistol;
+    
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private int zombiesKilled = 0;
     private double zombieSpawnChance = 0.0;
@@ -197,6 +200,9 @@ public class ZombieSleigher implements Controllable {
 
     	gamestate = Gamestate.TITLE;
     	
+    	pistol = new Pistol();
+    	weapon = pistol;
+    	
     	for (int i = 0; i < 3; i++) { 
     		hillY[i] = HEIGHT * i;
     		lastHillY[i] = hillY[i];
@@ -271,6 +277,7 @@ public class ZombieSleigher implements Controllable {
      * key bindings not key listener
      * make distance based on sleigh position on hill, not just hill
      * change large distances to km from m
+     * grenade upgrades
      */
         
     public void update() {
@@ -530,7 +537,7 @@ public class ZombieSleigher implements Controllable {
     
     private void gameReset(){
     	//TODO make sure to reset all stat variables, not just the stats themselves
-    	santa = new Santa(375,150);
+    	santa = new Santa(weapon, 375,150);
 		gameOver = false;
 		trees.clear();
 		zombies.clear();
