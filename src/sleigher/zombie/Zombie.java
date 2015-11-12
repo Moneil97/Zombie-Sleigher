@@ -10,6 +10,7 @@ public class Zombie {
 	float lastx, lasty;
 	float hillSpeed;
 	float xs, ys;
+	float health;
 	int width, height;
 	boolean dead;
 	float collisionDamage;
@@ -20,6 +21,8 @@ public class Zombie {
 	
 	public Zombie(float ys) {
 		int zone = (int) getRandomDouble(0.0, 5.0);
+		
+		health = 10;
 		
 		collisionDamage = 5;
 		dead = false;

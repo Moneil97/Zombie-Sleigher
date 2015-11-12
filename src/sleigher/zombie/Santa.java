@@ -37,6 +37,12 @@ public class Santa{
 	BufferedImage rightArmImage = ZombieSleigher.santaRightArmImage;
 	BufferedImage images[] = ZombieSleigher.santaImages;
 	
+	double rightAnchorX;
+	double leftAnchorX;
+	double anchorY;
+	
+	boolean weaponOnRight;
+	
 	public Santa(Weapon weapon, float x, float y) {
 
 		this.weapon = weapon;
@@ -76,7 +82,6 @@ public class Santa{
 		if (down && y + height < 600) 
 			y += left ^ right ? vy * corner : vy;
 			
-		//TODO change bounds to be a polygon more fitting of the shape
 		bounds = getBounds();
 	}
 	
@@ -87,15 +92,16 @@ public class Santa{
 		//the higher those two magic numbers, the slower. the second one should be 1/4 of the first b/c there are 4 frames
 		g.drawImage(images[(ticks % (8)) / 2], drawx, drawy, width, height, null);
 		
-		double rightAnchorX = drawx + width - width * 0.3;
-		double leftAnchorX = drawx + width * 0.3;
-		double anchorY = drawy + height * 0.39 + 1;
+		rightAnchorX = drawx + width - width * 0.3;
+		leftAnchorX = drawx + width * 0.3;
+		anchorY = drawy + height * 0.39 + 1;
 		
 		double angle;
 		double dy = anchorY - my;
 		
 		if (mx > drawx + width / 2) {
 			//right shoulder
+			weaponOnRight = true;
 			double dx = mx - rightAnchorX;
 			
 			if (dx == 0) { //avoid divide by zero error
@@ -118,6 +124,7 @@ public class Santa{
 			g.translate(-rightAnchorX, -anchorY);
 		} else {
 			//left shoulder
+			weaponOnRight = false;
 			double dx = mx - leftAnchorX;
 			
 			if (dx == 0) { //avoid divide by zero error

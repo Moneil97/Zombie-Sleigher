@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Line;
 import javax.swing.JFrame;
 
 import com.jackdahms.Controllable;
@@ -132,8 +133,8 @@ public class ZombieSleigher implements Controllable {
     private String[] statNames = {"Distance traveled: ",	//1
     		"Furthest distance traveled: ",	//2
     		"Total distance traveled: ",	//3
-    		"Zombies killed: ",			//4
-    		"Total zombies killed: ",	//5
+    		"Zombies killed: ",				//4
+    		"Total zombies killed: ",		//5
     		"Bullets fired: ",				//6
     		"Trees dodged: ",				//7
     		"Accuracy: ",					//8
@@ -317,6 +318,14 @@ public class ZombieSleigher implements Controllable {
         	}
         	
     		santa.update();
+    		weapon.update();
+    		
+    		if (weapon.fired) {
+    			Line bullet;
+    			if (santa.weaponOnRight) {
+    				bullet = new Line(santa.rightAnchorX, santa.anchorY, mx, my);
+    			}
+    		}
         	
     		for (int i = 0; i < zombies.size(); i++) {
     			Zombie z = zombies.get(i);

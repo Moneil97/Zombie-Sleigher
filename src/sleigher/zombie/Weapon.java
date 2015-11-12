@@ -9,16 +9,34 @@ public class Weapon {
 	float rateOfFire;
 	float damage;
 	
+	//TODO automatic, semi auto
+	boolean triggered = false;
 	boolean fired = false;
+	
+	int cooldown = 0;
 	
 	BufferedImage image;
 	
 	public void update() {
-		
+		cooldown--;
+		if (cooldown < 0 && triggered) {
+			fired = true;
+			cooldown = (int) (ZombieSleigher.UPS / rateOfFire);
+		} else {
+			fired = false;
+		}
 	}
 	
 	public void render(Graphics2D g, float delta) {
-		
+		//drawn in the santa class
+	}
+	
+	public void mousePressed(int ex, int ey) {
+		triggered = true;
+	}
+	
+	public void mouseReleased(int ex, int ey) {
+		triggered = false;
 	}
 
 }

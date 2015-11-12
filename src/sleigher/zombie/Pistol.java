@@ -5,7 +5,7 @@ public class Pistol extends Weapon {
 	public Pistol() {
 		image = ZombieSleigher.pistolImage;
 		
-		damage = 10;
+		damage = 5;
 		rateOfFire = 2;
 	}
 
