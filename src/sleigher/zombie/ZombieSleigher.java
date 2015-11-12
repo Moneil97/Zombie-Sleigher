@@ -232,6 +232,7 @@ public class ZombieSleigher implements Controllable {
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sciS
     	Scanner s = new Scanner(getClass().getResourceAsStream(root + "instructions.txt"));
     	while (s.hasNextLine()) instructions.add(s.nextLine());
+    	s.close();
     	
     	instantiateButtons();
     	
@@ -323,7 +324,7 @@ public class ZombieSleigher implements Controllable {
     		if (weapon.fired) {
     			Line bullet;
     			if (santa.weaponOnRight) {
-    				bullet = new Line(santa.rightAnchorX, santa.anchorY, mx, my);
+    				//bullet = new Line(santa.rightAnchorX, santa.anchorY, mx, my);
     			}
     		}
         	
