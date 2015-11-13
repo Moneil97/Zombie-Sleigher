@@ -18,6 +18,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -92,6 +93,7 @@ public class ZombieSleigher implements Controllable {
     
     private Weapon weapon;
     private Pistol pistol;
+    private Line2D bullet;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private int zombiesKilled = 0;
@@ -251,7 +253,6 @@ public class ZombieSleigher implements Controllable {
     /** TODO (in class, things we need to discuss together)
      * shop layout
      * actual upgrades
-     * weapon implementation, weapon class and subclasses
      * weapon stats
      * weapon upgrades
      */
@@ -259,6 +260,7 @@ public class ZombieSleigher implements Controllable {
     /**
      * TODO (actual things we have to add)
      * sound
+     * music, christmas at ground zero
      * speed increases damage done by zombies
      * weapons
      * weapon animations
@@ -328,9 +330,10 @@ public class ZombieSleigher implements Controllable {
     		weapon.update();
     		
     		if (weapon.fired) {
-    			Line bullet;
     			if (santa.weaponOnRight) {
-    				//bullet = new Line(santa.rightAnchorX, santa.anchorY, mx, my);
+    				bullet = new Line2D.Double(santa.rightAnchorX, santa.anchorY, mx, my);
+    			} else {
+    				bullet = new Line2D.Double(santa.leftAnchorX, santa.anchorY, mx, my);
     			}
     		}
         	
