@@ -116,7 +116,7 @@ public class Santa{
 			g.translate(rightAnchorX, anchorY);
 			g.rotate(angle);
 			g.drawImage(rightArmImage, -2, -2, 20, 7, null);
-			g.drawImage(weapon.image, 15, -2, 10, 6, null);
+			g.drawImage(weapon.imageRight, 15, -2, 10, 6, null);
 			g.rotate(-angle);
 			g.translate(-rightAnchorX, -anchorY);
 		} else {
@@ -139,7 +139,7 @@ public class Santa{
 			g.translate(leftAnchorX, anchorY);
 			g.rotate(angle);
 			g.drawImage(leftArmImage, -3, -3, 20, 7, null);
-			g.drawImage(weapon.image, 15, -2, 10, 6, null);
+			g.drawImage(weapon.imageLeft, 15, -2, 10, 6, null);
 			g.rotate(-angle);
 			g.translate(-leftAnchorX, -anchorY);
 		}

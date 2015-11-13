@@ -15,7 +15,8 @@ public class Weapon {
 	
 	int cooldown = 0;
 	
-	BufferedImage image;
+	BufferedImage imageRight;
+	BufferedImage imageLeft;
 	
 	public void update() {
 		cooldown--;
