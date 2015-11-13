@@ -4,7 +4,7 @@ public class Rifle extends Weapon {
 
 	public Rifle() {
 		
-		image = ZombieSleigher.rifleImage;
+		image = ZombieSleigher.rifleRightImage;
 		
 		damage = 5;
 		rateOfFire = 10;

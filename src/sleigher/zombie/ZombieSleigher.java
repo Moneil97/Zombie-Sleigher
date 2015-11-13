@@ -1,6 +1,5 @@
 package sleigher.zombie;
 
-import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,6 +17,8 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.font.TextAttribute;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -74,9 +75,11 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage treeOtherImage;
     static BufferedImage shopTitleImage;
     static BufferedImage sleighedImage;
-    static BufferedImage pistolImage;
-    static BufferedImage rifleImage;
+    static BufferedImage pistolRightImage;
+    static BufferedImage rifleRightImage;
     static BufferedImage bazookaImage;
+    static BufferedImage pistolLeftImage;
+	static BufferedImage rifleLeftImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -145,6 +148,7 @@ public class ZombieSleigher implements Controllable {
     		"Precents currently owned: ",	//13
     		"Total precents earned: "		//14
     };
+	
     
     public ZombieSleigher() {
     	
@@ -211,8 +215,8 @@ public class ZombieSleigher implements Controllable {
     	
     	for (int i=1; i <=4; i++)
     		santaImages[i-1] = load(root + "santa" + i + ".png");
-    	santaLeftArmImage = load(root + "santa_Arm_Left.png");
     	santaRightArmImage = load(root + "santa_Arm_Right.png");
+    	santaLeftArmImage = flip(santaRightArmImage);// = load(root + "santa_Arm_Right.png");
     	zombieImage = load(root + "zombie.png");
     	zombieDeadImage = load(root + "zombie_Dead.png");
     	titleImage = load(root + "title.png");
@@ -222,8 +226,10 @@ public class ZombieSleigher implements Controllable {
     	shopTitleImage = load(root + "shop_Title.png");
     	sleighedImage = load(root + "sleighed.png");
     	precentImage = load(root + "precent.png");
-    	pistolImage = load(root + "pistol.png");
-    	rifleImage = load(root + "rifle.png");
+    	pistolRightImage = load(root + "pistol.png");
+    	pistolLeftImage = flip(pistolRightImage);
+    	rifleRightImage = load(root + "rifle.png");
+    	rifleLeftImage = flip(rifleRightImage);
     	bazookaImage = load(root + "bazooka.png");
     	
     	pistol = new Pistol();
@@ -732,6 +738,14 @@ public class ZombieSleigher implements Controllable {
     /**
      * Worker Methods
      */
+    
+    public static BufferedImage flip(BufferedImage image){
+    	// Flip the image vertically
+    	AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+    	tx.translate(0, -image.getHeight(null));
+    	AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+    	return op.filter(image, null);
+    }
     
     public static void main(String[] args) {
         new ZombieSleigher();

@@ -1,15 +1,12 @@
 package sleigher.zombie;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.atan;
+
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import static java.lang.Math.*;
 
 public class Santa{
 	
