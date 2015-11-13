@@ -260,7 +260,8 @@ public class ZombieSleigher implements Controllable {
     /**
      * TODO (actual things we have to add)
      * sound
-     * music, christmas at ground zero
+     * music, christmas at ground zero, baila fleck and the flecktones
+     * zombie worth part of zombiesleigher, not zombie?
      * speed increases damage done by zombies
      * weapons
      * weapon animations
