@@ -259,7 +259,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
-     * sound
+     * sound: bullet firing, zombies dying
      * music, christmas at ground zero, baila fleck and the flecktones
      * zombie worth part of zombiesleigher, not zombie?
      * speed increases damage done by zombies
@@ -338,11 +338,15 @@ public class ZombieSleigher implements Controllable {
     				bullet = new Line2D.Double(santa.leftAnchorX, santa.anchorY, mx, my);
     			}
     		}
-        	
+    		
     		for (int i = 0; i < zombies.size(); i++) {
     			Zombie z = zombies.get(i);
     			
     			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
+    			
+    			if (z.bounds.intersectsLine(bullet)) {
+					z.onBulletPath = true;
+				}
     			
     			if (!z.dead && santa.bounds.intersects(z.bounds)) {
     				if (!godMode) santa.health -= z.collisionDamage;

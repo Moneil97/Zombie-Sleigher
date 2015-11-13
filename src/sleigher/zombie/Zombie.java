@@ -13,7 +13,10 @@ public class Zombie {
 	float health;
 	int width, height;
 	int precentWorth;
+	
 	boolean dead;
+	boolean onBulletPath;
+	
 	float collisionDamage;
 	Rectangle bounds;
 	
