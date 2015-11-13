@@ -288,6 +288,7 @@ public class ZombieSleigher implements Controllable {
      * make distance based on sleigh position on hill, not just hill
      * change large distances to km from m
      * grenade upgrades
+     * draw bullets
      */
         
     public void update() {
@@ -345,6 +346,7 @@ public class ZombieSleigher implements Controllable {
     			if (!z.dead && santa.bounds.intersects(z.bounds)) {
     				if (!godMode) santa.health -= z.collisionDamage;
     				z.dead = true;
+    				precents += z.precentWorth;
     				zombiesKilled++;
     			}
     			
