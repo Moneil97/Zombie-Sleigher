@@ -32,11 +32,11 @@ public class Weapon {
 		//drawn in the santa class
 	}
 	
-	public void mousePressed(int ex, int ey) {
+	public void mousePressed() {
 		triggered = true;
 	}
 	
-	public void mouseReleased(int ex, int ey) {
+	public void mouseReleased() {
 		triggered = false;
 	}
 

@@ -1,5 +1,6 @@
 package sleigher.zombie;
 
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
@@ -293,6 +294,7 @@ public class ZombieSleigher implements Controllable {
      * draw bullets
      */
         
+    int closestZombieIndex = -1; //make this an arraylist
     public void update() {
     	if (gamestate == Gamestate.GAME) {
     		
@@ -345,8 +347,24 @@ public class ZombieSleigher implements Controllable {
     			
     			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
     			
-    			if (z.bounds.intersectsLine(bullet)) {
+    			if (!z.dead && z.bounds.intersectsLine(bullet)) {
 					z.onBulletPath = true;
+					
+					float dy = (float) (z.y - santa.anchorY);
+					float dx;
+					if (santa.weaponOnRight) {
+						dx = (float) (z.x - santa.rightAnchorX);
+					} else {
+						dx = (float) (santa.leftAnchorX - z.x);
+					}
+					z.distance = (float) (Math.sqrt((dy * dy) + (dx * dx)));
+					
+					//TODO when zombies die reset index
+					if (closestZombieIndex > -1) {
+						if (z.distance < zombies.get(closestZombieIndex).distance) closestZombieIndex = i;
+					} else {
+						closestZombieIndex = i;
+					}
 				}
     			
     			if (!z.dead && santa.bounds.intersects(z.bounds)) {
@@ -358,6 +376,11 @@ public class ZombieSleigher implements Controllable {
     			
     			if (z.y + z.height < 0)
     				zombies.remove(i);
+    		}
+    		
+    		//bang bang
+    		if (weapon.fired && closestZombieIndex > -1) {
+    			zombies.get(closestZombieIndex).dead = true;
     		}
     		
     		for (int i = 0; i < trees.size(); i++) {
@@ -462,6 +485,8 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(new Color(150, 50, 150));
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
+    	
+    	g.draw(bullet);
     }
     
     public void renderTitle(Graphics2D g, float delta) {
@@ -635,7 +660,9 @@ public class ZombieSleigher implements Controllable {
     
     private class Mouse extends MouseAdapter {
     	public void mousePressed(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
+    		if (gamestate == Gamestate.GAME) {
+    			weapon.mousePressed();
+    		} else if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mousePressed(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {
@@ -649,7 +676,9 @@ public class ZombieSleigher implements Controllable {
     	} 
     	
     	public void mouseReleased(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
+    		if (gamestate == Gamestate.GAME) {
+    			weapon.mouseReleased();
+    		} else if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mouseReleased(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {

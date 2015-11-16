@@ -11,6 +11,7 @@ public class Zombie {
 	float hillSpeed;
 	float xs, ys;
 	float health;
+	float distance; //dist from santa anchor
 	int width, height;
 	int precentWorth;
 	
