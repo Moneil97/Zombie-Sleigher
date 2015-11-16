@@ -234,6 +234,7 @@ public class ZombieSleigher implements Controllable {
     	rifleLeftImage = flip(rifleRightImage);
     	bazookaImage = load(root + "bazooka.png");
     	
+    	bullet = new Line2D.Double();
     	pistol = new Pistol();
     	weapon = pistol;
     	
