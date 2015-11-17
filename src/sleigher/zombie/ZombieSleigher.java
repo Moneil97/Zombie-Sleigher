@@ -497,8 +497,6 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(new Color(150, 50, 150));
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
-    	
-    	g.draw(bullet);
     }
     
     public void renderTitle(Graphics2D g, float delta) {
