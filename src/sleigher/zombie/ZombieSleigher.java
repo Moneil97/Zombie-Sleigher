@@ -343,10 +343,16 @@ public class ZombieSleigher implements Controllable {
     		//calculate angle, can have it slightly randomized based on accuracy
 			
     		if (weapon.fired) {
+        		double hypotenuse = 1000;
+        		double angle = santa.angle;
+    			double edgex = hypotenuse * Math.cos(angle);
+    			double edgey = hypotenuse * Math.sin(angle);
     			if (santa.weaponOnRight) {
-    				bullet = new Line2D.Double(santa.rightAnchorX, santa.anchorY, mx, my);
+    				bullet = new Line2D.Double(santa.rightAnchorX, santa.anchorY, 
+    						santa.rightAnchorX + edgex, santa.anchorY + edgey);
     			} else {
-    				bullet = new Line2D.Double(santa.leftAnchorX, santa.anchorY, mx, my);
+    				bullet = new Line2D.Double(santa.leftAnchorX, santa.anchorY, 
+    						santa.leftAnchorX + edgex, santa.anchorY + edgey);
     			}
     		}
     		

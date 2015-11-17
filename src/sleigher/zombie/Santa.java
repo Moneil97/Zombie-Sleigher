@@ -37,6 +37,7 @@ public class Santa{
 	double rightAnchorX;
 	double leftAnchorX;
 	double anchorY;
+	double angle;
 	
 	boolean weaponOnRight;
 	
@@ -93,7 +94,6 @@ public class Santa{
 		leftAnchorX = drawx + width * 0.3;
 		anchorY = drawy + height * 0.39 + 1;
 		
-		double angle;
 		double dy = anchorY - my;
 		
 		if (mx > drawx + width / 2) {
