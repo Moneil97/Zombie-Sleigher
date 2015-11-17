@@ -16,7 +16,6 @@ public class Zombie {
 	int precentWorth;
 	
 	boolean dead;
-	boolean onBulletPath;
 	
 	float collisionDamage;
 	Rectangle bounds;

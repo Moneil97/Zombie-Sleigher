@@ -341,6 +341,7 @@ public class ZombieSleigher implements Controllable {
     		//TODO need to extrapolate bullet path to edge of screen?
     		//or play snow puff animation at cursor
     		//calculate angle, can have it slightly randomized based on accuracy
+			
     		if (weapon.fired) {
     			if (santa.weaponOnRight) {
     				bullet = new Line2D.Double(santa.rightAnchorX, santa.anchorY, mx, my);
@@ -355,8 +356,6 @@ public class ZombieSleigher implements Controllable {
     			z.update(hillSpeed, santa.x, santa.y, santa.width, santa.height);
     			
     			if (!z.dead && z.bounds.intersectsLine(bullet)) {
-					z.onBulletPath = true;
-					
 					float dy = (float) (z.y - santa.anchorY);
 					float dx;
 					if (santa.weaponOnRight) {
@@ -384,11 +383,12 @@ public class ZombieSleigher implements Controllable {
     				zombies.remove(i);
     		}
     		
-    		//bang bang
+    		//bang bang (do this as much as once per tick, 
     		if (weapon.fired && closestZombieIndex > -1) {
     			zombies.get(closestZombieIndex).dead = true;
-    			closestZombieIndex = -1;
     		}
+    		//do this every tick to account for death of the closest zombie
+    		closestZombieIndex = -1;
     		
     		for (int i = 0; i < trees.size(); i++) {
     			Tree t = trees.get(i);
