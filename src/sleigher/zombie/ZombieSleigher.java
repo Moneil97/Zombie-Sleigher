@@ -1,6 +1,5 @@
 package sleigher.zombie;
 
-import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
@@ -30,7 +29,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Line;
 import javax.swing.JFrame;
 
 import com.jackdahms.Controllable;
@@ -335,6 +333,7 @@ public class ZombieSleigher implements Controllable {
     		
     		//TODO need to extrapolate bullet path to edge of screen?
     		//or play snow puff animation at cursor
+    		//calculate angle, can have it slightly randomized based on accuracy
     		if (weapon.fired) {
     			if (santa.weaponOnRight) {
     				bullet = new Line2D.Double(santa.rightAnchorX, santa.anchorY, mx, my);
@@ -360,7 +359,6 @@ public class ZombieSleigher implements Controllable {
 					}
 					z.distance = (float) (Math.sqrt((dy * dy) + (dx * dx)));
 					
-					//TODO when zombies die reset index
 					if (closestZombieIndex > -1) {
 						if (z.distance < zombies.get(closestZombieIndex).distance) closestZombieIndex = i;
 					} else {
@@ -404,7 +402,6 @@ public class ZombieSleigher implements Controllable {
 //    		distance = distance > hillDistance + (int) santa.x + (int) santa.height ? 
 //    				distance : hillDistance + (int) santa.x + (int) santa.height;
     		
-    		//put this here, not in the gameover gamestate because it only needs to happen once
     		if (gameOver) {
     			gamestate = Gamestate.GAMEOVER;
     		}
