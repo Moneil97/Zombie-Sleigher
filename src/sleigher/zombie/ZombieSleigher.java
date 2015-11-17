@@ -337,13 +337,10 @@ public class ZombieSleigher implements Controllable {
         	
     		santa.update();
     		weapon.update();
-    		
-    		//TODO need to extrapolate bullet path to edge of screen?
-    		//or play snow puff animation at cursor
-    		//calculate angle, can have it slightly randomized based on accuracy
-			
+    		 
     		if (weapon.fired) {
         		double hypotenuse = 1000;
+        		//TODO angle variation
         		double angle = santa.angle;
     			double edgex = hypotenuse * Math.cos(angle);
     			double edgey = hypotenuse * Math.sin(angle);
