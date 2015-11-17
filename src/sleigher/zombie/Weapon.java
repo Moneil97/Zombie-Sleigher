@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class Weapon {
 	
 	//in shots per second
-	float rateOfFire;
+	float rateOfFire; //max thirty
 	float damage;
 	
 	//TODO automatic, semi auto

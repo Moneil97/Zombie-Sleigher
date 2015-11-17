@@ -333,6 +333,8 @@ public class ZombieSleigher implements Controllable {
     		santa.update();
     		weapon.update();
     		
+    		//TODO need to extrapolate bullet path to edge of screen?
+    		//or play snow puff animation at cursor
     		if (weapon.fired) {
     			if (santa.weaponOnRight) {
     				bullet = new Line2D.Double(santa.rightAnchorX, santa.anchorY, mx, my);
@@ -380,6 +382,7 @@ public class ZombieSleigher implements Controllable {
     		//bang bang
     		if (weapon.fired && closestZombieIndex > -1) {
     			zombies.get(closestZombieIndex).dead = true;
+    			closestZombieIndex = -1;
     		}
     		
     		for (int i = 0; i < trees.size(); i++) {
