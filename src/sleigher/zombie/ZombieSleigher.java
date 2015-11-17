@@ -77,15 +77,17 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage sleighedImage;
     static BufferedImage pistolRightImage;
     static BufferedImage rifleRightImage;
-    static BufferedImage bazookaImage;
+    static BufferedImage bazookaRightImage;
     static BufferedImage pistolLeftImage;
 	static BufferedImage rifleLeftImage;
+	static BufferedImage bazookaLeftImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
     private BoxButton quitButton;
     private BoxButton gameoverButton;
     private BoxButton instructionsButton;
+    private BoxButton shopButton;
     
     private Santa santa;
     private boolean godMode = false;
@@ -233,10 +235,13 @@ public class ZombieSleigher implements Controllable {
     	pistolLeftImage = flip(pistolRightImage);
     	rifleRightImage = load(root + "rifle.png");
     	rifleLeftImage = flip(rifleRightImage);
-    	bazookaImage = load(root + "bazooka.png");
+    	bazookaRightImage = load(root + "bazooka.png");
+    	bazookaLeftImage = flip(bazookaRightImage);
     	
     	bullet = new Line2D.Double();
     	pistol = new Pistol();
+    	rifle = new Rifle();
+    	bazooka = new Bazooka();
     	weapon = pistol;
     	
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sciS
@@ -932,6 +937,12 @@ public class ZombieSleigher implements Controllable {
     		}
     	};
     	instructionsButton = new BoxButton("BACK TO MENU", 300, 40, 200, 30) {
+    		@Override
+    		void onPress() {
+    			gamestate = Gamestate.TITLE;
+    		}
+    	};
+    	shopButton = new BoxButton("BACK TO MENU", 300, 40, 200, 30) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
