@@ -92,6 +92,8 @@ public class ZombieSleigher implements Controllable {
     
     private Weapon weapon;
     private Pistol pistol;
+    private Rifle rifle;
+    private Bazooka bazooka;
     private Line2D bullet;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
