@@ -323,7 +323,6 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % treeSpawnRate == 0) {
         		if (treeSpawnChance > getRandomDouble(0.0, 1.0)) {
-        			//TODO jitter seems to go away with this if statement in place
         			trees.add(new Tree());
         		}
         	}
