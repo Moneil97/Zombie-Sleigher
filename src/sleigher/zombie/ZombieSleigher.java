@@ -88,6 +88,7 @@ public class ZombieSleigher implements Controllable {
     private BoxButton gameoverButton;
     private BoxButton instructionsButton;
     private BoxButton shopButton;
+    private BoxButton[] weaponButtons = new BoxButton[2];
     
     private Santa santa;
     private boolean godMode = false;
@@ -228,7 +229,7 @@ public class ZombieSleigher implements Controllable {
     	santaTitleImage = load(root + "santa_Title.png");
     	treeImage = load(root + "tree1.png");
     	treeOtherImage = load(root + "tree2.png");
-    	shopTitleImage = load(root + "shop_Title.png");
+    	shopTitleImage = load(root + "shop.png");
     	sleighedImage = load(root + "sleighed.png");
     	precentImage = load(root + "precent.png");
     	pistolRightImage = load(root + "pistol.png");
@@ -244,7 +245,7 @@ public class ZombieSleigher implements Controllable {
     	bazooka = new Bazooka();
     	weapon = pistol;
     	
-    	//I can't believe I'm actually using this. I've never used it outside of AP comp sciS
+    	//I can't believe I'm actually using this. I've never used it outside of AP comp sci
     	Scanner s = new Scanner(getClass().getResourceAsStream(root + "instructions.txt"));
     	while (s.hasNextLine()) instructions.add(s.nextLine());
     	s.close();
@@ -557,8 +558,19 @@ public class ZombieSleigher implements Controllable {
 		g.drawString("PAUSED", 300 - 2, 280);
     }
     
+    //TODO just bookmarking this method so I can find it easy while I'm working on it
     public void renderShop(Graphics2D g, float delta) {
+    	g.setColor(Color.white);
+    	g.fillRect(0, 0, WIDTH, HEIGHT);
     	
+    	g.drawImage(shopTitleImage, 20, 20, 500, 200, null);
+    	
+    	g.drawImage(precentImage, 550, 60, 25, 25, null);
+    	g.setColor(new Color(150, 50, 150));
+    	g.setFont(new Font("helvetica", Font.PLAIN, 22));
+    	g.drawString("" + savedPrecents, 750 - g.getFontMetrics().stringWidth("" + savedPrecents), 82);
+    	
+    	shopButton.render(g);
     }
     
     public void renderGameover(Graphics2D g, float delta) {
@@ -644,6 +656,10 @@ public class ZombieSleigher implements Controllable {
     			gameoverButton.mouseMoved(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.INSTRUCTIONS) {
     			instructionsButton.mouseMoved(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.SHOP) {
+    			shopButton.mouseMoved(e.getX(), e.getY());
+    			for (BoxButton b : weaponButtons)
+    				b.mouseMoved(e.getX(), e.getY()); 
     		}
     	}
     	
@@ -661,6 +677,10 @@ public class ZombieSleigher implements Controllable {
     			gameoverButton.mouseMoved(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.INSTRUCTIONS) {
     			instructionsButton.mouseMoved(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.SHOP) {
+    			shopButton.mouseMoved(e.getX(), e.getY());
+    			for (BoxButton b : weaponButtons)
+    				b.mouseMoved(e.getX(), e.getY()); 
     		}
     	}
     }
@@ -679,6 +699,10 @@ public class ZombieSleigher implements Controllable {
     			gameoverButton.mousePressed(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.INSTRUCTIONS) {
     			instructionsButton.mousePressed(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.SHOP) {
+    			shopButton.mousePressed(e.getX(), e.getY());
+    			for (BoxButton b : weaponButtons)
+    				b.mousePressed(e.getX(), e.getY());
     		}
     	} 
     	
@@ -695,6 +719,10 @@ public class ZombieSleigher implements Controllable {
     			gameoverButton.mouseReleased(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.INSTRUCTIONS) {
     			instructionsButton.mouseReleased(e.getX(), e.getY());
+    		} else if (gamestate == Gamestate.SHOP) {
+    			shopButton.mouseReleased(e.getX(), e.getY());
+    			for (BoxButton b : weaponButtons)
+    				b.mouseReleased(e.getX(), e.getY());
     		}
     			
     	}
@@ -943,7 +971,7 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	shopButton = new BoxButton("BACK TO MENU", 300, 40, 200, 30) {
+    	shopButton = new BoxButton("BACK TO MENU", 550, 20, 200, 30) {
     		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
