@@ -244,8 +244,7 @@ public class ZombieSleigher implements Controllable {
     	rifle = new Rifle();
     	bazooka = new Bazooka();
     	pistol.purchased = true;
-    	//TODO set weapon method that checks purchased
-    	weapon = pistol;
+    	setWeapon(pistol);
     	
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sci
     	Scanner s = new Scanner(getClass().getResourceAsStream(root + "instructions.txt"));
