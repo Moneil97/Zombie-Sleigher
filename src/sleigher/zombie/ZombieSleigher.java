@@ -567,7 +567,7 @@ public class ZombieSleigher implements Controllable {
     	
     	g.drawImage(shopTitleImage, 20, 20, 500, 200, null);
     	
-    	g.drawImage(precentImage, shopButton.x , 60, 25, 25, null);
+    	g.drawImage(precentImage, shopButton.x , 70, 30, 30, null);
     	g.setColor(new Color(150, 50, 150));
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
     	g.drawString("" + savedPrecents, 
@@ -760,6 +760,15 @@ public class ZombieSleigher implements Controllable {
 	    		case KeyEvent.VK_S:
 	    			santa.down = false;
 	    			break;
+	    		case KeyEvent.VK_1: //TODO play weapon switching sound
+	    			setWeapon(pistol);
+	    			break;
+	    		case KeyEvent.VK_2:
+	    			setWeapon(rifle);
+	    			break;
+	    		case KeyEvent.VK_3:
+	    			setWeapon(bazooka);
+	    			break;
 	    		case KeyEvent.VK_COMMA:
 	    			santa.health -= 10;
 	    			break;
@@ -820,6 +829,10 @@ public class ZombieSleigher implements Controllable {
     /**
      * Worker Methods
      */
+    
+    private void setWeapon(Weapon w) {
+    	if (w.purchased) weapon = w;
+    }
     
     public static BufferedImage flip(BufferedImage image){
     	// Flip the image vertically
@@ -971,13 +984,13 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	shopButton = new BoxButton("BACK TO MENU", 540, 20, 240, 30) {
+    	shopButton = new BoxButton("BACK TO MENU", 540, 20, 240, 40) {
     		void onPress() {
     			gamestate = Gamestate.TITLE;
     		}
     	};
     	int rifleCost = 200;
-    	weaponButtons[0] = new BoxButton("Purchase rifle (" + rifleCost + ")", 540, 110, 190, 30) {
+    	weaponButtons[0] = new BoxButton("Purchase rifle (" + rifleCost + ")", 540, 110, 190, 40) {
     		void onPress() {
     			if (!rifle.purchased && savedPrecents >= rifleCost) {
     				//TODO play cash register
@@ -989,7 +1002,7 @@ public class ZombieSleigher implements Controllable {
     		}
     	};
     	int bazookaCost = 1000;
-    	weaponButtons[1] = new BoxButton("Purchase bazooka (" + bazookaCost + ")", 540, 160, 190, 30) {
+    	weaponButtons[1] = new BoxButton("Purchase bazooka (" + bazookaCost + ")", 540, 180, 190, 40) {
     		void onPress() {
     			if (!bazooka.purchased && savedPrecents >= bazookaCost) {
     				//TODO play cash register sound
