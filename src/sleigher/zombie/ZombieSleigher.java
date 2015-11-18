@@ -101,7 +101,7 @@ public class ZombieSleigher implements Controllable {
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private int zombiesKilled = 0;
-    private double zombieSpawnChance = 0.0;
+    private double zombieSpawnChance = 0.5;
     private double zombieSpawnChanceIncrement = 0.02;
     private int zombieSpawnRate = UPS / 2;
     
@@ -276,7 +276,6 @@ public class ZombieSleigher implements Controllable {
      * weapons
      * weapon animations
      * shop
-     * precents
      */
     
     /** TODO known bugs
@@ -287,6 +286,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * trees
      * precents drop and must be collected?
      * precents fly towards counter
      * grenades
@@ -392,6 +392,7 @@ public class ZombieSleigher implements Controllable {
     		//bang bang (do this as much as once per tick, 
     		if (weapon.fired && closestZombieIndex > -1) {
     			zombies.get(closestZombieIndex).dead = true;
+    			precents += zombies.get(closestZombieIndex).precentWorth;
     		}
     		//do this every tick to account for death of the closest zombie
     		closestZombieIndex = -1;
@@ -565,19 +566,29 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(Color.white);
     	g.fillRect(0, 0, WIDTH, HEIGHT);
     	
-    	g.drawImage(shopTitleImage, 20, 20, 500, 200, null);
+    	g.drawImage(shopTitleImage, 20, 20, 480, 180, null);
     	
     	g.drawImage(precentImage, shopButton.x , 70, 30, 30, null);
     	g.setColor(new Color(150, 50, 150));
-    	g.setFont(new Font("helvetica", Font.PLAIN, 22));
+    	g.setFont(new Font("helvetica", Font.PLAIN, 28));
     	g.drawString("" + savedPrecents, 
-    			shopButton.x + shopButton.width - g.getFontMetrics().stringWidth("" + savedPrecents), 82);
+    			shopButton.x + shopButton.width - g.getFontMetrics().stringWidth("" + savedPrecents), 95);
     	
     	shopButton.render(g);
     	
     	if (rifle.purchased) weaponButtons[0].hovering = true;
     	if (bazooka.purchased) weaponButtons[1].hovering = true;
     	for (BoxButton b : weaponButtons) b.render(g);
+    	
+    	g.setColor(new Color(100, 200, 100));
+    	BoxButton b = weaponButtons[0];
+    	g.drawRect(b.x + b.width + 20, b.y + 5, 40, b.height - 10);
+    	if (rifle.purchased);
+    	g.rotate(-Math.PI / 4);
+    	g.drawImage(rifleRightImage, b.x + b.width + 10, b.y + 20, 20, 10, null);
+    	g.rotate(Math.PI / 4);
+    	b = weaponButtons[1];
+    	g.drawRect(b.x + b.width + 20, b.y + 5, 40, b.height - 10);
     }
     
     public void renderGameover(Graphics2D g, float delta) {
@@ -984,13 +995,13 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	shopButton = new BoxButton("BACK TO MENU", 540, 20, 240, 40) {
+    	shopButton = new BoxButton("BACK TO MENU", 520, 20, 260, 40) {
     		void onPress() {
     			gamestate = Gamestate.TITLE;
     		}
     	};
     	int rifleCost = 200;
-    	weaponButtons[0] = new BoxButton("Purchase rifle (" + rifleCost + ")", 540, 110, 190, 40) {
+    	weaponButtons[0] = new BoxButton("Purchase rifle (" + rifleCost + ")", 520, 110, 190, 40) {
     		void onPress() {
     			if (!rifle.purchased && savedPrecents >= rifleCost) {
     				//TODO play cash register
@@ -1002,7 +1013,7 @@ public class ZombieSleigher implements Controllable {
     		}
     	};
     	int bazookaCost = 1000;
-    	weaponButtons[1] = new BoxButton("Purchase bazooka (" + bazookaCost + ")", 540, 180, 190, 40) {
+    	weaponButtons[1] = new BoxButton("Purchase bazooka (" + bazookaCost + ")", 520, 160, 190, 40) {
     		void onPress() {
     			if (!bazooka.purchased && savedPrecents >= bazookaCost) {
     				//TODO play cash register sound
@@ -1013,6 +1024,5 @@ public class ZombieSleigher implements Controllable {
     			}
     		}
     	};
-    }
-    
+    }  
 }
