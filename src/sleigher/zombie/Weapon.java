@@ -13,6 +13,9 @@ public class Weapon {
 	boolean triggered = false;
 	boolean fired = false;
 	
+	//whether or not the weapon is available to use
+	boolean purchased = false;
+	
 	int cooldown = 0;
 	
 	BufferedImage imageRight;

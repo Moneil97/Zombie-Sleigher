@@ -243,6 +243,8 @@ public class ZombieSleigher implements Controllable {
     	pistol = new Pistol();
     	rifle = new Rifle();
     	bazooka = new Bazooka();
+    	pistol.purchased = true;
+    	//TODO set weapon method that checks purchased
     	weapon = pistol;
     	
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sci
@@ -565,12 +567,17 @@ public class ZombieSleigher implements Controllable {
     	
     	g.drawImage(shopTitleImage, 20, 20, 500, 200, null);
     	
-    	g.drawImage(precentImage, 550, 60, 25, 25, null);
+    	g.drawImage(precentImage, shopButton.x , 60, 25, 25, null);
     	g.setColor(new Color(150, 50, 150));
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
-    	g.drawString("" + savedPrecents, 750 - g.getFontMetrics().stringWidth("" + savedPrecents), 82);
+    	g.drawString("" + savedPrecents, 
+    			shopButton.x + shopButton.width - g.getFontMetrics().stringWidth("" + savedPrecents), 82);
     	
     	shopButton.render(g);
+    	
+    	if (rifle.purchased) weaponButtons[0].hovering = true;
+    	if (bazooka.purchased) weaponButtons[1].hovering = true;
+    	for (BoxButton b : weaponButtons) b.render(g);
     }
     
     public void renderGameover(Graphics2D g, float delta) {
@@ -777,7 +784,7 @@ public class ZombieSleigher implements Controllable {
     	}
     	
     	
-    	@Override
+    	
     	public void keyPressed(KeyEvent e) {
     		super.keyPressed(e);
     		int key = e.getKeyCode();
@@ -928,53 +935,69 @@ public class ZombieSleigher implements Controllable {
 
     private void instantiateButtons() {
     	menuButtons[0] = new BoxButton("PLAY", 520, 80, 230, 40){
-    		@Override
     		void onPress() {
     			gameReset();
     			gamestate = Gamestate.GAME;
     		}
     	};
     	menuButtons[1] = new BoxButton("SHOP", 520, 135, 230, 40){
-    		@Override
     		void onPress() {
     			gamestate = Gamestate.SHOP;
     		}
     	};
     	menuButtons[2] = new BoxButton("INSTRUCTIONS", 520, 190, 230, 40){
-    		@Override
     		void onPress() {
     			gamestate = Gamestate.INSTRUCTIONS;
     		}
     	};
     	
     	resumeButton = new BoxButton("RESUME", 300, 285, 100, 30) {
-    		@Override
     		void onPress() {
     			gamestate = Gamestate.GAME;
     		}
     	};
     	quitButton = new BoxButton("QUIT", 424, 285, 76, 30) {
-    		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
     		}
     	};
     	gameoverButton = new BoxButton("BACK TO MENU", 300, 350, 200, 40) {
-    		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
     		}
     	};
     	instructionsButton = new BoxButton("BACK TO MENU", 300, 40, 200, 30) {
-    		@Override
     		void onPress() {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	shopButton = new BoxButton("BACK TO MENU", 550, 20, 200, 30) {
-    		@Override
+    	shopButton = new BoxButton("BACK TO MENU", 540, 20, 240, 30) {
     		void onPress() {
     			gamestate = Gamestate.TITLE;
+    		}
+    	};
+    	int rifleCost = 200;
+    	weaponButtons[0] = new BoxButton("Purchase rifle (" + rifleCost + ")", 540, 110, 190, 30) {
+    		void onPress() {
+    			if (!rifle.purchased && savedPrecents >= rifleCost) {
+    				//TODO play cash register
+    				rifle.purchased = true;
+    				savedPrecents -= rifleCost;
+    			} else {
+    				//TODO play error noise
+    			}
+    		}
+    	};
+    	int bazookaCost = 1000;
+    	weaponButtons[1] = new BoxButton("Purchase bazooka (" + bazookaCost + ")", 540, 160, 190, 30) {
+    		void onPress() {
+    			if (!bazooka.purchased && savedPrecents >= bazookaCost) {
+    				//TODO play cash register sound
+    				bazooka.purchased = true;
+    				savedPrecents -= bazookaCost;
+    			} else {
+    				//TODO play error noise
+    			}
     		}
     	};
     }
