@@ -583,12 +583,27 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(new Color(100, 200, 100));
     	BoxButton b = weaponButtons[0];
     	g.drawRect(b.x + b.width + 20, b.y + 5, 40, b.height - 10);
-    	if (rifle.purchased);
-    	g.rotate(-Math.PI / 4);
-    	g.drawImage(rifleRightImage, b.x + b.width + 10, b.y + 20, 20, 10, null);
-    	g.rotate(Math.PI / 4);
-    	b = weaponButtons[1];
+    	if (rifle.purchased) {
+    		int x = b.x + b.width + 15;
+    		int y = b.y + 25;
+    		g.translate(x, y);
+    		g.rotate(-Math.PI / 6);
+    		g.drawImage(rifleRightImage, 0, 0, 50, 20, null);
+    		g.rotate(Math.PI / 6);
+    		g.translate(-x, -y);
+    	}
+    	
+		b = weaponButtons[1];
     	g.drawRect(b.x + b.width + 20, b.y + 5, 40, b.height - 10);
+    	if (bazooka.purchased) {
+    		int x = b.x + b.width + 15;
+    		int y = b.y + 25;
+    		g.translate(x, y);
+    		g.rotate(-Math.PI / 6);
+    		g.drawImage(bazookaRightImage, 0, 0, 50, 20, null);
+    		g.rotate(Math.PI / 6);
+    		g.translate(-x, -y);
+    	}
     }
     
     public void renderGameover(Graphics2D g, float delta) {
@@ -800,7 +815,13 @@ public class ZombieSleigher implements Controllable {
     				gamestate = Gamestate.GAME;
     				break;
     			}
-    		} 
+    		} else if (gamestate == Gamestate.SHOP) {
+    			switch(key) {
+    			case KeyEvent.VK_P:
+    				savedPrecents += 100;
+    				break;
+    			}
+    		}
     	}
     	
     	
