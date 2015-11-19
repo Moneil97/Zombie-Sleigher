@@ -95,8 +95,6 @@ public class ZombieSleigher implements Controllable {
     private boolean godMode = false;
     
     private Weapon weapon;
-    //TODO discuss, posisbly change to array?
-    private int weaponIndex = 0; //0 is pistol, 1 is rifle, 2 is bazooka
     private Pistol pistol;
     private Rifle rifle;
     private Bazooka bazooka;
@@ -511,7 +509,7 @@ public class ZombieSleigher implements Controllable {
     		g.setColor(new Color(50, 50, 50, 150));
     		g.fillRect(basex + x * i, basey, width, height);
     		g.setColor(new Color(150, 150, 150));
-    		if (weaponIndex == i) g.setColor(Color.red);
+    		if (weapon.index == i) g.setColor(Color.red);
     		g.setStroke(new BasicStroke(3));
     		g.drawRect(basex + x * i, basey, width, height);
     		g.setStroke(new BasicStroke(1));

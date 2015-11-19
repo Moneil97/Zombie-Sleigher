@@ -8,6 +8,7 @@ public class Pistol extends Weapon {
 		
 		damage = 5;
 		rateOfFire = 1;
+		index = 0;
 	}
 
 }

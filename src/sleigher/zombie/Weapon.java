@@ -17,6 +17,7 @@ public class Weapon {
 	boolean purchased = false;
 	
 	int cooldown = 0;
+	int index; //weapon index
 	
 	BufferedImage imageRight;
 	BufferedImage imageLeft;

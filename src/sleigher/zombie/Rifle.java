@@ -9,7 +9,7 @@ public class Rifle extends Weapon {
 		
 		damage = 5;
 		rateOfFire = 10;
-		
+		index = 1;
 	}
 
 }
