@@ -460,7 +460,6 @@ public class ZombieSleigher implements Controllable {
     }
 
 	public void renderGame(Graphics2D g, float delta) {
-		
 		//only draw two backgrounds at a time so delta doesn't fuck up when you move the top background to the bottom
 		for (int i = bgIndex; i < bgIndex + 2; i++) {
 			int k = i % 3;
@@ -497,6 +496,18 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(new Color(150, 50, 150));
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
+    	
+    	//weapon boxes
+    	for (int i = 0; i < 3; i++) {
+    		int basex = 30;
+    		int basey = 10;
+    		int width = 25;
+    		int height = 25;
+    		g.setColor(new Color(50, 50, 50));
+    		g.fillRect(10 + basex * i, basey, width, height);
+    		g.setColor(new Color(150, 150, 150));
+    		g.drawRect(10 + basex * i, basey, width, height);
+    	}
     }
     
     public void renderTitle(Graphics2D g, float delta) {
@@ -821,9 +832,7 @@ public class ZombieSleigher implements Controllable {
     				break;
     			}
     		}
-    	}
-    	
-    	
+    	}	
     	
     	public void keyPressed(KeyEvent e) {
     		super.keyPressed(e);
