@@ -22,8 +22,15 @@ public class Weapon {
 	int gameWidth;
 	int gameHeight;
 	
+	//TODO this is going to suck if it has to be animated
+	int firex;
+	int firey;
+	int firewidth;
+	int fireheight;
+	
 	BufferedImage imageRight;
 	BufferedImage imageLeft;
+	BufferedImage imageFire;
 	
 	public void update() {
 		cooldown--;

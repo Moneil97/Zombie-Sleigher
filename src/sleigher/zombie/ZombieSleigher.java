@@ -82,6 +82,7 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage pistolLeftImage;
 	static BufferedImage rifleLeftImage;
 	static BufferedImage bazookaLeftImage;
+	static BufferedImage rifleFireImage;
     
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -104,7 +105,7 @@ public class ZombieSleigher implements Controllable {
     private int zombiesKilled = 0;
     private double zombieSpawnChance = 0.5;
     private double zombieSpawnChanceIncrement = 0.02;
-    private int zombieSpawnRate = UPS / 2;
+    private int zombieSpawnRate = UPS / 3;
     
     private List<Tree> trees = new ArrayList<Tree>();
     private int treesDodged = 0;
@@ -115,9 +116,9 @@ public class ZombieSleigher implements Controllable {
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
     
-    private float hillSpeed = 1;
+    private float hillSpeed = 10;
     private float maxHillSpeed = 30;
-    private float hillSpeedIncrement = 0.0f;
+    private float hillSpeedIncrement = 0.0f; 
     private float hillDistance = 0;
     private int distance = 0;
     private int bestDistance = 0;
@@ -156,7 +157,6 @@ public class ZombieSleigher implements Controllable {
     		"Total precents earned: "		//14
     };
 	
-    
     public ZombieSleigher() {
     	
     	//create JFrame
@@ -237,6 +237,7 @@ public class ZombieSleigher implements Controllable {
     	pistolLeftImage = flip(pistolRightImage);
     	rifleRightImage = load(root + "rifle.png");
     	rifleLeftImage = flip(rifleRightImage);
+    	rifleFireImage = load(root + "rifleFire.png"); //TODO make transparent
     	bazookaRightImage = load(root + "bazooka.png");
     	bazookaLeftImage = flip(bazookaRightImage);
     	
@@ -269,6 +270,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * precent sound
      * sound: bullet firing, zombies dying
      * music, christmas at ground zero, baila fleck and the flecktones
      * zombie worth part of zombiesleigher, not zombie?
@@ -282,10 +284,13 @@ public class ZombieSleigher implements Controllable {
      * trees and dead zombies jitter down
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * above issue may be operating system dependent
+     * hill speed increment causes hill jitter
      */
     
     /**
      * TODO (feature creep)
+     * reload
+     * zombie spawning algorithm
      * trees
      * precents drop and must be collected?
      * precents fly towards counter
@@ -326,6 +331,7 @@ public class ZombieSleigher implements Controllable {
         		treeSpawnChance += treeSpawnChanceIncrement;
         	}
         	
+        	//TODO redo zombie spawn rate
         	if (ticks % zombieSpawnRate == 0) {
         		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
         			zombies.add(new Zombie(hillSpeed));
@@ -340,7 +346,7 @@ public class ZombieSleigher implements Controllable {
         	
     		santa.update();
     		weapon.update();
-    		 
+    		
     		if (weapon.fired) {
         		double hypotenuse = 1000;
         		//TODO angle variation
@@ -500,18 +506,13 @@ public class ZombieSleigher implements Controllable {
     	
     	//weapon boxes
     	//TODO there's got to be a more efficient way to do this
-		final int basex = 10;
-		final int x = 30;
-		final int basey = 10;
-		final int width = 25;
-		final int height = 25;
     	for (int i = 0; i < 3; i++) {
     		g.setColor(new Color(50, 50, 50, 150));
-    		g.fillRect(basex + x * i, basey, width, height);
+    		g.fillRect(10 + 30 * i, 10, 25, 25);
     		g.setColor(new Color(150, 150, 150));
     		if (weapon.index == i) g.setColor(Color.red);
     		g.setStroke(new BasicStroke(3));
-    		g.drawRect(basex + x * i, basey, width, height);
+    		g.drawRect(10 + 30 * i, 10, 25, 25);
     		g.setStroke(new BasicStroke(1));
     	}
     	
