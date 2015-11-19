@@ -19,6 +19,9 @@ public class Weapon {
 	int cooldown = 0;
 	int index; //weapon index
 	
+	int gameWidth;
+	int gameHeight;
+	
 	BufferedImage imageRight;
 	BufferedImage imageLeft;
 	

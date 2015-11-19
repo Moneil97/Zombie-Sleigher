@@ -899,7 +899,10 @@ public class ZombieSleigher implements Controllable {
      */
     
     private void setWeapon(Weapon w) {
-    	if (w.purchased) weapon = w;
+    	if (w.purchased) {
+    		weapon = w;
+    		if (gamestate == Gamestate.GAME) santa.weapon = weapon;
+    	}
     }
     
     public static BufferedImage flip(BufferedImage image){
