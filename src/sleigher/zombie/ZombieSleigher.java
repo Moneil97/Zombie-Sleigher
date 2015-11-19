@@ -1,5 +1,6 @@
 package sleigher.zombie;
 
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
@@ -94,6 +95,8 @@ public class ZombieSleigher implements Controllable {
     private boolean godMode = false;
     
     private Weapon weapon;
+    //TODO discuss, posisbly change to array?
+    private int weaponIndex = 0; //0 is pistol, 1 is rifle, 2 is bazooka
     private Pistol pistol;
     private Rifle rifle;
     private Bazooka bazooka;
@@ -498,15 +501,42 @@ public class ZombieSleigher implements Controllable {
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
     	
     	//weapon boxes
+    	//TODO there's got to be a more efficient way to do this
+		final int basex = 10;
+		final int x = 30;
+		final int basey = 10;
+		final int width = 25;
+		final int height = 25;
     	for (int i = 0; i < 3; i++) {
-    		int basex = 30;
-    		int basey = 10;
-    		int width = 25;
-    		int height = 25;
-    		g.setColor(new Color(50, 50, 50));
-    		g.fillRect(10 + basex * i, basey, width, height);
+    		g.setColor(new Color(50, 50, 50, 150));
+    		g.fillRect(basex + x * i, basey, width, height);
     		g.setColor(new Color(150, 150, 150));
-    		g.drawRect(10 + basex * i, basey, width, height);
+    		if (weaponIndex == i) g.setColor(Color.red);
+    		g.setStroke(new BasicStroke(3));
+    		g.drawRect(basex + x * i, basey, width, height);
+    		g.setStroke(new BasicStroke(1));
+    	}
+    	
+    	g.translate(12, 20);
+    	g.rotate(-Math.PI / 6);
+    	g.drawImage(pistolRightImage, 0, 0, 20, 15, null);
+    	g.rotate(Math.PI / 6);
+    	g.translate(-12, -20);
+    	
+    	if (rifle.purchased) {
+	    	g.translate(37, 25);
+	    	g.rotate(-Math.PI / 6);
+	    	g.drawImage(rifleRightImage, 0, 0, 30, 15, null);
+	    	g.rotate(Math.PI / 6);
+	    	g.translate(-37, -25);
+    	}
+    	
+    	if (bazooka.purchased) {
+	    	g.translate(70, 23);
+	    	g.rotate(-Math.PI / 6);
+	    	g.drawImage(bazookaRightImage, 0, 0, 25, 13, null);
+	    	g.rotate(Math.PI / 6);
+	    	g.translate(-70, -23);
     	}
     }
     
