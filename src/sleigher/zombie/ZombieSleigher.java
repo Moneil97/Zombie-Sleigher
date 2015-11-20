@@ -217,7 +217,7 @@ public class ZombieSleigher implements Controllable {
     		lastHillY[i] = hillY[i];
     	}
     	
-    	String root = "/res/";
+    	String root = "/res/images/";
     	for (int i = 0; i < 3; i++) gameBackground[i] = load(root + "background.jpg");
     	
     	for (int i=1; i <=4; i++)
@@ -249,7 +249,7 @@ public class ZombieSleigher implements Controllable {
     	setWeapon(pistol);
     	
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sci
-    	Scanner s = new Scanner(getClass().getResourceAsStream(root + "instructions.txt"));
+    	Scanner s = new Scanner(getClass().getResourceAsStream("/res/instructions.txt"));
     	while (s.hasNextLine()) instructions.add(s.nextLine());
     	s.close();
     	
