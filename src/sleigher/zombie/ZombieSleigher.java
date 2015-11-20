@@ -603,7 +603,6 @@ public class ZombieSleigher implements Controllable {
 		g.drawString("PAUSED", 300 - 2, 280);
     }
     
-    //TODO just bookmarking this method so I can find it easy while I'm working on it
     public void renderShop(Graphics2D g, float delta) {
     	g.setColor(Color.white);
     	g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -695,6 +694,7 @@ public class ZombieSleigher implements Controllable {
 		seconds = 0;
 		zombiesKilled = 0;
 		treesDodged = 0;
+		precents = 0;
     }
     
     private void resetLastPositions() {

@@ -10,10 +10,10 @@ public class Pistol extends Weapon {
 		
 		firing = new BufferedImage[2];
 		firing[0] = ZombieSleigher.rifleFireImage;
-		firing[1] = ZombieSleigher.rifleRightImage;
+		firing[1] = ZombieSleigher.rifleFireImage;
 		
 		frames = firing.length;
-		frameSpeed = 30;
+		frameSpeed = 2;
 		
 		damage = 8;
 		rateOfFire = 1.5f;

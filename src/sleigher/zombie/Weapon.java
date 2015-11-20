@@ -54,7 +54,6 @@ public class Weapon {
 	
 	public void render(Graphics2D g, float delta) {
 		//drawn in the santa class
-		//TODO muzzle animation
 		if (ticks % frameSpeed == 0) { //every frameSpeed ticks
 			frameIndex--; //move back by one in array
 			if (frameIndex > -1) imageFire = firing[frameIndex];
