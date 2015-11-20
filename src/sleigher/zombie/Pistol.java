@@ -6,8 +6,8 @@ public class Pistol extends Weapon {
 		imageRight = ZombieSleigher.pistolRightImage;
 		imageLeft = ZombieSleigher.pistolLeftImage;
 		
-		damage = 5;
-		rateOfFire = 1;
+		damage = 8;
+		rateOfFire = 1.5f;
 		
 		index = 0;
 		gameWidth = 10;

@@ -334,7 +334,7 @@ public class ZombieSleigher implements Controllable {
         	//TODO redo zombie spawn rate
         	if (ticks % zombieSpawnRate == 0) {
         		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
-        			zombies.add(new Zombie(hillSpeed));
+        			zombies.add(new Zombie(hillSpeed, hillDistance));
         		}
         	}
         	

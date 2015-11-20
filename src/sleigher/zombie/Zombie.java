@@ -11,6 +11,7 @@ public class Zombie {
 	float hillSpeed;
 	float xs, ys;
 	float health;
+	float maxHealth;
 	float distance; //dist from santa anchor
 	int width, height;
 	int precentWorth;
@@ -23,10 +24,11 @@ public class Zombie {
 	BufferedImage image = ZombieSleigher.zombieImage;
 	BufferedImage deadImage = ZombieSleigher.zombieDeadImage;
 	
-	public Zombie(float ys) {
+	public Zombie(float ys, float distance) {
 		int zone = (int) getRandomDouble(0.0, 5.0);
 		
-		health = 10;
+		maxHealth = 3 + distance / 100; //base health of 3 plus one for every 100 meters
+		health = maxHealth;
 		
 		precentWorth = 1;
 		

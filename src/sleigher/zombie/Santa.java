@@ -142,6 +142,8 @@ public class Santa{
 			g.rotate(angle);
 			g.drawImage(leftArmImage, -3, -3, 20, 7, null);
 			g.drawImage(weapon.imageLeft, 15, -2, weapon.gameWidth, weapon.gameHeight, null);
+			if (weapon.fired) g.drawImage(weapon.imageFire, 
+					weapon.firex, -weapon.firey + 2, weapon.firewidth, weapon.fireheight, null);
 			g.rotate(-angle);
 			g.translate(-leftAnchorX, -anchorY);
 		}
