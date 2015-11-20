@@ -120,7 +120,7 @@ public class Santa{
 			g.rotate(angle);
 			g.drawImage(rightArmImage, -2, -2, 20, 7, null);
 			g.drawImage(weapon.imageRight, weapon.gamex, weapon.gamey, weapon.gameWidth, weapon.gameHeight, null);
-			if (weapon.imageFire != null) g.drawImage(weapon.imageFire, 
+			if (weapon.frameIndex > -1) g.drawImage(weapon.imageFire, 
 					weapon.firex, weapon.firey, weapon.firewidth, weapon.fireheight, null);
 			g.rotate(-angle);
 			g.translate(-rightAnchorX, -anchorY);
@@ -145,7 +145,7 @@ public class Santa{
 			g.rotate(angle);
 			g.drawImage(leftArmImage, -3, -3, 20, 7, null);
 			g.drawImage(weapon.imageLeft, weapon.gamex, weapon.gamey, weapon.gameWidth, weapon.gameHeight, null);
-			if (weapon.imageFire != null) g.drawImage(weapon.imageFire, 
+			if (weapon.frameIndex > -1) g.drawImage(weapon.imageFire, 
 					weapon.firex, weapon.firey + 3, weapon.firewidth, weapon.fireheight, null);
 			g.rotate(-angle);
 			g.translate(-leftAnchorX, -anchorY);
