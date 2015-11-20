@@ -13,11 +13,13 @@ public class Rifle extends Weapon {
 		
 		index = 1;
 		
+		gamex = 10;
+		gamey = -7;
 		gameWidth = 30;
 		gameHeight = 15;
 		
 		firex = 45;
-		firey = -3;
+		firey = -5;
 		firewidth = 20;
 		fireheight = 10;
 	}

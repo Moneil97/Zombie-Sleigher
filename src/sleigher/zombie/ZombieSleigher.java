@@ -285,6 +285,7 @@ public class ZombieSleigher implements Controllable {
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * above issue may be operating system dependent
      * hill speed increment causes hill jitter
+     * if game crashes before controllable thread created, then can't close window
      */
     
     /**
@@ -481,7 +482,8 @@ public class ZombieSleigher implements Controllable {
     	for (int i = 0; i < trees.size(); i++)
     		trees.get(i).render(g, delta);
 
-    	santa.render(g, mx, my, delta, ticks);
+    	weapon.render(g, delta);
+    	santa.render(g, mx, my, ticks, delta);
     	
     	//distance
     	g.setColor(Color.red);

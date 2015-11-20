@@ -19,6 +19,8 @@ public class Weapon {
 	int cooldown = 0;
 	int index; //weapon index
 	
+	int gamex;
+	int gamey;
 	int gameWidth;
 	int gameHeight;
 	
@@ -32,6 +34,12 @@ public class Weapon {
 	BufferedImage imageLeft;
 	BufferedImage imageFire;
 	
+	BufferedImage[] firing;
+	int frames;
+	int frameIndex;
+	int ticks;
+	int frameSpeed; //amount of ticks between frame
+	
 	public void update() {
 		cooldown--;
 		if (cooldown < 0 && triggered) {
@@ -44,6 +52,7 @@ public class Weapon {
 	
 	public void render(Graphics2D g, float delta) {
 		//drawn in the santa class
+		
 	}
 	
 	public void mousePressed() {

@@ -34,6 +34,9 @@ public class Santa{
 	BufferedImage rightArmImage = ZombieSleigher.santaRightArmImage;
 	BufferedImage images[] = ZombieSleigher.santaImages;
 	
+	int frames = 4;
+	int frameSpeed = 2;
+	
 	double rightAnchorX;
 	double leftAnchorX;
 	double anchorY;
@@ -83,12 +86,12 @@ public class Santa{
 		bounds = getBounds();
 	}
 	
-	public void render(Graphics2D g, int mx, int my, float delta, int ticks) {
+	public void render(Graphics2D g, int mx, int my, int ticks, float delta) {
 		int drawx = (int) ((x - lastx) * delta + lastx);
 		int drawy = (int) ((y - lasty) * delta + lasty);
 		
 		//the higher those two magic numbers, the slower. the second one should be 1/4 of the first b/c there are 4 frames
-		g.drawImage(images[(ticks % (8)) / 2], drawx, drawy, width, height, null);
+		g.drawImage(images[(ticks % (frames * frameSpeed)) / frameSpeed], drawx, drawy, width, height, null);
 		
 		rightAnchorX = drawx + width - width * 0.3;
 		leftAnchorX = drawx + width * 0.3;
@@ -116,8 +119,8 @@ public class Santa{
 			g.translate(rightAnchorX, anchorY);
 			g.rotate(angle);
 			g.drawImage(rightArmImage, -2, -2, 20, 7, null);
-			g.drawImage(weapon.imageRight, 15, -2, weapon.gameWidth, weapon.gameHeight, null);
-			if (weapon.fired) g.drawImage(weapon.imageFire, 
+			g.drawImage(weapon.imageRight, weapon.gamex, weapon.gamey, weapon.gameWidth, weapon.gameHeight, null);
+			if (weapon.imageFire != null) g.drawImage(weapon.imageFire, 
 					weapon.firex, weapon.firey, weapon.firewidth, weapon.fireheight, null);
 			g.rotate(-angle);
 			g.translate(-rightAnchorX, -anchorY);
@@ -141,9 +144,9 @@ public class Santa{
 			g.translate(leftAnchorX, anchorY);
 			g.rotate(angle);
 			g.drawImage(leftArmImage, -3, -3, 20, 7, null);
-			g.drawImage(weapon.imageLeft, 15, -2, weapon.gameWidth, weapon.gameHeight, null);
-			if (weapon.fired) g.drawImage(weapon.imageFire, 
-					weapon.firex, -weapon.firey + 2, weapon.firewidth, weapon.fireheight, null);
+			g.drawImage(weapon.imageLeft, weapon.gamex, weapon.gamey, weapon.gameWidth, weapon.gameHeight, null);
+			if (weapon.imageFire != null) g.drawImage(weapon.imageFire, 
+					weapon.firex, weapon.firey + 3, weapon.firewidth, weapon.fireheight, null);
 			g.rotate(-angle);
 			g.translate(-leftAnchorX, -anchorY);
 		}
