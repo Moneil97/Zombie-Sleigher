@@ -334,7 +334,7 @@ public class ZombieSleigher implements Controllable {
         	//TODO redo zombie spawn rate
         	if (ticks % zombieSpawnRate == 0) {
         		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
-        			zombies.add(new Zombie(hillSpeed, hillDistance));
+        			zombies.add(new Zombie(hillSpeed, distance));
         		}
         	}
         	
@@ -386,6 +386,7 @@ public class ZombieSleigher implements Controllable {
     			
     			if (!z.dead && santa.bounds.intersects(z.bounds)) {
     				if (!godMode) santa.health -= z.collisionDamage;
+    				z.health = 0;
     				z.dead = true;
     				precents += z.precentWorth;
     				zombiesKilled++;
@@ -395,10 +396,10 @@ public class ZombieSleigher implements Controllable {
     				zombies.remove(i);
     		}
     		
-    		//bang bang (do this as much as once per tick, 
+    		//bang bang
     		if (weapon.fired && closestZombieIndex > -1) {
-    			zombies.get(closestZombieIndex).dead = true;
-    			precents += zombies.get(closestZombieIndex).precentWorth;
+    			zombies.get(closestZombieIndex).damage(weapon.damage);
+    			if (zombies.get(closestZombieIndex).dead) precents += zombies.get(closestZombieIndex).precentWorth;
     		}
     		//do this every tick to account for death of the closest zombie
     		closestZombieIndex = -1;
