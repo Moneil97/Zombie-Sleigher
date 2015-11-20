@@ -42,10 +42,10 @@ public class Weapon {
 	public void update() {
 		cooldown--;
 		if (cooldown < 0 && triggered) {
-			fired = true;
-			ticks = 1;
-			frameIndex = frames - 1;
-			imageFire = firing[frameIndex];
+			fired = true; 
+			ticks = 1; //set ticks to one, not zero, because ticks increment at end of render method
+			frameIndex = frames - 1; //set the frame to last frame in array
+			imageFire = firing[frameIndex]; //draw that frame
 			cooldown = (int) (ZombieSleigher.UPS / rateOfFire);
 		} else {
 			fired = false;
@@ -55,8 +55,8 @@ public class Weapon {
 	public void render(Graphics2D g, float delta) {
 		//drawn in the santa class
 		//TODO muzzle animation
-		if (ticks % frameSpeed == 0) {
-			frameIndex--;
+		if (ticks % frameSpeed == 0) { //every frameSpeed ticks
+			frameIndex--; //move back by one in array
 			if (frameIndex > -1) imageFire = firing[frameIndex];
 		}
 		ticks++;
