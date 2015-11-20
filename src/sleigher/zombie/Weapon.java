@@ -44,7 +44,7 @@ public class Weapon {
 		if (cooldown < 0 && triggered) {
 			fired = true; 
 			ticks = 1; //set ticks to one, not zero, because ticks increment at end of render method
-			frameIndex = frames - 1; //set the frame to last frame in array
+			frameIndex = frames - 1; //set the frame to the first frame in array
 			imageFire = firing[frameIndex]; //draw that frame
 			cooldown = (int) (ZombieSleigher.UPS / rateOfFire);
 		} else {
