@@ -7,7 +7,6 @@ public class Pistol extends Weapon {
 	public Pistol() {
 		imageRight = ZombieSleigher.pistolRightImage;
 		imageLeft = ZombieSleigher.pistolLeftImage;
-		imageFire = ZombieSleigher.rifleFireImage;
 		
 		firing = new BufferedImage[2];
 		firing[0] = ZombieSleigher.rifleFireImage;

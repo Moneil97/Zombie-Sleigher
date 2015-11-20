@@ -24,7 +24,6 @@ public class Weapon {
 	int gameWidth;
 	int gameHeight;
 	
-	//TODO this is going to suck if it has to be animated
 	int firex;
 	int firey;
 	int firewidth;
@@ -44,8 +43,9 @@ public class Weapon {
 		cooldown--;
 		if (cooldown < 0 && triggered) {
 			fired = true;
-			ticks = 0;
+			ticks = 1;
 			frameIndex = frames - 1;
+			imageFire = firing[frameIndex];
 			cooldown = (int) (ZombieSleigher.UPS / rateOfFire);
 		} else {
 			fired = false;
@@ -55,11 +55,11 @@ public class Weapon {
 	public void render(Graphics2D g, float delta) {
 		//drawn in the santa class
 		//TODO muzzle animation
-		ticks++;
 		if (ticks % frameSpeed == 0) {
 			frameIndex--;
 			if (frameIndex > -1) imageFire = firing[frameIndex];
 		}
+		ticks++;
 	}
 	
 	public void mousePressed() {
