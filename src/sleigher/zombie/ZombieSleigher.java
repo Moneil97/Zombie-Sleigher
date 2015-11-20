@@ -683,6 +683,7 @@ public class ZombieSleigher implements Controllable {
     private void gameReset(){
     	//TODO make sure to reset all stat variables, not just the stats themselves
     	santa = new Santa(weapon, 375,150);
+    	weapon.fired = false;
 		gameOver = false;
 		trees.clear();
 		zombies.clear();
