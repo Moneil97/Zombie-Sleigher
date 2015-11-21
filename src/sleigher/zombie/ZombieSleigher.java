@@ -3,7 +3,9 @@ package sleigher.zombie;
 import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -17,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
@@ -157,16 +160,47 @@ public class ZombieSleigher implements Controllable {
     		"Total precents earned: "		//14
     };
 	
-    public ZombieSleigher() {
+    JFrame clickGuard;
+    
+    @SuppressWarnings("serial")
+	public ZombieSleigher() {
+    	
+    	//Don't you hate it when you accidently click outside the window and lose your game?
+    	//Well, thanks to click guard all your troubles are over
+    	//Totally Unnecessary, but I want to so bleh
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	clickGuard = new JFrame(){
+    		@Override
+    		public void paint(Graphics g) {
+    			super.paint(g);
+    			g.setColor(Color.black);
+    			g.fillRect(0, 0, screenSize.width, screenSize.height);
+    		}
+    	};
+    	clickGuard.setUndecorated(true);
+    	clickGuard.setSize(screenSize);
+    	clickGuard.setOpacity(.5f);
+    	clickGuard.setVisible(true);
     	
     	//create JFrame
     	frame = new JFrame("Santa Sleigher");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
         	public void windowClosing(WindowEvent e) {
+        		clickGuard.dispose();
         		exit();
         	}
         });
+        frame.addWindowFocusListener(new WindowFocusListener() {
+			@Override
+			public void windowLostFocus(WindowEvent e) {
+				frame.toFront();
+			}
+			
+			@Override
+			public void windowGainedFocus(WindowEvent e) { }
+			
+		});
         frame.setSize(WIDTH, HEIGHT);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
