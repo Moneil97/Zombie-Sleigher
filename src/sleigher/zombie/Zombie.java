@@ -93,12 +93,13 @@ public class Zombie {
 			g.drawImage(deadImage, drawx, drawy, width, height, null);
 		} else {
 			g.drawImage(image, drawx, drawy, width, height, null);
+			
+			//g.setColor(Color.red); 
+			//g.fillRect(drawx, drawy - 5, width, 3);
+			g.setColor(new Color(0, 255, 0, 150));
+			g.fillRect(drawx, drawy - 5,(int) ((health / maxHealth) * width), 3);
 		}
 		
-		g.setColor(new Color(0, 255, 0, 150));
-		g.fillRect(drawx, drawy - 5,(int) ((health / maxHealth) * width), 3);
-		g.setColor(Color.red); 
-		g.fillRect(drawx, drawy - 5, width - (int) ((health / maxHealth) * width), 3);
 	}
 	
 	public void damage(float damage) {
