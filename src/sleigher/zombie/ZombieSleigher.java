@@ -881,6 +881,12 @@ public class ZombieSleigher implements Controllable {
 	    		case KeyEvent.VK_G:
 	    			godMode = !godMode;
 	    			break;
+	    		case KeyEvent.VK_C:
+	    			if (clickGuard.isVisible())
+	    				clickGuard.setVisible(false);
+	    			else
+	    				clickGuard.setVisible(true);
+	    			break;
 	    		}		
 	    		
     		} else if (gamestate == Gamestate.PAUSE) {
