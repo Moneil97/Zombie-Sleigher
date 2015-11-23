@@ -97,7 +97,8 @@ public class Zombie {
 			//g.setColor(Color.red); 
 			//g.fillRect(drawx, drawy - 5, width, 3);
 			g.setColor(new Color(0, 255, 0, 150));
-			g.fillRect(drawx, drawy - 5,(int) ((health / maxHealth) * width), 3);
+			int barWidth = (int) ((health / maxHealth) * width);
+			g.fillRect(drawx + width/2 - barWidth/2 , drawy - 5, barWidth, 3);
 		}
 		
 	}
