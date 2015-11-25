@@ -35,6 +35,10 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import net.beadsproject.beads.core.AudioContext;
+import net.beadsproject.beads.data.Buffer;
+import net.beadsproject.beads.ugens.WavePlayer;
+
 import com.jackdahms.Controllable;
 import com.jackdahms.ControllableThread;
 
@@ -86,7 +90,7 @@ public class ZombieSleigher implements Controllable {
 	static BufferedImage rifleLeftImage;
 	static BufferedImage bazookaLeftImage;
 	static BufferedImage rifleFireImage;
-    
+	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
     private BoxButton quitButton;
@@ -319,7 +323,7 @@ public class ZombieSleigher implements Controllable {
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * above issue may be operating system dependent
      * hill speed increment causes hill jitter
-     * if game crashes before controllable thread created, then can't close window
+     * if game crashes before controllable thread created, then can't close window (will never affect user)
      */
     
     /**
@@ -1001,10 +1005,15 @@ public class ZombieSleigher implements Controllable {
 		} while (!updateScreen());
     }
     
-    
     //when the frame exits
     public void exit() {
-    	controllableThread.stop();
+    	try {
+    		controllableThread.stop();
+    	} catch (NullPointerException e) {
+    		//if something crashes before the thread starts, then you wouldn't be able to close the frame
+    		//so I put this here
+    		System.err.println("Exited before thread started!");
+    	}
     	frame.dispose();
     }
     
