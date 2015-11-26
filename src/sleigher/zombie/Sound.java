@@ -19,6 +19,7 @@ public class Sound {
 		gainValue = new Glide(ac, 1, 0); //audio context, init value, glide time in ms
 		gain = new Gain(ac, 1, gainValue);
 		
+		sample = null;
 		try {
 			sample = new SamplePlayer(ZombieSleigher.audioContext, new Sample(path));
 		} catch (IOException e) {
@@ -33,7 +34,8 @@ public class Sound {
 	}
 	
 	public void play() {
-		
+		sample.setToLoopStart();
+		sample.start();
 	}
 	
 	public void setKillOnEnd(boolean kill) {

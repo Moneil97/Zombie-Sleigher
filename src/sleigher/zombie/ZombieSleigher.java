@@ -402,6 +402,8 @@ public class ZombieSleigher implements Controllable {
     		weapon.update();
     		
     		if (weapon.fired) {
+    			weapon.fireSound.play();
+    			
         		double hypotenuse = 1000;
         		//TODO angle variation
         		double angle = santa.angle;
