@@ -19,6 +19,7 @@ public class Santa{
 	Weapon weapon;
 	
 	float health;
+	float maxHealth;
 	float scalex = 2.5f;
 	float scaley = 1.6f;
 	
@@ -58,6 +59,7 @@ public class Santa{
 		
 		collisionDamage = 10;
 		
+		maxHealth = 100;
 		health = 100;
 		
 		width = (int) (18 * scalex);

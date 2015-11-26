@@ -628,7 +628,8 @@ public class ZombieSleigher implements Controllable {
     	
     	//health bar
     	g.setColor(new Color(0, 255, 0, 125));
-    	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 32, 5, (int) santa.health, 20);
+    	g.fillRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 32, 5, 
+    			(int) (100.0 * (santa.health / santa.maxHealth)), 20);
     	g.setColor(Color.red);
     	g.drawRect(400 - g.getFontMetrics().stringWidth("HEALTH ") / 2 + 32, 5, 100, 20);
     	
@@ -818,7 +819,11 @@ public class ZombieSleigher implements Controllable {
     
     private void gameReset(){
     	//TODO make sure to reset all stat variables, not just the stats themselves
-    	santa = new Santa(weapon, 375,150);
+    	santa.health = santa.maxHealth;
+    	weapon = pistol;
+    	santa.weapon = weapon;
+    	santa.x = 375;
+    	santa.y = 150;
     	weapon.fired = false;
 		gameOver = false;
 		trees.clear();
@@ -1374,7 +1379,7 @@ public class ZombieSleigher implements Controllable {
 					currentUpgrade++;
 					savedPrecents -= cost;
 					cost += costIncrement;
-//					 += statIncrement;
+					santa.maxHealth += statIncrement;
 				} else {
 					//TODO play error noise
 				}
