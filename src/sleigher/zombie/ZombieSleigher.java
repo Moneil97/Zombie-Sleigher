@@ -1,5 +1,6 @@
 package sleigher.zombie;
 
+import java.awt.AWTException;
 import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -9,7 +10,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.event.KeyAdapter;
@@ -31,9 +35,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+import org.jnativehook.mouse.NativeMouseEvent;
+import org.jnativehook.mouse.NativeMouseListener;
+import org.jnativehook.mouse.NativeMouseMotionListener;
 
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.data.Buffer;
@@ -173,6 +185,7 @@ public class ZombieSleigher implements Controllable {
     };
 	
     JFrame clickGuard;
+    Robot rob;
     
     @SuppressWarnings("serial")
 	public ZombieSleigher() {
@@ -233,7 +246,70 @@ public class ZombieSleigher implements Controllable {
     	
     	//and awaaaaay we go!
     	init();
+    	
+    	
+    	
+		try {
+			rob = new Robot();
+		} catch (AWTException e2) {
+			e2.printStackTrace();
+		}
+		
+    	
+		try {
+			GlobalScreen.registerNativeHook();
+		} catch (NativeHookException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
+    	//Add listeners
+		GlobalScreen.addNativeMouseListener(new NativeMouseListener() {
+			
+			@Override
+			public void nativeMouseReleased(NativeMouseEvent e) {
+				if (gamestate == Gamestate.GAME)
+	    			weapon.mouseReleased();
+			}
+			
+			@Override
+			public void nativeMousePressed(NativeMouseEvent e) {
+				if (gamestate == Gamestate.GAME)
+	    			weapon.mousePressed();
+			}
+			
+			@Override
+			public void nativeMouseClicked(NativeMouseEvent e) {}
+		});
+//		GlobalScreen.addNativeMouseWheelListener(this);
+		GlobalScreen.addNativeMouseMotionListener(new NativeMouseMotionListener() {
+			
+			@Override
+			public void nativeMouseMoved(NativeMouseEvent e) {
+				Point screen = frame.getLocationOnScreen();
+				if (e.getX() < screen.x)
+					rob.mouseMove(frame.getLocationOnScreen().x, e.getY());
+				if (e.getX() > screen.x + frame.getWidth()-2)
+					rob.mouseMove(screen.x + frame.getWidth()-2, e.getY());
+				if (e.getY() > screen.y + frame.getHeight()-2)
+					rob.mouseMove(e.getX(), screen.y + frame.getHeight()-2);
+				if (e.getY() < screen.y)
+					rob.mouseMove(e.getX(), screen.y);
+			}
+			
+			@Override
+			public void nativeMouseDragged(NativeMouseEvent e) {
+				
+			}
+		});
+
+		// Disable parent logger and set the desired level.
+		logger.setUseParentHandlers(false);
+		logger.setLevel(Level.ALL);
+    	
+  
     }
+    private static final Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
     
     public void init() {
     	backgroundGraphics = (Graphics2D) background.getGraphics();
@@ -822,9 +898,9 @@ public class ZombieSleigher implements Controllable {
     
     private class Mouse extends MouseAdapter {
     	public void mousePressed(MouseEvent e) {
-    		if (gamestate == Gamestate.GAME) {
+    		/*if (gamestate == Gamestate.GAME) {
     			weapon.mousePressed();
-    		} else if (gamestate == Gamestate.TITLE) {
+    		} else */if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mousePressed(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {
@@ -842,9 +918,9 @@ public class ZombieSleigher implements Controllable {
     	} 
     	
     	public void mouseReleased(MouseEvent e) {
-    		if (gamestate == Gamestate.GAME) {
+    		/*if (gamestate == Gamestate.GAME) {
     			weapon.mouseReleased();
-    		} else if (gamestate == Gamestate.TITLE) {
+    		} else */if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mouseReleased(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {

@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="beads/tools.jar"/>
 	<classpathentry kind="lib" path="beads/tritonus_aos-0.3.6.jar"/>
 	<classpathentry kind="lib" path="beads/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="jnativehook-2.0.2.jar" sourcepath="F:/Downloads/JNativeHook-2.0.2.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
