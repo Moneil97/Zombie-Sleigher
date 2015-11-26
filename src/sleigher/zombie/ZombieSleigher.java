@@ -778,7 +778,7 @@ public class ZombieSleigher implements Controllable {
     		g.translate(-x, -y);
     	}
     	
-    	for (BoxButton u : upgradeButtons) {
+    	for (UpgradeButton u : upgradeButtons) {
     		u.render(g);
     	}
     }
@@ -1246,10 +1246,10 @@ public class ZombieSleigher implements Controllable {
     			}
     		}
     	};
+ 
+        //santa max health + hull strength
 
-    	UpgradeButton u = upgradeButtons[0];
-    	u = new UpgradeButton("Increase pistol fire rate",
-    			100, 300, 200, 40) {
+    	upgradeButtons[0] = new UpgradeButton("Increase pistol fire rate", 20, 215, 200, 30) {
     		void onPress() {
     			if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
     				//TODO play cash register sound
@@ -1262,12 +1262,46 @@ public class ZombieSleigher implements Controllable {
     			}
     		}
     	};
+    	UpgradeButton u = upgradeButtons[0];
     	u.cost = 50;
     	u.costIncrement = 10;
     	u.currentUpgrade = 0;
     	u.maxUpgrade = 10;
     	u.statIncrement = 0.5f;
     	
+    	upgradeButtons[1] = new UpgradeButton("Increase pistol damage",20, 260, 200, 30) {
+    		
+    	};
     	u = upgradeButtons[1];
+    	
+    	upgradeButtons[2] = new UpgradeButton("Increase rifle fire rate", 20, 305, 200, 30) {
+    		
+    	};
+    	u = upgradeButtons[2];
+    	
+    	upgradeButtons[3] = new UpgradeButton("Increase rifle damage", 20, 350, 200, 30) {
+    		
+    	};
+    	u = upgradeButtons[3];
+    	
+    	upgradeButtons[4] = new UpgradeButton("Increase bazooka fire rate", 20, 395, 200, 30) {
+    		
+    	};
+    	u = upgradeButtons[4];
+    	
+    	upgradeButtons[5] = new UpgradeButton("Increase bazooka damage", 20, 440, 200, 30) {
+    		
+    	};
+    	u = upgradeButtons[5];
+    	
+    	upgradeButtons[6] = new UpgradeButton("Increase max health", 20, 485, 200, 30) {
+    		
+    	};
+    	u = upgradeButtons[6];
+    	
+    	upgradeButtons[7] = new UpgradeButton("Increase hull strength", 20, 530, 200, 30) {
+    		
+    	};
+    	u = upgradeButtons[7];
     }  
 }
