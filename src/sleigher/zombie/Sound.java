@@ -23,6 +23,7 @@ public class Sound {
 		try {
 			sample = new SamplePlayer(ZombieSleigher.audioContext, new Sample(path));
 		} catch (IOException e) {
+			e.printStackTrace();
 			System.err.println("Failed to load sound at " + path);
 		}
 		

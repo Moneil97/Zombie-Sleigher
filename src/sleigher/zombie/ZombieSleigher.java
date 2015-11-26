@@ -280,10 +280,11 @@ public class ZombieSleigher implements Controllable {
     	bazookaRightImage = load(root + "bazooka.png");
     	bazookaLeftImage = flip(bazookaRightImage);
     	
-    	root = "/res/sounds/";
+    	root = "src/res/sounds/";
     	audioContext = new AudioContext();
+    	masterGain = new Gain(audioContext, 0, 0.5f);
     	
-    	pistolSound = new Sound(root + "pistol.wav");
+//    	pistolSound = new Sound(root + "pistol.wav");
     	
     	audioContext.out.addInput(masterGain);
     	
