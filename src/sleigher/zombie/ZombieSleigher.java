@@ -788,30 +788,15 @@ public class ZombieSleigher implements Controllable {
     		u.render(g);
     		for (int j = 0; j < u.maxUpgrades; j++) {
 
-    			g.setColor(new Color(50, 50, 50, 150));
+    			g.setColor(new Color(150, 150, 150));
     			
-        		g.fillRect(220 + 30 * j, 215 + 45 * i, 25, 25);
+        		g.fillRect(235 + 40 * j, 218 + 45 * i, 25, 25);
         		
-        		g.setColor(new Color(150, 150, 150));
+        		g.setColor(new Color(50, 50, 50));
 //        		if (weapon.index == i) g.setColor(Color.red);
         		
         		g.setStroke(new BasicStroke(3));
-        		g.drawRect(220 + 30 * i, 215 + 45 * i, 25, 25);
-        		g.setStroke(new BasicStroke(1));
-    		}
-    	}
-    	for (UpgradeButton u : upgradeButtons) {
-    		u.render(g);
-    		for (int i = 0; i < u.maxUpgrades; i++) {
-    			g.setColor(new Color(50, 50, 50, 150));
-    			
-        		g.fillRect(220 + 30 * i, 10, 25, 25);
-        		
-        		g.setColor(new Color(150, 150, 150));
-//        		if (weapon.index == i) g.setColor(Color.red);
-        		
-        		g.setStroke(new BasicStroke(3));
-        		g.drawRect(10 + 30 * i, 10, 25, 25);
+        		g.drawRect(235 + 40 * i, 218 + 45 * i, 25, 25);
         		g.setStroke(new BasicStroke(1));
     		}
     	}
