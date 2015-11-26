@@ -1111,7 +1111,13 @@ public class ZombieSleigher implements Controllable {
     		//so I put this here
     		System.err.println("Exited before thread started!");
     	}
+    	try {
+			GlobalScreen.unregisterNativeHook();
+		} catch (NativeHookException e) {
+			e.printStackTrace();
+		}
     	frame.dispose();
+    	System.exit(0);
     }
     
     public BufferedImage load(String path) {
