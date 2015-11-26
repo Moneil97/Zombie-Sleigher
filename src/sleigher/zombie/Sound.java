@@ -22,16 +22,16 @@ public class Sound {
 		sample = null;
 		try {
 			sample = new SamplePlayer(ZombieSleigher.audioContext, new Sample(path));
+			gain.addInput(sample);
+			
+			setKillOnEnd(false);
+			
+			ZombieSleigher.masterGain.addInput(gain);
 		} catch (IOException e) {
 			
 			System.err.println("Failed to load sound at " + path);
 		}
 		
-		gain.addInput(sample);
-		
-		setKillOnEnd(false);
-		
-		ZombieSleigher.masterGain.addInput(gain);
 	}
 	
 	public void play() {

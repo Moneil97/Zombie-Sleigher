@@ -18,6 +18,8 @@ public class Rifle extends Weapon {
 		
 		frames = firing.length;
 		
+		fireSound = ZombieSleigher.pistolSound;
+		
 		damage = 2;
 		rateOfFire = 5;
 		
