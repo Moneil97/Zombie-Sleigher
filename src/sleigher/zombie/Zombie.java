@@ -29,7 +29,6 @@ public class Zombie {
 		int zone = (int) getRandomDouble(0.0, 5.0);
 		
 		maxHealth = 3 + distance / 100; //base health of 3 plus one for every 100 meters
-		System.out.println(maxHealth);
 		health = maxHealth;
 		
 		precentWorth = 1;

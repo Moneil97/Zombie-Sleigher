@@ -225,11 +225,6 @@ public class ZombieSleigher implements Controllable {
     	
     	//and awaaaaay we go!
     	init();
-
-    	//Update will be called UPS
-    	controllableThread = new ControllableThread(this);
-    	controllableThread.setTargetUps(UPS);
-    	controllableThread.start();
     }
     
     public void init() {
@@ -279,6 +274,11 @@ public class ZombieSleigher implements Controllable {
     	bazookaRightImage = load(root + "bazooka.png");
     	bazookaLeftImage = flip(bazookaRightImage);
     	
+    	AudioContext ac = new AudioContext();
+    	
+    	WavePlayer wp = new WavePlayer(ac, 440, Buffer.SINE);
+    	ac.out.addInput(wp);
+    	
     	bullet = new Line2D.Double();
     	pistol = new Pistol();
     	rifle = new Rifle();
@@ -297,6 +297,13 @@ public class ZombieSleigher implements Controllable {
     	canvas.addMouseMotionListener(new MouseMotion());
     	canvas.addMouseListener(new Mouse());
     	canvas.addKeyListener(new Key());
+
+    	//Update will be called UPS
+    	controllableThread = new ControllableThread(this);
+    	controllableThread.setTargetUps(UPS);
+    	controllableThread.start();
+    	
+    	ac.start();
     }
     
     /** TODO (in class, things we need to discuss together)
