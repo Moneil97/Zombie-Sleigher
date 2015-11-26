@@ -118,6 +118,11 @@ public class ZombieSleigher implements Controllable {
     private BoxButton instructionsButton;
     private BoxButton shopButton;
     private BoxButton[] weaponButtons = new BoxButton[2];
+    //pistol fire rate + damage
+    //rifle fire rate + damage
+    //bazooka fire rate + damage
+    //santa max health + hull strength
+    private UpgradeButton[] upgradeButtons = new UpgradeButton[8];
     
     private Santa santa;
     private boolean godMode = false;
@@ -389,20 +394,16 @@ public class ZombieSleigher implements Controllable {
     	audioContext.start();
     }
     
-    /** TODO (in class, things we need to discuss together)
-     * shop layout
+    /**
+     * TODO (actual things we have to add)
+     * bazooka
      * actual upgrades
      * weapon stats
      * weapon upgrades
-     */
-    
-    /**
-     * TODO (actual things we have to add)
      * precent sound
-     * sound: bullet firing, zombies dying
+     * sound: zombies dying
      * music, christmas at ground zero, baila fleck and the flecktones
      * zombie worth part of zombiesleigher, not zombie?
-     * speed increases damage done by zombies
      * weapons
      * weapon animations
      * shop
@@ -775,6 +776,10 @@ public class ZombieSleigher implements Controllable {
     		g.drawImage(bazookaRightImage, 0, 0, 50, 20, null);
     		g.rotate(Math.PI / 6);
     		g.translate(-x, -y);
+    	}
+    	
+    	for (BoxButton u : upgradeButtons) {
+    		u.render(g);
     	}
     }
     
@@ -1173,7 +1178,6 @@ public class ZombieSleigher implements Controllable {
     		return true;
     	}
     }
-    
 
     private void instantiateButtons() {
     	menuButtons[0] = new BoxButton("PLAY", 520, 80, 230, 40){
@@ -1242,5 +1246,28 @@ public class ZombieSleigher implements Controllable {
     			}
     		}
     	};
+
+    	UpgradeButton u = upgradeButtons[0];
+    	u = new UpgradeButton("Increase pistol fire rate",
+    			100, 300, 200, 40) {
+    		void onPress() {
+    			if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+    				//TODO play cash register sound
+    				currentUpgrade++;
+    				savedPrecents -= cost;
+    				cost += costIncrement;
+    				pistol.rateOfFire += statIncrement;
+    			} else {
+    				//TODO play error noise
+    			}
+    		}
+    	};
+    	u.cost = 50;
+    	u.costIncrement = 10;
+    	u.currentUpgrade = 0;
+    	u.maxUpgrade = 10;
+    	u.statIncrement = 0.5f;
+    	
+    	u = upgradeButtons[1];
     }  
 }
