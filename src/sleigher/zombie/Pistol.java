@@ -12,6 +12,8 @@ public class Pistol extends Weapon {
 		firing[0] = ZombieSleigher.rifleFireImage;
 		firing[1] = ZombieSleigher.rifleFireImage;
 		
+		fireSound = ZombieSleigher.pistolSound;
+		
 		frames = firing.length;
 		frameSpeed = 2;
 		

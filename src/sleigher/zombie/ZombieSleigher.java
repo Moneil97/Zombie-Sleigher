@@ -37,6 +37,7 @@ import javax.swing.JFrame;
 
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.data.Buffer;
+import net.beadsproject.beads.ugens.Gain;
 import net.beadsproject.beads.ugens.WavePlayer;
 
 import com.jackdahms.Controllable;
@@ -90,6 +91,11 @@ public class ZombieSleigher implements Controllable {
 	static BufferedImage rifleLeftImage;
 	static BufferedImage bazookaLeftImage;
 	static BufferedImage rifleFireImage;
+	
+	static AudioContext audioContext;
+	static Gain masterGain;
+	
+	static Sound pistolSound;
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -274,10 +280,12 @@ public class ZombieSleigher implements Controllable {
     	bazookaRightImage = load(root + "bazooka.png");
     	bazookaLeftImage = flip(bazookaRightImage);
     	
-    	AudioContext ac = new AudioContext();
+    	root = "/res/sounds/";
+    	audioContext = new AudioContext();
     	
-    	WavePlayer wp = new WavePlayer(ac, 440, Buffer.SINE);
-    	ac.out.addInput(wp);
+    	pistolSound = new Sound(root + "pistol.wav");
+    	
+    	audioContext.out.addInput(masterGain);
     	
     	bullet = new Line2D.Double();
     	pistol = new Pistol();
@@ -303,7 +311,7 @@ public class ZombieSleigher implements Controllable {
     	controllableThread.setTargetUps(UPS);
     	controllableThread.start();
     	
-    	ac.start();
+    	audioContext.start();
     }
     
     /** TODO (in class, things we need to discuss together)
@@ -1028,7 +1036,7 @@ public class ZombieSleigher implements Controllable {
     	try {
 			return ImageIO.read(this.getClass().getResource(path));
 		} catch (Exception e) {
-			System.err.println("Could not load image!");
+			System.err.println("Failed to load image at " + path);
 			BufferedImage missingTexture = create(800, 600, false);
 			
 			//the "missing texture" texture from garry's mod

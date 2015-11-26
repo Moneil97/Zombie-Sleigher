@@ -39,6 +39,8 @@ public class Weapon {
 	int ticks;
 	int frameSpeed; //amount of ticks between frame
 	
+	Sound fireSound;
+	
 	public void update() {
 		cooldown--;
 		if (cooldown < 0 && triggered) {
