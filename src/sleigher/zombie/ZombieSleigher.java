@@ -1246,17 +1246,15 @@ public class ZombieSleigher implements Controllable {
     			}
     		}
     	};
- 
-        //santa max health + hull strength
 
     	upgradeButtons[0] = new UpgradeButton("Increase pistol fire rate", 20, 215, 200, 30) {
-    		void onPress() {
+    		void onSell() {
     			if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
     				//TODO play cash register sound
     				currentUpgrade++;
     				savedPrecents -= cost;
     				cost += costIncrement;
-    				pistol.rateOfFire += statIncrement;
+    				pistol.rateOfFire += statIncrement; //TODO I don't know if this is enough to update the gun
     			} else {
     				//TODO play error noise
     			}
@@ -1267,41 +1265,146 @@ public class ZombieSleigher implements Controllable {
     	u.costIncrement = 10;
     	u.currentUpgrade = 0;
     	u.maxUpgrade = 10;
-    	u.statIncrement = 0.5f;
+    	u.statIncrement = 0.2f;
     	
     	upgradeButtons[1] = new UpgradeButton("Increase pistol damage",20, 260, 200, 30) {
-    		
+    		public void onPress() {
+	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+					//TODO play cash register sound
+					currentUpgrade++;
+					savedPrecents -= cost;
+					cost += costIncrement;
+					pistol.damage += statIncrement;
+				} else {
+					//TODO play error noise
+				}
+    		}
     	};
     	u = upgradeButtons[1];
+    	u.cost = 50;
+    	u.costIncrement = 20;
+    	u.currentUpgrade = 0;
+    	u.maxUpgrade = 10;
+    	u.statIncrement = 1;
     	
     	upgradeButtons[2] = new UpgradeButton("Increase rifle fire rate", 20, 305, 200, 30) {
-    		
+    		public void onPress() {
+	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+					//TODO play cash register sound
+					currentUpgrade++;
+					savedPrecents -= cost;
+					cost += costIncrement;
+					pistol.damage += statIncrement;
+				} else {
+					//TODO play error noise
+				}
+    		}
     	};
     	u = upgradeButtons[2];
+    	u.cost = 75;
+    	u.costIncrement = 25;
+    	u.currentUpgrade = 0;
+    	u.maxUpgrade = 10;
+    	u.statIncrement = 0.5f;
     	
     	upgradeButtons[3] = new UpgradeButton("Increase rifle damage", 20, 350, 200, 30) {
-    		
+    		public void onPress() {
+	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+					//TODO play cash register sound
+					currentUpgrade++;
+					savedPrecents -= cost;
+					cost += costIncrement;
+					pistol.damage += statIncrement;
+				} else {
+					//TODO play error noise
+				}
+    		}
     	};
     	u = upgradeButtons[3];
+    	u.cost = 100;
+    	u.costIncrement = 50;
+    	u.currentUpgrade = 0;
+    	u.maxUpgrade = 10;
+    	u.statIncrement = 1;
     	
     	upgradeButtons[4] = new UpgradeButton("Increase bazooka fire rate", 20, 395, 200, 30) {
-    		
+    		public void onPress() {
+	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+					//TODO play cash register sound
+					currentUpgrade++;
+					savedPrecents -= cost;
+					cost += costIncrement;
+					pistol.damage += statIncrement;
+				} else {
+					//TODO play error noise
+				}
+    		}
     	};
     	u = upgradeButtons[4];
+    	u.cost = 200;
+    	u.costIncrement = 100;
+    	u.currentUpgrade = 0;
+    	u.maxUpgrade = 10;
+    	u.statIncrement = 0.2f;
     	
     	upgradeButtons[5] = new UpgradeButton("Increase bazooka damage", 20, 440, 200, 30) {
-    		
+    		public void onPress() {
+	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+					//TODO play cash register sound
+					currentUpgrade++;
+					savedPrecents -= cost;
+					cost += costIncrement;
+					pistol.damage += statIncrement;
+				} else {
+					//TODO play error noise
+				}
+    		}
     	};
     	u = upgradeButtons[5];
+    	u.cost = 200;
+    	u.costIncrement = 100;
+    	u.currentUpgrade = 0;
+    	u.maxUpgrade = 10;
+    	u.statIncrement = 2;
     	
     	upgradeButtons[6] = new UpgradeButton("Increase max health", 20, 485, 200, 30) {
-    		
+    		public void onPress() {
+	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+					//TODO play cash register sound
+					currentUpgrade++;
+					savedPrecents -= cost;
+					cost += costIncrement;
+					pistol.damage += statIncrement;
+				} else {
+					//TODO play error noise
+				}
+    		}
     	};
     	u = upgradeButtons[6];
+    	u.cost = 200;
+    	u.costIncrement = 100;
+    	u.currentUpgrade = 0;
+    	u.maxUpgrade = 10;
+    	u.statIncrement = 10;
     	
     	upgradeButtons[7] = new UpgradeButton("Increase hull strength", 20, 530, 200, 30) {
-    		
+    		public void onPress() {
+	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+					//TODO play cash register sound
+					currentUpgrade++;
+					savedPrecents -= cost;
+					cost += costIncrement;
+					pistol.damage += statIncrement;
+				} else {
+					//TODO play error noise
+				}
+    		}
     	};
     	u = upgradeButtons[7];
+    	u.cost = 200;
+    	u.costIncrement = 200;
+    	u.currentUpgrade = 0;
+    	u.maxUpgrade = 10;
+    	u.statIncrement = -0.3f;
     }  
 }
