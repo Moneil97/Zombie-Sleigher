@@ -5,7 +5,7 @@ public class UpgradeButton extends BoxButton {
 	int cost;
 	int costIncrement;
 	int currentUpgrade;
-	int maxUpgrade;
+	int maxUpgrades;
 	float statIncrement;
 	
 	public UpgradeButton(String title, int x, int y, int width, int height) {

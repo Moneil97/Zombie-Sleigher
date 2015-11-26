@@ -374,6 +374,8 @@ public class ZombieSleigher implements Controllable {
     	pistol.purchased = true;
     	setWeapon(pistol);
     	
+    	santa = new Santa(weapon, 375, 150);
+    	
     	//I can't believe I'm actually using this. I've never used it outside of AP comp sci
     	Scanner s = new Scanner(getClass().getResourceAsStream("/res/instructions.txt"));
     	while (s.hasNextLine()) instructions.add(s.nextLine());
@@ -396,6 +398,8 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * background scrolls faster on game
+     * background scrolls slowly on title, shop, and instructions
      * bazooka
      * actual upgrades
      * weapon stats
@@ -779,8 +783,37 @@ public class ZombieSleigher implements Controllable {
     		g.translate(-x, -y);
     	}
     	
+    	for (int i = 0; i < upgradeButtons.length; i++) {
+    		UpgradeButton u = upgradeButtons[i];
+    		u.render(g);
+    		for (int j = 0; j < u.maxUpgrades; j++) {
+
+    			g.setColor(new Color(50, 50, 50, 150));
+    			
+        		g.fillRect(220 + 30 * j, 215 + 45 * i, 25, 25);
+        		
+        		g.setColor(new Color(150, 150, 150));
+//        		if (weapon.index == i) g.setColor(Color.red);
+        		
+        		g.setStroke(new BasicStroke(3));
+        		g.drawRect(220 + 30 * i, 215 + 45 * i, 25, 25);
+        		g.setStroke(new BasicStroke(1));
+    		}
+    	}
     	for (UpgradeButton u : upgradeButtons) {
     		u.render(g);
+    		for (int i = 0; i < u.maxUpgrades; i++) {
+    			g.setColor(new Color(50, 50, 50, 150));
+    			
+        		g.fillRect(220 + 30 * i, 10, 25, 25);
+        		
+        		g.setColor(new Color(150, 150, 150));
+//        		if (weapon.index == i) g.setColor(Color.red);
+        		
+        		g.setStroke(new BasicStroke(3));
+        		g.drawRect(10 + 30 * i, 10, 25, 25);
+        		g.setStroke(new BasicStroke(1));
+    		}
     	}
     }
     
@@ -1253,8 +1286,8 @@ public class ZombieSleigher implements Controllable {
     	};
 
     	upgradeButtons[0] = new UpgradeButton("Increase pistol fire rate", 20, 215, 200, 30) {
-    		void onSell() {
-    			if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+    		void onPress() {
+    			if (currentUpgrade <  maxUpgrades && savedPrecents >= cost) {
     				//TODO play cash register sound
     				currentUpgrade++;
     				savedPrecents -= cost;
@@ -1269,12 +1302,12 @@ public class ZombieSleigher implements Controllable {
     	u.cost = 50;
     	u.costIncrement = 10;
     	u.currentUpgrade = 0;
-    	u.maxUpgrade = 10;
+    	u.maxUpgrades = 10;
     	u.statIncrement = 0.2f;
     	
     	upgradeButtons[1] = new UpgradeButton("Increase pistol damage",20, 260, 200, 30) {
     		public void onPress() {
-	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+	    		if (currentUpgrade <  maxUpgrades && savedPrecents >= cost) {
 					//TODO play cash register sound
 					currentUpgrade++;
 					savedPrecents -= cost;
@@ -1289,12 +1322,12 @@ public class ZombieSleigher implements Controllable {
     	u.cost = 50;
     	u.costIncrement = 20;
     	u.currentUpgrade = 0;
-    	u.maxUpgrade = 10;
+    	u.maxUpgrades = 10;
     	u.statIncrement = 1;
     	
     	upgradeButtons[2] = new UpgradeButton("Increase rifle fire rate", 20, 305, 200, 30) {
     		public void onPress() {
-	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+	    		if (currentUpgrade <  maxUpgrades && savedPrecents >= cost) {
 					//TODO play cash register sound
 					currentUpgrade++;
 					savedPrecents -= cost;
@@ -1309,12 +1342,12 @@ public class ZombieSleigher implements Controllable {
     	u.cost = 75;
     	u.costIncrement = 25;
     	u.currentUpgrade = 0;
-    	u.maxUpgrade = 10;
+    	u.maxUpgrades = 10;
     	u.statIncrement = 0.5f;
     	
     	upgradeButtons[3] = new UpgradeButton("Increase rifle damage", 20, 350, 200, 30) {
     		public void onPress() {
-	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+	    		if (currentUpgrade <  maxUpgrades && savedPrecents >= cost) {
 					//TODO play cash register sound
 					currentUpgrade++;
 					savedPrecents -= cost;
@@ -1329,12 +1362,12 @@ public class ZombieSleigher implements Controllable {
     	u.cost = 100;
     	u.costIncrement = 50;
     	u.currentUpgrade = 0;
-    	u.maxUpgrade = 10;
+    	u.maxUpgrades = 10;
     	u.statIncrement = 1;
     	
     	upgradeButtons[4] = new UpgradeButton("Increase bazooka fire rate", 20, 395, 200, 30) {
     		public void onPress() {
-	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+	    		if (currentUpgrade <  maxUpgrades && savedPrecents >= cost) {
 					//TODO play cash register sound
 					currentUpgrade++;
 					savedPrecents -= cost;
@@ -1349,12 +1382,12 @@ public class ZombieSleigher implements Controllable {
     	u.cost = 200;
     	u.costIncrement = 100;
     	u.currentUpgrade = 0;
-    	u.maxUpgrade = 10;
+    	u.maxUpgrades = 10;
     	u.statIncrement = 0.2f;
     	
     	upgradeButtons[5] = new UpgradeButton("Increase bazooka damage", 20, 440, 200, 30) {
     		public void onPress() {
-	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+	    		if (currentUpgrade <  maxUpgrades && savedPrecents >= cost) {
 					//TODO play cash register sound
 					currentUpgrade++;
 					savedPrecents -= cost;
@@ -1369,12 +1402,12 @@ public class ZombieSleigher implements Controllable {
     	u.cost = 200;
     	u.costIncrement = 100;
     	u.currentUpgrade = 0;
-    	u.maxUpgrade = 10;
+    	u.maxUpgrades = 10;
     	u.statIncrement = 2;
     	
     	upgradeButtons[6] = new UpgradeButton("Increase max health", 20, 485, 200, 30) {
     		public void onPress() {
-	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+	    		if (currentUpgrade <  maxUpgrades && savedPrecents >= cost) {
 					//TODO play cash register sound
 					currentUpgrade++;
 					savedPrecents -= cost;
@@ -1389,12 +1422,12 @@ public class ZombieSleigher implements Controllable {
     	u.cost = 200;
     	u.costIncrement = 100;
     	u.currentUpgrade = 0;
-    	u.maxUpgrade = 10;
+    	u.maxUpgrades = 10;
     	u.statIncrement = 10;
     	
     	upgradeButtons[7] = new UpgradeButton("Increase hull strength", 20, 530, 200, 30) {
     		public void onPress() {
-	    		if (currentUpgrade <  maxUpgrade && savedPrecents >= cost) {
+	    		if (currentUpgrade <  maxUpgrades && savedPrecents >= cost) {
 					//TODO play cash register sound
 					currentUpgrade++;
 					savedPrecents -= cost;
@@ -1409,7 +1442,7 @@ public class ZombieSleigher implements Controllable {
     	u.cost = 200;
     	u.costIncrement = 200;
     	u.currentUpgrade = 0;
-    	u.maxUpgrade = 10;
+    	u.maxUpgrades = 10;
     	u.statIncrement = -0.15f;
     }  
 }
