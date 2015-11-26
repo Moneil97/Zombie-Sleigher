@@ -42,6 +42,8 @@ public class Santa{
 	double anchorY;
 	double angle;
 	
+	float collisionDamage;
+	
 	boolean weaponOnRight;
 	
 	public Santa(Weapon weapon, float x, float y) {
@@ -53,6 +55,8 @@ public class Santa{
 		lasty = y;
 		vx = 5;
 		vy = 6;
+		
+		collisionDamage = 10;
 		
 		health = 100;
 		

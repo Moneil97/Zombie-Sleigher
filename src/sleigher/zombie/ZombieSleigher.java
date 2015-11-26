@@ -247,15 +247,12 @@ public class ZombieSleigher implements Controllable {
     	//and awaaaaay we go!
     	init();
     	
-    	
-    	
-		try {
+    	try {
 			rob = new Robot();
 		} catch (AWTException e2) {
 			e2.printStackTrace();
 		}
 		
-    	
 		try {
 			GlobalScreen.registerNativeHook();
 		} catch (NativeHookException e) {
@@ -306,8 +303,6 @@ public class ZombieSleigher implements Controllable {
 		// Disable parent logger and set the desired level.
 		logger.setUseParentHandlers(false);
 		logger.setLevel(Level.ALL);
-    	
-  
     }
     private static final Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
     
@@ -363,8 +358,8 @@ public class ZombieSleigher implements Controllable {
     	masterGain = new Gain(audioContext, soundCount, 0.5f);
     	
     	pistolSound = new Sound(root + "pistol.wav");
-    	
     	masterGain.addInput(pistolSound.sample);
+    	
     	audioContext.out.addInput(masterGain);
     	
     	bullet = new Line2D.Double();
@@ -414,17 +409,18 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
+     * weapon firing noise plays on window opening
      * trees and dead zombies jitter down
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * above issue may be operating system dependent
      * hill speed increment causes hill jitter
-     * if game crashes before controllable thread created, then can't close window (will never affect user)
      */
     
     /**
      * TODO (feature creep)
      * reload
      * zombie spawning algorithm
+     * accuracy and shot variation
      * trees
      * precents drop and must be collected?
      * precents fly towards counter
@@ -465,7 +461,6 @@ public class ZombieSleigher implements Controllable {
         		treeSpawnChance += treeSpawnChanceIncrement;
         	}
         	
-        	//TODO redo zombie spawn rate
         	if (ticks % zombieSpawnRate == 0) {
         		if (zombieSpawnChance > getRandomDouble(0.0, 1.0)) {
         			zombies.add(new Zombie(hillSpeed, distance));
@@ -485,7 +480,6 @@ public class ZombieSleigher implements Controllable {
     			weapon.fireSound.play();
     			
         		double hypotenuse = 1000;
-        		//TODO angle variation
         		double angle = santa.angle;
     			double edgex = hypotenuse * Math.cos(angle);
     			double edgey = hypotenuse * Math.sin(angle);
@@ -521,7 +515,7 @@ public class ZombieSleigher implements Controllable {
 				}
     			
     			if (!z.dead && santa.bounds.intersects(z.bounds)) {
-    				if (!godMode) santa.health -= z.collisionDamage;
+    				if (!godMode) santa.health -= santa.collisionDamage;
     				z.health = 0;
     				z.dead = true;
     				precents += z.precentWorth;
@@ -643,12 +637,13 @@ public class ZombieSleigher implements Controllable {
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
     	
     	//weapon boxes
-    	//TODO there's got to be a more efficient way to do this
     	for (int i = 0; i < 3; i++) {
     		g.setColor(new Color(50, 50, 50, 150));
     		g.fillRect(10 + 30 * i, 10, 25, 25);
     		g.setColor(new Color(150, 150, 150));
+    		
     		if (weapon.index == i) g.setColor(Color.red);
+    		
     		g.setStroke(new BasicStroke(3));
     		g.drawRect(10 + 30 * i, 10, 25, 25);
     		g.setStroke(new BasicStroke(1));
@@ -898,7 +893,7 @@ public class ZombieSleigher implements Controllable {
     
     private class Mouse extends MouseAdapter {
     	public void mousePressed(MouseEvent e) {
-    		/*if (gamestate == Gamestate.GAME) {
+    		/*if (gamestate == Gamestate.GAME) { TODO
     			weapon.mousePressed();
     		} else */if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
@@ -918,7 +913,7 @@ public class ZombieSleigher implements Controllable {
     	} 
     	
     	public void mouseReleased(MouseEvent e) {
-    		/*if (gamestate == Gamestate.GAME) {
+    		/*if (gamestate == Gamestate.GAME) { TODO 
     			weapon.mouseReleased();
     		} else */if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
@@ -964,7 +959,7 @@ public class ZombieSleigher implements Controllable {
 	    		case KeyEvent.VK_S:
 	    			santa.down = false;
 	    			break;
-	    		case KeyEvent.VK_1: //TODO play weapon switching sound
+	    		case KeyEvent.VK_1:
 	    			setWeapon(pistol);
 	    			break;
 	    		case KeyEvent.VK_2:
@@ -1046,6 +1041,7 @@ public class ZombieSleigher implements Controllable {
     
     private void setWeapon(Weapon w) {
     	if (w.purchased) {
+    		//TODO play weapon switching noise
     		weapon = w;
     		if (gamestate == Gamestate.GAME) santa.weapon = weapon;
     	}
@@ -1063,9 +1059,13 @@ public class ZombieSleigher implements Controllable {
         new ZombieSleigher();
     }
    
-    public void say(Object o) {
+    private void say(Object o) {
 		System.out.println(o);
 	}
+    
+    private void playSound(Sound sound) {
+    	sound.play();
+    }
     
     //						[lower, upper)
     public double getRandomDouble(double lower, double upper) {

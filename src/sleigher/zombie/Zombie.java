@@ -19,7 +19,6 @@ public class Zombie {
 	
 	boolean dead;
 	
-	float collisionDamage;
 	Rectangle bounds;
 	
 	BufferedImage image = ZombieSleigher.zombieImage;
@@ -33,7 +32,6 @@ public class Zombie {
 		
 		precentWorth = 1;
 		
-		collisionDamage = 5;
 		dead = false;
 		
 		if (zone < 1) { //lower right of the screen
