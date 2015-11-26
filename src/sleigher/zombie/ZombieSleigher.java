@@ -282,10 +282,11 @@ public class ZombieSleigher implements Controllable {
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
-    	masterGain = new Gain(audioContext, 0, 0.5f);
+    	masterGain = new Gain(audioContext, 1, 0.5f);
     	
     	pistolSound = new Sound(root + "pistol.wav");
     	
+    	masterGain.addInput(pistolSound.sample);
     	audioContext.out.addInput(masterGain);
     	
     	bullet = new Line2D.Double();
