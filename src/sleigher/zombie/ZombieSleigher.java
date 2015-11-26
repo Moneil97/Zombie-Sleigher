@@ -409,6 +409,7 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
+     * rifle has irregular fire rate on occasion, maybe related to the jitter?
      * weapon firing noise plays on window opening
      * trees and dead zombies jitter down
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
