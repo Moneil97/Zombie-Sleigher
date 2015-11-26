@@ -204,7 +204,7 @@ public class ZombieSleigher implements Controllable {
     	};
     	clickGuard.setUndecorated(true);
     	clickGuard.setSize(screenSize);
-    	clickGuard.setOpacity(.5f);
+    	clickGuard.setOpacity(0);
     	clickGuard.setVisible(true);
     	
     	//create JFrame
