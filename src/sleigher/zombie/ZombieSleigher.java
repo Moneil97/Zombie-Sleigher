@@ -95,7 +95,9 @@ public class ZombieSleigher implements Controllable {
 	static AudioContext audioContext;
 	static Gain masterGain;
 	
-	static Sound pistolSound;
+	static Sound pistolSound;	//1
+	
+	private int soundCount = 1;
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -282,7 +284,7 @@ public class ZombieSleigher implements Controllable {
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
-    	masterGain = new Gain(audioContext, 1, 0.5f);
+    	masterGain = new Gain(audioContext, soundCount, 0.5f);
     	
     	pistolSound = new Sound(root + "pistol.wav");
     	
