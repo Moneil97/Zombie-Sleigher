@@ -1294,7 +1294,7 @@ public class ZombieSleigher implements Controllable {
 					currentUpgrade++;
 					savedPrecents -= cost;
 					cost += costIncrement;
-					pistol.damage += statIncrement;
+					rifle.rateOfFire += statIncrement;
 				} else {
 					//TODO play error noise
 				}
@@ -1314,7 +1314,7 @@ public class ZombieSleigher implements Controllable {
 					currentUpgrade++;
 					savedPrecents -= cost;
 					cost += costIncrement;
-					pistol.damage += statIncrement;
+					rifle.damage += statIncrement;
 				} else {
 					//TODO play error noise
 				}
@@ -1334,7 +1334,7 @@ public class ZombieSleigher implements Controllable {
 					currentUpgrade++;
 					savedPrecents -= cost;
 					cost += costIncrement;
-					pistol.damage += statIncrement;
+					bazooka.rateOfFire += statIncrement;
 				} else {
 					//TODO play error noise
 				}
@@ -1354,7 +1354,7 @@ public class ZombieSleigher implements Controllable {
 					currentUpgrade++;
 					savedPrecents -= cost;
 					cost += costIncrement;
-					pistol.damage += statIncrement;
+					bazooka.damage += statIncrement;
 				} else {
 					//TODO play error noise
 				}
@@ -1374,7 +1374,7 @@ public class ZombieSleigher implements Controllable {
 					currentUpgrade++;
 					savedPrecents -= cost;
 					cost += costIncrement;
-					pistol.damage += statIncrement;
+//					 += statIncrement;
 				} else {
 					//TODO play error noise
 				}
@@ -1394,7 +1394,7 @@ public class ZombieSleigher implements Controllable {
 					currentUpgrade++;
 					savedPrecents -= cost;
 					cost += costIncrement;
-					pistol.damage += statIncrement;
+					santa.collisionDamage += statIncrement;
 				} else {
 					//TODO play error noise
 				}
@@ -1405,6 +1405,6 @@ public class ZombieSleigher implements Controllable {
     	u.costIncrement = 200;
     	u.currentUpgrade = 0;
     	u.maxUpgrade = 10;
-    	u.statIncrement = -0.3f;
+    	u.statIncrement = -0.15f;
     }  
 }
