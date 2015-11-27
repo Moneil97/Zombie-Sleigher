@@ -9,8 +9,8 @@ public class Pistol extends Weapon {
 		imageLeft = ZombieSleigher.pistolLeftImage;
 		
 		firing = new BufferedImage[2];
-		firing[0] = ZombieSleigher.rifleFireImage;
-		firing[1] = ZombieSleigher.rifleFireImage;
+		firing[0] = ZombieSleigher.muzzleFireImages[0];
+		firing[1] = ZombieSleigher.muzzleFireImages[1];
 		
 		fireSound = ZombieSleigher.pistolSound;
 		

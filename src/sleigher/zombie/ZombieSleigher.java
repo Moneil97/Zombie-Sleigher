@@ -102,7 +102,7 @@ public class ZombieSleigher implements Controllable {
     static BufferedImage pistolLeftImage;
 	static BufferedImage rifleLeftImage;
 	static BufferedImage bazookaLeftImage;
-	static BufferedImage rifleFireImage;
+	static BufferedImage[] muzzleFireImages = new BufferedImage[2];
 	
 	static AudioContext audioContext;
 	static Gain masterGain;
@@ -355,7 +355,8 @@ public class ZombieSleigher implements Controllable {
     	pistolLeftImage = flip(pistolRightImage);
     	rifleRightImage = load(root + "rifle.png");
     	rifleLeftImage = flip(rifleRightImage);
-    	rifleFireImage = load(root + "rifleFire.png"); //TODO make transparent
+    	
+    	for (int i = 1; i <= 2; i++) muzzleFireImages[i] = load(root + "muzzle" + i + ".png");
     	bazookaRightImage = load(root + "bazooka.png");
     	bazookaLeftImage = flip(bazookaRightImage);
     	
@@ -399,23 +400,24 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * replace trees dodged stat
      * checkmarks on boxes when upgrades are purchased
      * background scrolls faster on game
      * background scrolls slowly on title, shop, and instructions
      * bazooka
-     * actual upgrades
-     * weapon stats
-     * weapon upgrades
      * precent sound
      * sound: zombies dying
      * music, christmas at ground zero, baila fleck and the flecktones
      * zombie worth part of zombiesleigher, not zombie?
-     * weapons
      * weapon animations
      * shop
      */
     
     /** TODO known bugs
+     * muzzle fire images are not transparent
+     * accuracy over 100
+     * overall accuracy not tracked
+     * buttons don't turn back to white after changing menu
      * rifle has irregular fire rate on occasion, maybe related to the jitter?
      * weapon firing noise plays on window opening
      * trees and dead zombies jitter down

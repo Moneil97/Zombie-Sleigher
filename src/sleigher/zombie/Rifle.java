@@ -8,13 +8,13 @@ public class Rifle extends Weapon {
 		
 		imageRight = ZombieSleigher.rifleRightImage;
 		imageLeft = ZombieSleigher.rifleLeftImage;
-		imageFire = ZombieSleigher.rifleFireImage;
+		imageFire = ZombieSleigher.muzzleFireImages[0];
 		
 		//temp
 		frameSpeed = 2;
 		firing = new BufferedImage[2];
-		firing[0] = ZombieSleigher.rifleFireImage;
-		firing[1] = ZombieSleigher.rifleFireImage;
+		firing[0] = ZombieSleigher.muzzleFireImages[0];
+		firing[1] = ZombieSleigher.muzzleFireImages[1];
 		
 		frames = firing.length;
 		
