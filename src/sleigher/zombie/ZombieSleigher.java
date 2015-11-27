@@ -398,6 +398,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * checkmarks on boxes when upgrades are purchased
      * background scrolls faster on game
      * background scrolls slowly on title, shop, and instructions
      * bazooka
@@ -793,12 +794,17 @@ public class ZombieSleigher implements Controllable {
         		g.fillRect(235 + 40 * j, 218 + 45 * i, 25, 25);
         		
         		g.setColor(new Color(50, 50, 50));
-//        		if (weapon.index == i) g.setColor(Color.red);
+        		if (j < u.currentUpgrade) g.setColor(Color.red);
         		
         		g.setStroke(new BasicStroke(3));
-        		g.drawRect(235 + 40 * i, 218 + 45 * i, 25, 25);
+        		g.drawRect(235 + 40 * j, 218 + 45 * i, 25, 25);
         		g.setStroke(new BasicStroke(1));
+        		
+        		if (j < u.currentUpgrade) {
+        			//TODO draw checkmark
+        		}
     		}
+    		
     	}
     }
     
@@ -895,6 +901,8 @@ public class ZombieSleigher implements Controllable {
     			shopButton.mouseMoved(e.getX(), e.getY());
     			for (BoxButton b : weaponButtons)
     				b.mouseMoved(e.getX(), e.getY()); 
+    			for (UpgradeButton b : upgradeButtons)
+    				b.mouseMoved(e.getX(), e.getY());
     		}
     	}
     	
@@ -916,6 +924,8 @@ public class ZombieSleigher implements Controllable {
     			shopButton.mouseMoved(e.getX(), e.getY());
     			for (BoxButton b : weaponButtons)
     				b.mouseMoved(e.getX(), e.getY()); 
+    			for (UpgradeButton b : upgradeButtons)
+    				b.mouseMoved(e.getX(), e.getY());
     		}
     	}
     }
@@ -938,6 +948,8 @@ public class ZombieSleigher implements Controllable {
     			shopButton.mousePressed(e.getX(), e.getY());
     			for (BoxButton b : weaponButtons)
     				b.mousePressed(e.getX(), e.getY());
+    			for (UpgradeButton b : upgradeButtons)
+    				b.mousePressed(e.getX(), e.getY());
     		}
     	} 
     	
@@ -958,8 +970,9 @@ public class ZombieSleigher implements Controllable {
     			shopButton.mouseReleased(e.getX(), e.getY());
     			for (BoxButton b : weaponButtons)
     				b.mouseReleased(e.getX(), e.getY());
-    		}
-    			
+    			for (UpgradeButton b : upgradeButtons)
+    				b.mouseReleased(e.getX(), e.getY());
+    		}	
     	}
     }
     

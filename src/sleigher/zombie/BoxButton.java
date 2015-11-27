@@ -65,7 +65,6 @@ public abstract class BoxButton {
 		if (ex > x && ex < x + width)
 			if (ey > y && ey < y + height)
 				if (pressed) {
-					hovering = false;
 					onPress();
 				}
 	}
