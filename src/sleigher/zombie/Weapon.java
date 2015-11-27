@@ -28,6 +28,7 @@ public class Weapon {
 	int firey;
 	int firewidth;
 	int fireheight;
+	static int bulletsFired=0;
 	
 	BufferedImage imageRight;
 	BufferedImage imageLeft;
@@ -49,6 +50,7 @@ public class Weapon {
 			frameIndex = frames - 1; //set the frame to the first frame in array
 			imageFire = firing[frameIndex]; //draw that frame
 			cooldown = (int) (ZombieSleigher.UPS / rateOfFire);
+			bulletsFired++;
 		} else {
 			fired = false;
 		}

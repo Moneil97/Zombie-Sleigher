@@ -134,7 +134,8 @@ public class ZombieSleigher implements Controllable {
     private Line2D bullet;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
-    private int zombiesKilled = 0;
+    private int zombiesRanOver = 0;
+    private int zombiesShot = 0;
     private double zombieSpawnChance = 0.5;
     private double zombieSpawnChanceIncrement = 0.02;
     private int zombieSpawnRate = UPS / 3;
@@ -526,7 +527,7 @@ public class ZombieSleigher implements Controllable {
     				z.health = 0;
     				z.dead = true;
     				precents += z.precentWorth;
-    				zombiesKilled++;
+    				zombiesRanOver++;
     			}
     			
     			if (z.y + z.height < 0)
@@ -536,7 +537,10 @@ public class ZombieSleigher implements Controllable {
     		//bang bang
     		if (weapon.fired && closestZombieIndex > -1) {
     			zombies.get(closestZombieIndex).damage(weapon.damage);
-    			if (zombies.get(closestZombieIndex).dead) precents += zombies.get(closestZombieIndex).precentWorth;
+    			if (zombies.get(closestZombieIndex).dead){
+    				precents += zombies.get(closestZombieIndex).precentWorth;
+    				zombiesShot++;
+    			}
     		}
     		//do this every tick to account for death of the closest zombie
     		closestZombieIndex = -1;
@@ -578,14 +582,14 @@ public class ZombieSleigher implements Controllable {
     			statValues[1] = bestDistance;	//record distance
     			statValues[2] += distance;		//furthest distance traveled
     			
-    			statValues[3] = zombiesKilled;	//kamizombies killed
-    			statValues[4] += zombiesKilled;	//total kamizombies killed
+    			statValues[3] = zombiesRanOver + zombiesShot;	//kamizombies killed
+    			statValues[4] += statValues[3];	//total kamizombies killed
     			
-    			statValues[5] = 0;				//bullets fired
+    			statValues[5] = Weapon.bulletsFired; //bullets fired
     			statValues[6] = treesDodged;	//trees dodged
     			
-    			statValues[7] = 0;				//accuracy of run
-    			statValues[8] = 0;				//lifetime accuracy
+    			statValues[7] = (int) (((float)Weapon.bulletsFired/zombiesShot)*100); //accuracy of run
+    			statValues[8] = 0;//Need to save lifeTime[bulletsFired and zombiesShot]	//lifetime accuracy 
     			
     			statValues[9] = seconds;		//time of run
     			statValues[10] += seconds;		//total play time
@@ -858,7 +862,7 @@ public class ZombieSleigher implements Controllable {
 		hillDistance = 0;
 		distance = 0;
 		seconds = 0;
-		zombiesKilled = 0;
+		zombiesRanOver = 0;
 		treesDodged = 0;
 		precents = 0;
     }
