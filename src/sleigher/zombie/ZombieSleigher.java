@@ -577,6 +577,12 @@ public class ZombieSleigher implements Controllable {
     			bestDistance = bestDistance > distance ? bestDistance : distance;
     			savedPrecents += precents;
     			
+    			weapon.mouseReleased();
+    			santa.left = false;
+    			santa.right = false;
+    			santa.up = false;
+    			santa.down = false;
+
     			//make sure this is in order that matches with statNames
     			statValues[0] = distance;		//previous distance
     			statValues[1] = bestDistance;	//record distance
