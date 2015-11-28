@@ -149,7 +149,9 @@ public class ZombieSleigher implements Controllable {
     private int ticks = 0; //ticks since thread started;
     private int seconds = 0; //seconds since thread started
     
-    private float hillSpeed = 10;
+    private float gameHillSpeed = 10;
+    private float menuHillSpeed = 5;
+    private float hillSpeed;
     private float maxHillSpeed = 30;
     private float hillSpeedIncrement = 0.0f; 
     private float hillDistance = 0;
@@ -335,6 +337,8 @@ public class ZombieSleigher implements Controllable {
     		lastHillY[i] = hillY[i];
     	}
     	
+    	hillSpeed = menuHillSpeed;
+    	
     	String root = "/res/images/";
     	for (int i = 0; i < 3; i++) gameBackground[i] = load(root + "background.jpg");
     	
@@ -356,7 +360,7 @@ public class ZombieSleigher implements Controllable {
     	rifleRightImage = load(root + "rifle.png");
     	rifleLeftImage = flip(rifleRightImage);
     	
-    	for (int i = 1; i <= 2; i++) muzzleFireImages[i] = load(root + "muzzle" + i + ".png");
+    	for (int i = 1; i <= 2; i++) muzzleFireImages[i - 1] = load(root + "muzzle" + i + ".png");
     	bazookaRightImage = load(root + "bazooka.png");
     	bazookaLeftImage = flip(bazookaRightImage);
     	
@@ -398,22 +402,26 @@ public class ZombieSleigher implements Controllable {
     	audioContext.start();
     }
     
+    /** TODO (things to discuss) 
+     * is the current hill speed good?
+     */
+    
     /**
      * TODO (actual things we have to add)
      * replace trees dodged stat
      * checkmarks on boxes when upgrades are purchased
-     * background scrolls faster on game
-     * background scrolls slowly on title, shop, and instructions
      * bazooka
      * precent sound
      * sound: zombies dying
      * music, christmas at ground zero, baila fleck and the flecktones
      * zombie worth part of zombiesleigher, not zombie?
      * weapon animations
-     * shop
      */
     
     /** TODO known bugs
+     * sound library not good - needs to play new sound bite, not repeat previous sound bite
+     * prices not antialiased (other text antialiased) see render() method
+     * no unit on accuracy stat
      * muzzle fire images are not transparent
      * accuracy over 100
      * overall accuracy not tracked
@@ -428,6 +436,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * background scrolls slowly on title, shop, and instructions
      * reload
      * zombie spawning algorithm
      * accuracy and shot variation
@@ -465,7 +474,7 @@ public class ZombieSleigher implements Controllable {
         	
         	if (ticks % UPS == 0) {
         		seconds++;
-        		if (hillSpeed < maxHillSpeed) hillSpeed += hillSpeedIncrement;
+//        		if (hillSpeed < maxHillSpeed) hillSpeed += hillSpeedIncrement;
         		
         		zombieSpawnChance += zombieSpawnChanceIncrement;
         		treeSpawnChance += treeSpawnChanceIncrement;
@@ -803,21 +812,27 @@ public class ZombieSleigher implements Controllable {
 
     			g.setColor(new Color(150, 150, 150));
     			
-        		g.fillRect(235 + 40 * j, 218 + 45 * i, 25, 25);
+        		g.fillRect(240 + 45 * j, 217 + 45 * i, 25, 25);
         		
         		g.setColor(new Color(50, 50, 50));
         		if (j < u.currentUpgrade) g.setColor(Color.red);
         		
         		g.setStroke(new BasicStroke(3));
-        		g.drawRect(235 + 40 * j, 218 + 45 * i, 25, 25);
+        		g.drawRect(240 + 45 * j, 218 + 45 * i, 25, 25);
         		g.setStroke(new BasicStroke(1));
         		
         		if (j < u.currentUpgrade) {
         			//TODO draw checkmark
         		}
+        		
+        		g.drawImage(precentImage, 750, 216 + 45 * i, 25, 25, null);
+        		
+            	g.setColor(new Color(150, 50, 150));
+            	g.setFont(new Font("helvetica", Font.PLAIN, 24));
+            	g.drawString("" + u.cost, 743 - g.getFontMetrics().stringWidth("" + u.cost), 239 + 45 * i);
     		}
-    		
     	}
+
     }
     
     public void renderGameover(Graphics2D g, float delta) {
@@ -866,7 +881,7 @@ public class ZombieSleigher implements Controllable {
 		zombies.clear();
 		treeSpawnChance = 0.3;
 		zombieSpawnChance = 0.0;
-		hillSpeed = 5;
+		hillSpeed = gameHillSpeed;
 		hillDistance = 0;
 		distance = 0;
 		seconds = 0;
@@ -1313,7 +1328,7 @@ public class ZombieSleigher implements Controllable {
     	u.costIncrement = 10;
     	u.currentUpgrade = 0;
     	u.maxUpgrades = 10;
-    	u.statIncrement = 0.2f;
+    	u.statIncrement = 0.1f;
     	
     	upgradeButtons[1] = new UpgradeButton("Increase pistol damage",20, 260, 200, 30) {
     		public void onPress() {
