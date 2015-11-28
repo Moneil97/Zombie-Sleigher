@@ -12,8 +12,10 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Robot;
+import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.event.KeyAdapter;
@@ -104,6 +106,7 @@ public class ZombieSleigher implements Controllable {
 	static BufferedImage bazookaLeftImage;
 	static BufferedImage[] muzzleFireImages = new BufferedImage[2];
 	static BufferedImage checkImage;
+	static BufferedImage[] muzzleSmokeImages = new BufferedImage[2];
 	
 	static AudioContext audioContext;
 	static Gain masterGain;
@@ -132,6 +135,7 @@ public class ZombieSleigher implements Controllable {
     private Pistol pistol;
     private Rifle rifle;
     private Bazooka bazooka;
+    private Polygon blast;
     private Line2D bullet;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
@@ -364,6 +368,7 @@ public class ZombieSleigher implements Controllable {
     	bazookaRightImage = load(root + "bazooka.png");
     	bazookaLeftImage = flip(bazookaRightImage);
     	checkImage = load(root + "check.png");
+    	for (int i = 1; i <= 2; i++) muzzleSmokeImages[i - 1] = load(root + "smoke" + i + ".png");
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
@@ -380,6 +385,16 @@ public class ZombieSleigher implements Controllable {
     	bazooka = new Bazooka();
     	pistol.purchased = true;
     	setWeapon(pistol);
+    	
+    	
+    	int size = 30; //arbitrary constant proportional to size of desired blast
+    	int[] x = {1, 2, 3, 3, 2, 1, 0, 0};
+    	int[] y = {0, 0, 1, 2, 3, 3, 2, 1};
+    	for (int i = 0; i < x.length; i++) {
+    		x[i] *= size;
+    		y[i] *= size;
+    	}
+    	blast = new Polygon(x, y, x.length);
     	
     	santa = new Santa(weapon, 375, 150);
     	
@@ -410,8 +425,9 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
-     * scroll to change weapons
-     * replace trees dodged stat
+     * bazooka sounds
+     * scroll to change weapons (remember that weapons have index field)
+     * replace trees dodged stat or add tree collisions
      * bazooka (octagon hitbox, smoke from barrel animation, explosion animation)
      * precent sound
      * sound: zombies dying
@@ -549,10 +565,20 @@ public class ZombieSleigher implements Controllable {
     		
     		//bang bang
     		if (weapon.fired && closestZombieIndex > -1) {
-    			zombies.get(closestZombieIndex).damage(weapon.damage);
-    			if (zombies.get(closestZombieIndex).dead){
-    				precents += zombies.get(closestZombieIndex).precentWorth;
-    				zombiesShot++;
+    			if (weapon.index < 2) { //non bazooka
+	    			zombies.get(closestZombieIndex).damage(weapon.damage);
+	    			if (zombies.get(closestZombieIndex).dead){
+	    				precents += zombies.get(closestZombieIndex).precentWorth;
+	    				zombiesShot++;
+	    			}
+    			} else { //bazooka
+    				//translate center of octagon to center of closest zombie
+    				//for each zombie
+    					//if intersects octagon
+    						//do damage
+    						//if zombie dead
+    							//increase precents
+    							//increase zombies shot
     			}
     		}
     		//do this every tick to account for death of the closest zombie
@@ -666,6 +692,9 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(new Color(150, 50, 150));
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
+    	
+    	g.setColor(new Color(150, 50, 150, 100));
+    	g.fillPolygon(blast);
     	
     	//weapon boxes
     	for (int i = 0; i < 3; i++) {
