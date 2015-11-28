@@ -421,12 +421,13 @@ public class ZombieSleigher implements Controllable {
     /** TODO (things to discuss) 
      * is the current hill speed good?
      * click guard needs to go
+     * sound library: need to loop sound?
      */
     
     /**
      * TODO (actual things we have to add)
      * bazooka sounds
-     * scroll to change weapons (remember that weapons have index field)
+     * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      * replace trees dodged stat or add tree collisions
      * bazooka (octagon hitbox, smoke from barrel animation, explosion animation)
      * precent sound
@@ -437,7 +438,6 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
-     * sound library not good - needs to play new sound bite, not repeat previous sound bite
      * prices not antialiased (other text antialiased) see render() method
      * no unit on accuracy stat
      * muzzle fire images are not transparent
@@ -693,6 +693,7 @@ public class ZombieSleigher implements Controllable {
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
     	
+    	//TODO blast
     	g.setColor(new Color(150, 50, 150, 100));
     	g.fillPolygon(blast);
     	
