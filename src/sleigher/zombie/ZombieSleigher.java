@@ -1328,7 +1328,7 @@ public class ZombieSleigher implements Controllable {
     	u.costIncrement = 10;
     	u.currentUpgrade = 0;
     	u.maxUpgrades = 10;
-    	u.statIncrement = 0.1f;
+    	u.statIncrement = 0.09f;
     	
     	upgradeButtons[1] = new UpgradeButton("Increase pistol damage",20, 260, 200, 30) {
     		public void onPress() {
