@@ -410,8 +410,8 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * scroll to change weapons
      * replace trees dodged stat
-     * checkmarks on boxes when upgrades are purchased
      * bazooka (octagon hitbox, smoke from barrel animation, explosion animation)
      * precent sound
      * sound: zombies dying
@@ -428,12 +428,12 @@ public class ZombieSleigher implements Controllable {
      * accuracy over 100
      * overall accuracy not tracked
      * buttons don't turn back to white after changing menu
-     * rifle has irregular fire rate on occasion, maybe related to the jitter?
+     * guns have irregular fire rate on occasion, maybe related to the jitter?
      * weapon firing noise plays on window opening
      * trees and dead zombies jitter down
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * above issue may be operating system dependent
-     * hill speed increment causes hill jitter
+     * hill speed increment causes bad hill jumps
      */
     
     /**
