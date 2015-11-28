@@ -136,6 +136,7 @@ public class ZombieSleigher implements Controllable {
     private Rifle rifle;
     private Bazooka bazooka;
     private Polygon blast;
+    private int bx, by; //track the current position of the blast polygon
     private Line2D bullet;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
@@ -390,6 +391,8 @@ public class ZombieSleigher implements Controllable {
     	int size = 30; //arbitrary constant proportional to size of desired blast
     	int[] x = {1, 2, 3, 3, 2, 1, 0, 0};
     	int[] y = {0, 0, 1, 2, 3, 3, 2, 1};
+    	bx = 0;
+    	by = 0;
     	for (int i = 0; i < x.length; i++) {
     		x[i] *= size;
     		y[i] *= size;
@@ -426,6 +429,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * can damage yourself with bazooka
      * bazooka sounds
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      * replace trees dodged stat or add tree collisions
@@ -571,8 +575,22 @@ public class ZombieSleigher implements Controllable {
 	    				precents += zombies.get(closestZombieIndex).precentWorth;
 	    				zombiesShot++;
 	    			}
-    			} else { //bazooka
-    				//translate center of octagon to center of closest zombie
+    			} else { //bazooka //TODO check efficiency
+    				Zombie z = zombies.get(closestZombieIndex);
+    				//center x and y
+    				int cx = (int) (z.x + z.width / 2);
+    				int cy = (int) (z.y + z.height / 2);
+    				
+    				blast.translate(bx - cx, by - cy);
+    				
+    				bx = cx;
+    				by = cy;
+    				
+    				for (int i = 0; i < zombies.size(); i++) {
+    					if (false) { //TODO uh oh, how to check intersection between bounds and blast?
+    						
+    					}
+    				}
     				//for each zombie
     					//if intersects octagon
     						//do damage
