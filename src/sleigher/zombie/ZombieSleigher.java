@@ -103,6 +103,7 @@ public class ZombieSleigher implements Controllable {
 	static BufferedImage rifleLeftImage;
 	static BufferedImage bazookaLeftImage;
 	static BufferedImage[] muzzleFireImages = new BufferedImage[2];
+	static BufferedImage checkImage;
 	
 	static AudioContext audioContext;
 	static Gain masterGain;
@@ -136,8 +137,8 @@ public class ZombieSleigher implements Controllable {
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private int zombiesRanOver = 0;
     private int zombiesShot = 0;
-    private double zombieSpawnChance = 0.5;
-    private double zombieSpawnChanceIncrement = 0.02;
+    private double zombieSpawnChance = 0.6;
+    private double zombieSpawnChanceIncrement = 0.015;
     private int zombieSpawnRate = UPS / 3;
     
     private List<Tree> trees = new ArrayList<Tree>();
@@ -359,10 +360,10 @@ public class ZombieSleigher implements Controllable {
     	pistolLeftImage = flip(pistolRightImage);
     	rifleRightImage = load(root + "rifle.png");
     	rifleLeftImage = flip(rifleRightImage);
-    	
     	for (int i = 1; i <= 2; i++) muzzleFireImages[i - 1] = load(root + "muzzle" + i + ".png");
     	bazookaRightImage = load(root + "bazooka.png");
     	bazookaLeftImage = flip(bazookaRightImage);
+    	checkImage = load(root + "check.png");
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
@@ -404,13 +405,14 @@ public class ZombieSleigher implements Controllable {
     
     /** TODO (things to discuss) 
      * is the current hill speed good?
+     * click guard needs to go
      */
     
     /**
      * TODO (actual things we have to add)
      * replace trees dodged stat
      * checkmarks on boxes when upgrades are purchased
-     * bazooka
+     * bazooka (octagon hitbox, smoke from barrel animation, explosion animation)
      * precent sound
      * sound: zombies dying
      * music, christmas at ground zero, baila fleck and the flecktones
@@ -822,7 +824,7 @@ public class ZombieSleigher implements Controllable {
         		g.setStroke(new BasicStroke(1));
         		
         		if (j < u.currentUpgrade) {
-        			//TODO draw checkmark
+            		g.drawImage(checkImage, 240 + 45 * j, 218 + 45 * i, 25, 25, null);
         		}
         		
         		g.drawImage(precentImage, 750, 216 + 45 * i, 25, 25, null);
