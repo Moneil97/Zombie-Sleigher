@@ -391,8 +391,8 @@ public class ZombieSleigher implements Controllable {
     	int size = 30; //arbitrary constant proportional to size of desired blast
     	int[] x = {1, 2, 3, 3, 2, 1, 0, 0};
     	int[] y = {0, 0, 1, 2, 3, 3, 2, 1};
-    	bx = 0;
-    	by = 0;
+    	bx = size * 3 / 2;
+    	by = size * 3 / 2;
     	for (int i = 0; i < x.length; i++) {
     		x[i] *= size;
     		y[i] *= size;
@@ -429,16 +429,16 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * increase precent worth as run goes on
      * can damage yourself with bazooka
      * bazooka sounds
+     * bazooka animations
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      * replace trees dodged stat or add tree collisions
-     * bazooka (octagon hitbox, smoke from barrel animation, explosion animation)
      * precent sound
      * sound: zombies dying
      * music, christmas at ground zero, baila fleck and the flecktones
      * zombie worth part of zombiesleigher, not zombie?
-     * weapon animations
      */
     
     /** TODO known bugs
@@ -577,26 +577,24 @@ public class ZombieSleigher implements Controllable {
 	    			}
     			} else { //bazooka //TODO check efficiency
     				Zombie z = zombies.get(closestZombieIndex);
+    				
+    				blast.translate(-bx, -by);
+    				
     				//center x and y
-    				int cx = (int) (z.x + z.width / 2);
-    				int cy = (int) (z.y + z.height / 2);
+    				bx = (int) (z.x + z.width / 2);
+    				by = (int) (z.y + z.height / 2);    		
     				
-    				blast.translate(bx - cx, by - cy);
-    				
-    				bx = cx;
-    				by = cy;
+    				blast.translate(bx, by);
     				
     				for (int i = 0; i < zombies.size(); i++) {
-    					if (false) { //TODO uh oh, how to check intersection between bounds and blast?
-    						
+    					if (blast.intersects(zombies.get(i).bounds)) {
+    						zombies.get(i).damage(weapon.damage);
+    						if (zombies.get(i).dead) {
+    							precents += zombies.get(i).precentWorth;
+    							zombiesShot++; //TODO should bazooka count towards this stat?
+    						}
     					}
     				}
-    				//for each zombie
-    					//if intersects octagon
-    						//do damage
-    						//if zombie dead
-    							//increase precents
-    							//increase zombies shot
     			}
     		}
     		//do this every tick to account for death of the closest zombie
@@ -711,7 +709,7 @@ public class ZombieSleigher implements Controllable {
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
     	
-    	//TODO blast
+    	//TODO blast animation
     	g.setColor(new Color(150, 50, 150, 100));
     	g.fillPolygon(blast);
     	
