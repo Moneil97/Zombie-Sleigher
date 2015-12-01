@@ -111,6 +111,7 @@ public class ZombieSleigher implements Controllable {
 	static BufferedImage[] muzzleSmokeImages = new BufferedImage[2];
 	
 	static AudioContext audioContext;
+	static Glide masterGlide;
 	static Gain masterGain;
 	
 	static Sound pistolSound;	//1
@@ -377,7 +378,7 @@ public class ZombieSleigher implements Controllable {
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
-    	Glide masterGlide = new Glide(audioContext, 0);
+    	masterGlide = new Glide(audioContext, 0);
     	masterGain = new Gain(audioContext, soundCount, masterGlide);
     	
     	pistolSound = new Sound(root + "pistol.wav");
@@ -425,6 +426,7 @@ public class ZombieSleigher implements Controllable {
     	controllableThread.start();
     	
     	audioContext.start();
+		masterGlide.setValue(0.5f);
     }
     
     /** TODO (things to discuss) 
@@ -453,7 +455,6 @@ public class ZombieSleigher implements Controllable {
      * overall accuracy not tracked
      * buttons don't turn back to white after changing menu
      * guns have irregular fire rate on occasion, maybe related to the jitter?
-     * all noises play on window opening, based on initial gain value
      * trees and dead zombies jitter down
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * above issue may be operating system dependent
@@ -632,7 +633,7 @@ public class ZombieSleigher implements Controllable {
     		santa.lastx = santa.x;
     		santa.lasty = santa.y;
     	} else if (gamestate == Gamestate.SHOP) {
-    	
+    		
     	} else if (gamestate == Gamestate.GAMEOVER) {
     		if (gameOver) {
     			bestDistance = bestDistance > distance ? bestDistance : distance;

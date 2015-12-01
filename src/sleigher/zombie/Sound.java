@@ -22,6 +22,7 @@ public class Sound {
 		sample = null;
 		try {
 			sample = new SamplePlayer(ZombieSleigher.audioContext, new Sample(path));
+			sample.setToEnd();
 			gain.addInput(sample);
 			
 			setKillOnEnd(false);
