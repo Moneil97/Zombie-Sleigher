@@ -122,8 +122,11 @@ public class ZombieSleigher implements Controllable {
 	static Sound firstSound;		//4	the song that plays while the long playlist is loading
 	static Sound cashSound;			//5 ca ching for purchases
 	static Sound clickSound;		//6 error noise
+	static Sound runoverSound;		//7 when you hit zombies with your sleigh
+	static Sound bulletSound;		//8 when a bullet hits a zombie
 	
 	private int soundCount = 1;		//I don't think this is needed, but I'm not sure
+	private boolean mute = false;
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -383,7 +386,7 @@ public class ZombieSleigher implements Controllable {
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
-    	masterGlide = new Glide(audioContext, 0);
+    	masterGlide = new Glide(audioContext, 0.5f, 0);
     	masterGain = new Gain(audioContext, soundCount, masterGlide);
     	
     	pistolSound = new Sound(root + "pistol.wav");
@@ -391,6 +394,8 @@ public class ZombieSleigher implements Controllable {
     	firstSound = new Sound(root + "first.mp3");
     	cashSound = new Sound(root + "cash.wav");
     	clickSound = new Sound(root + "click.wav");
+    	runoverSound = new Sound(root + "runover.wav");
+    	bulletSound = new Sound(root + "bullet.wav");
     	
     	cashSound.gainValue.setValue(3);
     	clickSound.gainValue.setValue(2);
@@ -436,7 +441,6 @@ public class ZombieSleigher implements Controllable {
     	controllableThread.start();
     	    	
     	audioContext.start();
-		masterGlide.setValue(0.5f);
 		firstSound.play();
 
     	startLoadThread(); //to load background music file
@@ -450,18 +454,19 @@ public class ZombieSleigher implements Controllable {
     /**
      * TODO (actual things we have to add)
      * increase precent worth as run goes on
-     * bazooka animations
+     * bazooka images and animations
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      * replace trees dodged stat or add tree collisions
-     * precent sound
      * sound: zombies dying
      * music, christmas at ground zero, baila fleck and the flecktones
      * zombie worth part of zombiesleigher, not zombie?
      */
     
     /** TODO known bugs
+     * exiting throws null pointer bc of load thread if exit before music loaded
      * it takes a long time to load the images and sounds (mostly bg music) on just a grey screen. 
      * 			add a gamestate and load resources then?
+     * 			have music playing during loading screen
      * muzzle flash on rifle is off
      * prices not antialiased (other text antialiased) see render() method
      * no unit on accuracy stat
@@ -478,6 +483,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * mute button on menu
      * music mute
      * sound mute
      * bar showing time remaining between shots
@@ -488,7 +494,7 @@ public class ZombieSleigher implements Controllable {
      * accuracy and shot variation
      * trees
      * precents drop and must be collected?
-     * precents fly towards counter
+     * precents fly towards counter and precent sound
      * grenades
      * more zombie species
      * dashed line follows best distance
@@ -581,6 +587,7 @@ public class ZombieSleigher implements Controllable {
     			
     			if (!z.dead && santa.bounds.intersects(z.bounds)) {
     				if (!godMode) santa.health -= santa.collisionDamage;
+    				runoverSound.play();
     				z.health = 0;
     				z.dead = true;
     				precents += z.precentWorth;
@@ -596,6 +603,7 @@ public class ZombieSleigher implements Controllable {
     			if (weapon.index < 2) { //non bazooka
 	    			zombies.get(closestZombieIndex).damage(weapon.damage);
 	    			if (zombies.get(closestZombieIndex).dead){
+	    				bulletSound.play();
 	    				precents += zombies.get(closestZombieIndex).precentWorth;
 	    				zombiesShot++;
 	    			}
@@ -689,7 +697,8 @@ public class ZombieSleigher implements Controllable {
     		santa.lasty = santa.y;
     		
     	} else if (gamestate == Gamestate.TITLE) {
-    		
+    		if (mute) masterGlide.setValue(0);
+    		else masterGlide.setValue(0.5f);
     	}
     }
 
@@ -848,6 +857,8 @@ public class ZombieSleigher implements Controllable {
     	
     	shopButton.render(g);
     	
+//    	if (rifle.purchased) weaponButtons[0].hovering = true;
+//    	if (bazooka.purchased) weaponButtons[1].hovering = true;
     	for (BoxButton b : weaponButtons) b.render(g);
     	
     	g.setColor(new Color(100, 200, 100));
@@ -1137,6 +1148,12 @@ public class ZombieSleigher implements Controllable {
     			switch(key) {
     			case KeyEvent.VK_P:
     				savedPrecents += 1000;
+    				break;
+    			}
+    		} else if (gamestate == Gamestate.TITLE){
+    			switch (key) {
+    			case KeyEvent.VK_M:
+    				mute = !mute;
     				break;
     			}
     		}
