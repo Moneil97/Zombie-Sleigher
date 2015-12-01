@@ -17,7 +17,7 @@ public class Bazooka extends Weapon {
 		
 		frames = firing.length;
 		
-		fireSound = ZombieSleigher.pistolSound;
+		fireSound = ZombieSleigher.blastSound;
 		
 		damage = 10;
 		rateOfFire = 0.2f;

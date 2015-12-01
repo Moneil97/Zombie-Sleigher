@@ -113,8 +113,9 @@ public class ZombieSleigher implements Controllable {
 	static Gain masterGain;
 	
 	static Sound pistolSound;	//1
+	static Sound blastSound;	//2
 	
-	private int soundCount = 1;
+	private int soundCount = 2;
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -374,10 +375,12 @@ public class ZombieSleigher implements Controllable {
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
-    	masterGain = new Gain(audioContext, soundCount, 0.5f);
+    	masterGain = new Gain(audioContext, soundCount, 0);
     	
     	pistolSound = new Sound(root + "pistol.wav");
     	masterGain.addInput(pistolSound.sample);
+    	blastSound = new Sound(root + "blast.wav");
+    	masterGain.addInput(blastSound.sample);
     	
     	audioContext.out.addInput(masterGain);
     	
@@ -420,6 +423,7 @@ public class ZombieSleigher implements Controllable {
     	controllableThread.start();
     	
     	audioContext.start();
+    	masterGain.setGain(0.5f);
     }
     
     /** TODO (things to discuss) 
@@ -441,6 +445,7 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
+     * muzzle flash on rifle is way off
      * prices not antialiased (other text antialiased) see render() method
      * no unit on accuracy stat
      * muzzle fire images are not transparent
