@@ -54,6 +54,7 @@ import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.data.Buffer;
 import net.beadsproject.beads.ugens.Gain;
 import net.beadsproject.beads.ugens.Glide;
+import net.beadsproject.beads.ugens.SamplePlayer;
 import net.beadsproject.beads.ugens.WavePlayer;
 
 import com.jackdahms.Controllable;
@@ -114,9 +115,9 @@ public class ZombieSleigher implements Controllable {
 	static Glide masterGlide;
 	static Gain masterGain;
 	
-	static Sound pistolSound;	//1
-	static Sound blastSound;	//2
-	static Sound emptySound;	//3 cause of that stupid bug
+	static Sound pistolSound;		//1
+	static Sound blastSound;		//2
+	static Sound backgroundLoop;	//3
 	
 	private int soundCount = 3;
 	
@@ -383,7 +384,8 @@ public class ZombieSleigher implements Controllable {
     	
     	pistolSound = new Sound(root + "pistol.wav");
     	blastSound = new Sound(root + "blast.wav");
-    	emptySound = new Sound(root + "empty.wav");
+    	backgroundLoop = new Sound(root + "background.mp3");
+    	backgroundLoop.sample.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS); //set the background music to loop
     	
     	audioContext.out.addInput(masterGain);
     	
@@ -427,6 +429,7 @@ public class ZombieSleigher implements Controllable {
     	
     	audioContext.start();
 		masterGlide.setValue(0.5f);
+		backgroundLoop.play();
     }
     
     /** TODO (things to discuss) 
@@ -447,6 +450,8 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
+     * it takes a long time to load the images and sounds (mostly bg music) on just a grey screen. 
+     * 			add a gamestate and load resources then?
      * muzzle flash on rifle is off
      * prices not antialiased (other text antialiased) see render() method
      * no unit on accuracy stat
