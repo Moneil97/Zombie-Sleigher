@@ -16,7 +16,7 @@ public class Sound {
 	
 	public Sound(String path) {
 		AudioContext ac = ZombieSleigher.audioContext;
-		gainValue = new Glide(ac, 1, 0); //audio context, init value, glide time in ms
+		gainValue = new Glide(ac, 1); //audio context, init value
 		gain = new Gain(ac, 1, gainValue);
 		
 		sample = null;
@@ -25,13 +25,11 @@ public class Sound {
 			gain.addInput(sample);
 			
 			setKillOnEnd(false);
-			
-			ZombieSleigher.masterGain.addInput(gain);
 		} catch (IOException e) {
-			
 			System.err.println("Failed to load sound at " + path);
-		}
+		}	
 		
+		ZombieSleigher.masterGain.addInput(gain);	
 	}
 	
 	public void play() {

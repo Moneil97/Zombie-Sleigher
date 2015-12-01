@@ -53,6 +53,7 @@ import org.jnativehook.mouse.NativeMouseMotionListener;
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.data.Buffer;
 import net.beadsproject.beads.ugens.Gain;
+import net.beadsproject.beads.ugens.Glide;
 import net.beadsproject.beads.ugens.WavePlayer;
 
 import com.jackdahms.Controllable;
@@ -114,8 +115,9 @@ public class ZombieSleigher implements Controllable {
 	
 	static Sound pistolSound;	//1
 	static Sound blastSound;	//2
+	static Sound emptySound;	//3 cause of that stupid bug
 	
-	private int soundCount = 2;
+	private int soundCount = 3;
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -375,12 +377,12 @@ public class ZombieSleigher implements Controllable {
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
-    	masterGain = new Gain(audioContext, soundCount, 0);
+    	Glide masterGlide = new Glide(audioContext, 0);
+    	masterGain = new Gain(audioContext, soundCount, masterGlide);
     	
     	pistolSound = new Sound(root + "pistol.wav");
-    	masterGain.addInput(pistolSound.sample);
     	blastSound = new Sound(root + "blast.wav");
-    	masterGain.addInput(blastSound.sample);
+    	emptySound = new Sound(root + "empty.wav");
     	
     	audioContext.out.addInput(masterGain);
     	
@@ -423,7 +425,6 @@ public class ZombieSleigher implements Controllable {
     	controllableThread.start();
     	
     	audioContext.start();
-    	masterGain.setGain(0.5f);
     }
     
     /** TODO (things to discuss) 
@@ -434,7 +435,6 @@ public class ZombieSleigher implements Controllable {
     /**
      * TODO (actual things we have to add)
      * increase precent worth as run goes on
-     * bazooka sounds
      * bazooka animations
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      * replace trees dodged stat or add tree collisions
@@ -445,7 +445,7 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
-     * muzzle flash on rifle is way off
+     * muzzle flash on rifle is off
      * prices not antialiased (other text antialiased) see render() method
      * no unit on accuracy stat
      * muzzle fire images are not transparent
@@ -453,7 +453,7 @@ public class ZombieSleigher implements Controllable {
      * overall accuracy not tracked
      * buttons don't turn back to white after changing menu
      * guns have irregular fire rate on occasion, maybe related to the jitter?
-     * weapon firing noise plays on window opening
+     * all noises play on window opening, based on initial gain value
      * trees and dead zombies jitter down
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
      * above issue may be operating system dependent
@@ -462,6 +462,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * bar showing time remaining between shots
      * can damage yourself with bazooka
      * background scrolls slowly on title, shop, and instructions
      * reload
