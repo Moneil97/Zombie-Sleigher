@@ -28,6 +28,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
@@ -424,13 +425,11 @@ public class ZombieSleigher implements Controllable {
     /** TODO (things to discuss) 
      * is the current hill speed good?
      * click guard needs to go
-     * sound library: need to loop sound?
      */
     
     /**
      * TODO (actual things we have to add)
      * increase precent worth as run goes on
-     * can damage yourself with bazooka
      * bazooka sounds
      * bazooka animations
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
@@ -458,6 +457,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * can damage yourself with bazooka
      * background scrolls slowly on title, shop, and instructions
      * reload
      * zombie spawning algorithm
