@@ -51,6 +51,7 @@ import org.jnativehook.mouse.NativeMouseListener;
 import org.jnativehook.mouse.NativeMouseMotionListener;
 
 import net.beadsproject.beads.core.AudioContext;
+import net.beadsproject.beads.core.Bead;
 import net.beadsproject.beads.data.Buffer;
 import net.beadsproject.beads.ugens.Gain;
 import net.beadsproject.beads.ugens.Glide;
@@ -117,9 +118,10 @@ public class ZombieSleigher implements Controllable {
 	
 	static Sound pistolSound;		//1
 	static Sound blastSound;		//2
-	static Sound backgroundLoop;	//3
+	static Sound backgroundSound;	//3 the classy frank sinatra playlist
+	static Sound firstSound;		//4	the song that plays while the long playlist is loading
 	
-	private int soundCount = 3;
+	private int soundCount = 4;
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -384,8 +386,7 @@ public class ZombieSleigher implements Controllable {
     	
     	pistolSound = new Sound(root + "pistol.wav");
     	blastSound = new Sound(root + "blast.wav");
-    	backgroundLoop = new Sound(root + "background.mp3");
-    	backgroundLoop.sample.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS); //set the background music to loop
+    	firstSound = new Sound(root + "first.mp3");
     	
     	audioContext.out.addInput(masterGain);
     	
@@ -426,10 +427,12 @@ public class ZombieSleigher implements Controllable {
     	controllableThread = new ControllableThread(this);
     	controllableThread.setTargetUps(UPS);
     	controllableThread.start();
-    	
+    	    	
     	audioContext.start();
 		masterGlide.setValue(0.5f);
-		backgroundLoop.play();
+		firstSound.play();
+
+    	startLoadThread(); //to load background music file
     }
     
     /** TODO (things to discuss) 
@@ -1167,6 +1170,22 @@ public class ZombieSleigher implements Controllable {
     /**
      * Worker Methods
      */
+    
+    private void startLoadThread() {
+    	new Thread(new Runnable() {
+    		public void run() {
+    			firstSound.sample.setEndListener(new Bead() {
+    				@Override
+    				protected void messageReceived(Bead bead) {
+    					backgroundSound = new Sound("src/res/sounds/background.mp3");
+    	    	    	backgroundSound.sample.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS); //set the background music to loop 
+    	    	    	backgroundSound.play(); //begins the background music loop
+    	    	    	this.pause(true); //tell this bead to stop
+    				}
+    			});
+    		}
+    	}).start();
+    }
     
     private void setWeapon(Weapon w) {
     	if (w.purchased) {
