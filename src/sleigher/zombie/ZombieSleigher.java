@@ -448,7 +448,7 @@ public class ZombieSleigher implements Controllable {
     
     /** TODO (things to discuss) 
      * is the current hill speed good?
-     * click guard needs to go
+     * click guard and rob need to go
      */
     
     /**
@@ -1230,10 +1230,6 @@ public class ZombieSleigher implements Controllable {
     private void say(Object o) {
 		System.out.println(o);
 	}
-    
-    private void playSound(Sound sound) {
-    	sound.play();
-    }
     
     //						[lower, upper)
     public double getRandomDouble(double lower, double upper) {
