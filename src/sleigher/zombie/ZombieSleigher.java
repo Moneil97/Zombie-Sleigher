@@ -453,6 +453,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * dead santa image
      * bazooka images and animations
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      * replace trees dodged stat or add tree collisions
