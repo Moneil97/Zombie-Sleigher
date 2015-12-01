@@ -453,13 +453,9 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
-     * increase precent worth as run goes on
      * bazooka images and animations
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      * replace trees dodged stat or add tree collisions
-     * sound: zombies dying
-     * music, christmas at ground zero, baila fleck and the flecktones
-     * zombie worth part of zombiesleigher, not zombie?
      */
     
     /** TODO known bugs
