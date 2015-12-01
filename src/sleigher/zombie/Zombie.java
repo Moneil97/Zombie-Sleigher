@@ -30,7 +30,7 @@ public class Zombie {
 		maxHealth = 3 + distance / 100; //base health of 3 plus one for every 100 meters
 		health = maxHealth;
 		
-		precentWorth = 1;
+		precentWorth = 1 + 2 * (int)distance / 500; //2 additional precents for every 500 meters traveled
 		
 		dead = false;
 		

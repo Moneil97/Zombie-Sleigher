@@ -471,6 +471,8 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * music mute
+     * sound mute
      * bar showing time remaining between shots
      * can damage yourself with bazooka
      * background scrolls slowly on title, shop, and instructions
@@ -1129,7 +1131,7 @@ public class ZombieSleigher implements Controllable {
     		} else if (gamestate == Gamestate.SHOP) {
     			switch(key) {
     			case KeyEvent.VK_P:
-    				savedPrecents += 100;
+    				savedPrecents += 1000;
     				break;
     			}
     		}
@@ -1364,7 +1366,7 @@ public class ZombieSleigher implements Controllable {
     			gamestate = Gamestate.TITLE;
     		}
     	};
-    	int rifleCost = 200;
+    	int rifleCost = 400;
     	weaponButtons[0] = new BoxButton("Purchase rifle (" + rifleCost + ")", 520, 110, 190, 40) {
     		void onPress() {
     			if (!rifle.purchased && savedPrecents >= rifleCost) {
@@ -1376,7 +1378,7 @@ public class ZombieSleigher implements Controllable {
     			}
     		}
     	};
-    	int bazookaCost = 1000;
+    	int bazookaCost = 2000;
     	weaponButtons[1] = new BoxButton("Purchase bazooka (" + bazookaCost + ")", 520, 160, 190, 40) {
     		void onPress() {
     			if (!bazooka.purchased && savedPrecents >= bazookaCost) {
