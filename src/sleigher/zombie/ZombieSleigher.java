@@ -121,8 +121,9 @@ public class ZombieSleigher implements Controllable {
 	static Sound backgroundSound;	//3 the classy frank sinatra playlist
 	static Sound firstSound;		//4	the song that plays while the long playlist is loading
 	static Sound cashSound;			//5 ca ching for purchases
+	static Sound clickSound;		//6 error noise
 	
-	private int soundCount = 4;
+	private int soundCount = 1;		//I don't think this is needed, but I'm not sure
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -389,8 +390,10 @@ public class ZombieSleigher implements Controllable {
     	blastSound = new Sound(root + "blast.wav");
     	firstSound = new Sound(root + "first.mp3");
     	cashSound = new Sound(root + "cash.wav");
+    	clickSound = new Sound(root + "click.wav");
     	
-    	cashSound.gainValue.setValue(4);
+    	cashSound.gainValue.setValue(3);
+    	clickSound.gainValue.setValue(2);
     	
     	audioContext.out.addInput(masterGain);
     	
@@ -1378,7 +1381,7 @@ public class ZombieSleigher implements Controllable {
     				rifle.purchased = true;
     				savedPrecents -= rifleCost;
     			} else {
-    				//TODO play error noise
+    				clickSound.play();
     			}
     		}
     	};
@@ -1390,7 +1393,7 @@ public class ZombieSleigher implements Controllable {
     				bazooka.purchased = true;
     				savedPrecents -= bazookaCost;
     			} else {
-    				//TODO play error noise
+    				clickSound.play();
     			}
     		}
     	};
@@ -1402,9 +1405,9 @@ public class ZombieSleigher implements Controllable {
     				currentUpgrade++;
     				savedPrecents -= cost;
     				cost += costIncrement;
-    				pistol.rateOfFire += statIncrement; //TODO I don't know if this is enough to update the gun
+    				pistol.rateOfFire += statIncrement;
     			} else {
-    				//TODO play error noise
+    				clickSound.play();
     			}
     		}
     	};
@@ -1424,7 +1427,7 @@ public class ZombieSleigher implements Controllable {
 					cost += costIncrement;
 					pistol.damage += statIncrement;
 				} else {
-					//TODO play error noise
+					clickSound.play();
 				}
     		}
     	};
@@ -1444,7 +1447,7 @@ public class ZombieSleigher implements Controllable {
 					cost += costIncrement;
 					rifle.rateOfFire += statIncrement;
 				} else {
-					//TODO play error noise
+					clickSound.play();
 				}
     		}
     	};
@@ -1464,7 +1467,7 @@ public class ZombieSleigher implements Controllable {
 					cost += costIncrement;
 					rifle.damage += statIncrement;
 				} else {
-					//TODO play error noise
+					clickSound.play();
 				}
     		}
     	};
@@ -1484,7 +1487,7 @@ public class ZombieSleigher implements Controllable {
 					cost += costIncrement;
 					bazooka.rateOfFire += statIncrement;
 				} else {
-					//TODO play error noise
+					clickSound.play();
 				}
     		}
     	};
@@ -1504,7 +1507,7 @@ public class ZombieSleigher implements Controllable {
 					cost += costIncrement;
 					bazooka.damage += statIncrement;
 				} else {
-					//TODO play error noise
+					clickSound.play();
 				}
     		}
     	};
@@ -1524,7 +1527,7 @@ public class ZombieSleigher implements Controllable {
 					cost += costIncrement;
 					santa.maxHealth += statIncrement;
 				} else {
-					//TODO play error noise
+					clickSound.play();
 				}
     		}
     	};
@@ -1544,7 +1547,7 @@ public class ZombieSleigher implements Controllable {
 					cost += costIncrement;
 					santa.collisionDamage += statIncrement;
 				} else {
-					//TODO play error noise
+					clickSound.play();
 				}
     		}
     	};
