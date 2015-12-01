@@ -848,8 +848,6 @@ public class ZombieSleigher implements Controllable {
     	
     	shopButton.render(g);
     	
-    	if (rifle.purchased) weaponButtons[0].hovering = true;
-    	if (bazooka.purchased) weaponButtons[1].hovering = true;
     	for (BoxButton b : weaponButtons) b.render(g);
     	
     	g.setColor(new Color(100, 200, 100));
