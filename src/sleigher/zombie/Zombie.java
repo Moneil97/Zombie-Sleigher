@@ -27,10 +27,10 @@ public class Zombie {
 	public Zombie(float ys, float distance) {
 		int zone = (int) getRandomDouble(0.0, 5.0);
 		
-		maxHealth = 3 + distance / 100; //base health of 3 plus one for every 100 meters
+		maxHealth = 4 + distance / 120; //base health of 3 plus one for every 100 meters
 		health = maxHealth;
 		
-		precentWorth = 1 + 2 * (int)distance / 500; //2 additional precents for every 500 meters traveled
+		precentWorth = 1 + (int)distance / 250; //1 additional precent for every 250 meters traveled
 		
 		dead = false;
 		

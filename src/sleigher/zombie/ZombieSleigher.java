@@ -411,14 +411,10 @@ public class ZombieSleigher implements Controllable {
     	startLoadThread(); //to load background music file
     }
     
-    /** TODO (things to discuss) 
-     * is the current hill speed good?
-     * click guard and rob need to go
-     */
-    
     /**
      * TODO (actual things we have to add)
      * dead santa image
+     * destroyed tree image
      * bazooka images and animations
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      * replace trees dodged stat or add tree collisions
@@ -591,6 +587,7 @@ public class ZombieSleigher implements Controllable {
     				}
     			}
     		}
+    		
     		//do this every tick to account for death of the closest zombie
     		closestZombieIndex = -1;
     		
@@ -677,7 +674,7 @@ public class ZombieSleigher implements Controllable {
     	
     	for (int i = 0; i < trees.size(); i++)
     		trees.get(i).render(g, delta);
-
+    	
     	weapon.render(g, delta);
     	santa.render(g, mx, my, ticks, delta);
     	
