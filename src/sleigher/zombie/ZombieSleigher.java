@@ -441,6 +441,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * collision damage a property of zombie and tree
      * mute button on menu
      * music mute
      * sound mute
@@ -594,6 +595,13 @@ public class ZombieSleigher implements Controllable {
     		for (int i = 0; i < trees.size(); i++) {
     			Tree t = trees.get(i);
     			t.update(hillSpeed);
+    			
+    			Area ta = new Area(t.bounds);
+    			ta.intersect(new Area(santa.bounds));
+    			if (!ta.isEmpty()) {
+    				t.dead = true;
+    				santa.health -= santa.collisionDamage;
+    			}
     			
     			if (t.y + t.height < 0) {
     				trees.remove(i);
