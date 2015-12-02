@@ -151,17 +151,19 @@ public class ZombieSleigher implements Controllable {
     private Polygon blast;
     private int bx, by; //track the current position of the blast polygon
     private Line2D bullet;
+    private int lifetimeBulletsFired;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
-    private int zombiesRanOver = 0;
+    private int zombiesRunover = 0;
     private int zombiesShot = 0;
+    private int lifetimeZombiesShot = 0;
     private double zombieSpawnChance = 0.6;
     private double zombieSpawnChanceIncrement = 0.015;
     private int zombieSpawnRate = UPS / 3;
     
     private List<Tree> trees = new ArrayList<Tree>();
     private int treesDodged = 0;
-    private double treeSpawnChance = 0.3;
+    private double treeSpawnChance = 0.6;
     private double treeSpawnChanceIncrement = 0.02;
     private int treeSpawnRate = UPS * 2;
     
@@ -417,7 +419,6 @@ public class ZombieSleigher implements Controllable {
      * destroyed tree image
      * bazooka images and animations
      * scroll to change weapons (remember that weapons have index field and the setWeapon method)
-     * replace trees dodged stat or add tree collisions
      */
     
     /** TODO known bugs
@@ -451,7 +452,6 @@ public class ZombieSleigher implements Controllable {
      * reload
      * zombie spawning algorithm
      * accuracy and shot variation
-     * trees
      * precents drop and must be collected?
      * precents fly towards counter and precent sound
      * grenades
@@ -550,7 +550,7 @@ public class ZombieSleigher implements Controllable {
     				z.health = 0;
     				z.dead = true;
     				precents += z.precentWorth;
-    				zombiesRanOver++;
+    				zombiesRunover++;
     			}
     			
     			if (z.y + z.height < 0)
@@ -598,7 +598,7 @@ public class ZombieSleigher implements Controllable {
     			
     			Area ta = new Area(t.bounds);
     			ta.intersect(new Area(santa.bounds));
-    			if (!ta.isEmpty()) {
+    			if (!ta.isEmpty() && !t.dead) {
     				t.dead = true;
     				santa.health -= santa.collisionDamage;
     			}
@@ -642,7 +642,7 @@ public class ZombieSleigher implements Controllable {
     			statValues[1] = bestDistance;	//record distance
     			statValues[2] += distance;		//furthest distance traveled
     			
-    			statValues[3] = zombiesRanOver + zombiesShot;	//kamizombies killed
+    			statValues[3] = zombiesRunover + zombiesShot;	//kamizombies killed
     			statValues[4] += statValues[3];	//total kamizombies killed
     			
     			statValues[5] = Weapon.bulletsFired; //bullets fired
@@ -933,7 +933,7 @@ public class ZombieSleigher implements Controllable {
 		hillDistance = 0;
 		distance = 0;
 		seconds = 0;
-		zombiesRanOver = 0;
+		zombiesRunover = 0;
 		treesDodged = 0;
 		precents = 0;
     }
