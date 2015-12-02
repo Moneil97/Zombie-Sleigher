@@ -211,35 +211,14 @@ public class ZombieSleigher implements Controllable {
     		"Total precents earned: "		//14
     };
 	
-    JFrame clickGuard;
-    Robot rob;
-    
     @SuppressWarnings("serial")
 	public ZombieSleigher() {
-    	
-    	//Don't you hate it when you accidently click outside the window and lose your game?
-    	//Well, thanks to click guard all your troubles are over
-    	//Totally Unnecessary, but I want to so bleh
-    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	clickGuard = new JFrame(){
-    		@Override
-    		public void paint(Graphics g) {
-    			super.paint(g);
-    			g.setColor(Color.black);
-    			g.fillRect(0, 0, screenSize.width, screenSize.height);
-    		}
-    	};
-    	clickGuard.setUndecorated(true);
-    	clickGuard.setSize(screenSize);
-    	clickGuard.setOpacity(0);
-    	clickGuard.setVisible(true);
     	
     	//create JFrame
     	frame = new JFrame("Santa Sleigher");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
         	public void windowClosing(WindowEvent e) {
-        		clickGuard.dispose();
         		exit();
         	}
         });
@@ -273,12 +252,6 @@ public class ZombieSleigher implements Controllable {
     	
     	//and awaaaaay we go!
     	init();
-    	
-    	try {
-			rob = new Robot();
-		} catch (AWTException e2) {
-			e2.printStackTrace();
-		}
 		
 		try {
 			GlobalScreen.registerNativeHook();
@@ -310,15 +283,7 @@ public class ZombieSleigher implements Controllable {
 			
 			@Override
 			public void nativeMouseMoved(NativeMouseEvent e) {
-				Point screen = frame.getLocationOnScreen();
-				if (e.getX() < screen.x)
-					rob.mouseMove(frame.getLocationOnScreen().x, e.getY());
-				if (e.getX() > screen.x + frame.getWidth()-2)
-					rob.mouseMove(screen.x + frame.getWidth()-2, e.getY());
-				if (e.getY() > screen.y + frame.getHeight()-2)
-					rob.mouseMove(e.getX(), screen.y + frame.getHeight()-2);
-				if (e.getY() < screen.y)
-					rob.mouseMove(e.getX(), screen.y);
+				
 			}
 			
 			@Override
@@ -1037,9 +1002,7 @@ public class ZombieSleigher implements Controllable {
     
     private class Mouse extends MouseAdapter {
     	public void mousePressed(MouseEvent e) {
-    		/*if (gamestate == Gamestate.GAME) { TODO
-    			weapon.mousePressed();
-    		} else */if (gamestate == Gamestate.TITLE) {
+    		if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mousePressed(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {
@@ -1059,9 +1022,7 @@ public class ZombieSleigher implements Controllable {
     	} 
     	
     	public void mouseReleased(MouseEvent e) {
-    		/*if (gamestate == Gamestate.GAME) { TODO 
-    			weapon.mouseReleased();
-    		} else */if (gamestate == Gamestate.TITLE) {
+    		if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mouseReleased(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {
@@ -1125,11 +1086,11 @@ public class ZombieSleigher implements Controllable {
 	    			godMode = !godMode;
 	    			break;
 	    		case KeyEvent.VK_C:
-	    			if (clickGuard.isVisible())
-	    				clickGuard.setVisible(false);
-	    			else
-	    				clickGuard.setVisible(true);
-	    			break;
+//	    			if (clickGuard.isVisible())
+//	    				clickGuard.setVisible(false);
+//	    			else
+//	    				clickGuard.setVisible(true);
+//	    			break;
 	    		}		
 	    		
     		} else if (gamestate == Gamestate.PAUSE) {
