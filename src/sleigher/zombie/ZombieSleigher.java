@@ -415,6 +415,8 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
+     * clicking sound when browsing buttons
+     * tree hit sound
      * dead santa image
      * destroyed tree image
      * bazooka images and animations
@@ -710,8 +712,8 @@ public class ZombieSleigher implements Controllable {
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
     	
     	//TODO blast animation
-    	g.setColor(new Color(150, 50, 150, 100));
-    	g.fillPolygon(blast);
+//    	g.setColor(new Color(150, 50, 150, 100));
+//    	g.fillPolygon(blast);
     	
     	//weapon boxes
     	for (int i = 0; i < 3; i++) {

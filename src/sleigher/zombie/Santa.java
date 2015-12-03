@@ -14,7 +14,7 @@ public class Santa{
 	float lastx, lasty;
 	float ax = .3f, ay = .2f;
 	float vx = 0, vy = 0;
-	float maxVx = 6, maxVy = 4;
+	float maxVx = 8, maxVy = 4;
 	
 	Weapon weapon;
 	
