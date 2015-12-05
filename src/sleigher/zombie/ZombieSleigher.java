@@ -124,6 +124,7 @@ public class ZombieSleigher implements Controllable {
 	static Sound clickSound;		//6 error noise
 	static Sound runoverSound;		//7 when you hit zombies with your sleigh
 	static Sound bulletSound;		//8 when a bullet hits a zombie
+	static Sound treeSound;			//9 when santa hits a tree
 	
 	private int soundCount = 1;		//I don't think this is needed, but I'm not sure
 	private boolean mute = false;
@@ -363,9 +364,11 @@ public class ZombieSleigher implements Controllable {
     	clickSound = new Sound(root + "click.wav");
     	runoverSound = new Sound(root + "runover.wav");
     	bulletSound = new Sound(root + "bullet.wav");
+    	treeSound = new Sound(root + "tree.wav");
     	
     	cashSound.gainValue.setValue(3);
     	clickSound.gainValue.setValue(2);
+    	treeSound.gainValue.setValue(2);
     	
     	audioContext.out.addInput(masterGain);
     	
@@ -375,7 +378,6 @@ public class ZombieSleigher implements Controllable {
     	bazooka = new Bazooka();
     	pistol.purchased = true;
     	setWeapon(pistol);
-    	
     	
     	int size = 30; //arbitrary constant proportional to size of desired blast
     	int[] x = {1, 2, 3, 3, 2, 1, 0, 0};
@@ -409,8 +411,27 @@ public class ZombieSleigher implements Controllable {
     	    	
     	audioContext.start();
 		firstSound.play();
-
-    	startLoadThread(); //to load background music file
+		
+		//new thread to mitigate load time
+		new Thread (new Runnable() {
+			public void run() {
+				backgroundSound = new Sound("src/res/sounds/background.mp3");				
+			}
+		}).start();
+		//Background sound MUST be loaded in order for this to work, but the first song provides adaquate load time so no worries
+		//plays background playlist after first song stops
+		new Thread(new Runnable() {
+    		public void run() {
+    			firstSound.sample.setEndListener(new Bead() {
+    				@Override
+    				protected void messageReceived(Bead bead) {
+    	    	    	backgroundSound.sample.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS); //set the background music to loop 
+    	    	    	backgroundSound.play(); //begins the background music loop
+    	    	    	this.pause(true); //tell this bead to stop
+    				}
+    			});
+    		}
+    	}).start();
     }
     
     /**
@@ -424,7 +445,6 @@ public class ZombieSleigher implements Controllable {
      */
     
     /** TODO known bugs
-     * exiting throws null pointer bc of load thread if exit before music loaded
      * it takes a long time to load the images and sounds (mostly bg music) on just a grey screen. 
      * 			add a gamestate and load resources then?
      * 			have music playing during loading screen
@@ -602,6 +622,7 @@ public class ZombieSleigher implements Controllable {
     			ta.intersect(new Area(santa.bounds));
     			if (!ta.isEmpty() && !t.dead) {
     				t.dead = true;
+    				treeSound.play();
     				santa.health -= santa.collisionDamage;
     			}
     			
@@ -1159,23 +1180,7 @@ public class ZombieSleigher implements Controllable {
     /**
      * Worker Methods
      */
-    
-    private void startLoadThread() {
-    	new Thread(new Runnable() {
-    		public void run() {
-    			firstSound.sample.setEndListener(new Bead() {
-    				@Override
-    				protected void messageReceived(Bead bead) {
-    					backgroundSound = new Sound("src/res/sounds/background.mp3");
-    	    	    	backgroundSound.sample.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS); //set the background music to loop 
-    	    	    	backgroundSound.play(); //begins the background music loop
-    	    	    	this.pause(true); //tell this bead to stop
-    				}
-    			});
-    		}
-    	}).start();
-    }
-    
+        
     private void setWeapon(Weapon w) {
     	if (w.purchased) {
     		//TODO play weapon switching noise
