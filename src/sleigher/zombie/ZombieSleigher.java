@@ -153,6 +153,7 @@ public class ZombieSleigher implements Controllable {
     private int bx, by; //track the current position of the blast polygon
     private Line2D bullet;
     private int lifetimeBulletsFired;
+    private int bulletsHit;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private int zombiesRunover = 0;
@@ -582,6 +583,7 @@ public class ZombieSleigher implements Controllable {
     		
     		//bang bang
     		if (weapon.fired && closestZombieIndex > -1) {
+    			bulletsHit++;
     			if (weapon.index < 2) { //non bazooka
 	    			zombies.get(closestZombieIndex).damage(weapon.damage);
 	    			if (zombies.get(closestZombieIndex).dead){
@@ -672,7 +674,7 @@ public class ZombieSleigher implements Controllable {
     			statValues[5] = Weapon.bulletsFired; //bullets fired
     			statValues[6] = treesDodged;	//trees dodged
     			
-    			statValues[7] = (int) ((zombiesShot / Weapon.bulletsFired) * 100);
+    			statValues[7] = (int) ((bulletsHit / (float)Weapon.bulletsFired) * 100);
     			statValues[8] = 0;//TODO Need to save lifeTime[bulletsFired and zombiesShot]	//lifetime accuracy 
     			
     			statValues[9] = seconds;		//time of run
