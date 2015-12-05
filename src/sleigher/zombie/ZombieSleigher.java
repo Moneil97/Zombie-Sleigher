@@ -153,12 +153,12 @@ public class ZombieSleigher implements Controllable {
     private int bx, by; //track the current position of the blast polygon
     private Line2D bullet;
     private int lifetimeBulletsFired;
+    private int lifetimeBulletsHit;
     private int bulletsHit;
     
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private int zombiesRunover = 0;
     private int zombiesShot = 0;
-    private int lifetimeZombiesShot = 0;
     private double zombieSpawnChance = 0.6;
     private double zombieSpawnChanceIncrement = 0.015;
     private int zombieSpawnRate = UPS / 3;
@@ -662,6 +662,9 @@ public class ZombieSleigher implements Controllable {
     			santa.right = false;
     			santa.up = false;
     			santa.down = false;
+    			
+    			lifetimeBulletsFired += Weapon.bulletsFired;
+    			lifetimeBulletsHit += bulletsHit;
 
     			//make sure this is in order that matches with statNames
     			statValues[0] = distance;		//previous distance
@@ -675,7 +678,7 @@ public class ZombieSleigher implements Controllable {
     			statValues[6] = treesDodged;	//trees dodged
     			
     			statValues[7] = (int) ((bulletsHit / (float)Weapon.bulletsFired) * 100);
-    			statValues[8] = 0;//TODO Need to save lifeTime[bulletsFired and zombiesShot]	//lifetime accuracy 
+    			statValues[8] = (int) ((lifetimeBulletsHit / (float)Weapon.bulletsFired) * 100);//lifetime accuracy 
     			
     			statValues[9] = seconds;		//time of run
     			statValues[10] += seconds;		//total play time
