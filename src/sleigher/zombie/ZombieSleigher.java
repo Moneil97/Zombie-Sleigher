@@ -398,11 +398,9 @@ public class ZombieSleigher implements Controllable {
     /**
      * TODO (actual things we have to add)
      * clicking sound when browsing buttons
-     * tree hit sound
      * dead santa image
      * destroyed tree image
      * bazooka images and animations
-     * scroll to change weapons (remember that weapons have index field and the setWeapon method)
      */
     
     /** TODO known bugs
@@ -411,10 +409,8 @@ public class ZombieSleigher implements Controllable {
      * 			have music playing during loading screen
      * muzzle flash on rifle is off
      * prices not antialiased (other text antialiased) see render() method
-     * no unit on accuracy stat
-     * muzzle fire images are not transparent
      * accuracy over 100
-     * overall accuracy not tracked
+     * overall accuracy incorrect
      * buttons don't turn back to white after changing menu
      * guns have irregular fire rate on occasion, maybe related to the jitter?
      * trees and dead zombies jitter down
