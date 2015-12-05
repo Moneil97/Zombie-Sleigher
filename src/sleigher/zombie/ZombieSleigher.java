@@ -1,21 +1,14 @@
 package sleigher.zombie;
 
-import java.awt.AWTException;
 import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
-import java.awt.Robot;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.event.KeyAdapter;
@@ -27,7 +20,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
@@ -40,28 +32,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
-import org.jnativehook.mouse.NativeMouseEvent;
-import org.jnativehook.mouse.NativeMouseListener;
-import org.jnativehook.mouse.NativeMouseMotionListener;
+import com.jackdahms.Controllable;
+import com.jackdahms.ControllableThread;
 
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.core.Bead;
-import net.beadsproject.beads.data.Buffer;
 import net.beadsproject.beads.ugens.Gain;
 import net.beadsproject.beads.ugens.Glide;
 import net.beadsproject.beads.ugens.SamplePlayer;
-import net.beadsproject.beads.ugens.WavePlayer;
-
-import com.jackdahms.Controllable;
-import com.jackdahms.ControllableThread;
 
 public class ZombieSleigher implements Controllable {
 
@@ -228,16 +210,6 @@ public class ZombieSleigher implements Controllable {
         		exit();
         	}
         });
-        frame.addWindowFocusListener(new WindowFocusListener() {
-			@Override
-			public void windowLostFocus(WindowEvent e) {
-				frame.toFront();
-			}
-			
-			@Override
-			public void windowGainedFocus(WindowEvent e) { }
-			
-		});
         frame.setSize(WIDTH, HEIGHT);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
@@ -258,51 +230,7 @@ public class ZombieSleigher implements Controllable {
     	
     	//and awaaaaay we go!
     	init();
-		
-		try {
-			GlobalScreen.registerNativeHook();
-		} catch (NativeHookException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-		
-    	//Add listeners
-		GlobalScreen.addNativeMouseListener(new NativeMouseListener() {
-			
-			@Override
-			public void nativeMouseReleased(NativeMouseEvent e) {
-				if (gamestate == Gamestate.GAME)
-	    			weapon.mouseReleased();
-			}
-			
-			@Override
-			public void nativeMousePressed(NativeMouseEvent e) {
-				if (gamestate == Gamestate.GAME)
-	    			weapon.mousePressed();
-			}
-			
-			@Override
-			public void nativeMouseClicked(NativeMouseEvent e) {}
-		});
-//		GlobalScreen.addNativeMouseWheelListener(this);
-		GlobalScreen.addNativeMouseMotionListener(new NativeMouseMotionListener() {
-			
-			@Override
-			public void nativeMouseMoved(NativeMouseEvent e) {
-				
-			}
-			
-			@Override
-			public void nativeMouseDragged(NativeMouseEvent e) {
-				
-			}
-		});
-
-		// Disable parent logger and set the desired level.
-		logger.setUseParentHandlers(false);
-		logger.setLevel(Level.ALL);
     }
-    private static final Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
     
     public void init() {
     	backgroundGraphics = (Graphics2D) background.getGraphics();
@@ -406,33 +334,33 @@ public class ZombieSleigher implements Controllable {
     	//Needs to be added after buttons are created
 		canvas.addMouseWheelListener(new MouseWheelListener() {
 			
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						
-						if (!(rifle.purchased || bazooka.purchased))
-							return;
-						
-						if (weapon.index == 0){ //pistol
-							if (e.getWheelRotation() > 0) 	//down
-								setWeapon(rifle.purchased? rifle : bazooka);
-							else							//up
-								setWeapon(bazooka.purchased? bazooka : rifle);
-						}
-						else if (weapon.index == 1){ //rifle
-							if (e.getWheelRotation() > 0) 	//down
-								setWeapon(bazooka.purchased? bazooka : pistol);
-							else							//up
-								setWeapon(pistol);
-						}
-						else{ //bazooka
-							if (e.getWheelRotation() > 0) 	//down
-								setWeapon(pistol);
-							else							//up
-								setWeapon(rifle.purchased? rifle : pistol);
-						}
-						
-					}
-				});
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				
+				if (!(rifle.purchased || bazooka.purchased))
+					return;
+				
+				if (weapon.index == 0){ //pistol
+					if (e.getWheelRotation() > 0) 	//down
+						setWeapon(rifle.purchased? rifle : bazooka);
+					else							//up
+						setWeapon(bazooka.purchased? bazooka : rifle);
+				}
+				else if (weapon.index == 1){ //rifle
+					if (e.getWheelRotation() > 0) 	//down
+						setWeapon(bazooka.purchased? bazooka : pistol);
+					else							//up
+						setWeapon(pistol);
+				}
+				else{ //bazooka
+					if (e.getWheelRotation() > 0) 	//down
+						setWeapon(pistol);
+					else							//up
+						setWeapon(rifle.purchased? rifle : pistol);
+				}
+				
+			}
+		});
     	canvas.addMouseMotionListener(new MouseMotion());
     	canvas.addMouseListener(new Mouse());
     	canvas.addKeyListener(new Key());
@@ -1068,7 +996,9 @@ public class ZombieSleigher implements Controllable {
     
     private class Mouse extends MouseAdapter {
     	public void mousePressed(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
+    		if (gamestate == Gamestate.GAME)
+    			weapon.mousePressed();
+    		else if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mousePressed(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {
@@ -1088,7 +1018,9 @@ public class ZombieSleigher implements Controllable {
     	} 
     	
     	public void mouseReleased(MouseEvent e) {
-    		if (gamestate == Gamestate.TITLE) {
+			if (gamestate == Gamestate.GAME)
+    			weapon.mouseReleased();
+			else if (gamestate == Gamestate.TITLE) {
     			for (BoxButton b : menuButtons)
     				b.mouseReleased(e.getX(), e.getY());
     		} else if (gamestate == Gamestate.PAUSE) {
@@ -1287,11 +1219,6 @@ public class ZombieSleigher implements Controllable {
     		//so I put this here
     		System.err.println("Exited before thread started!");
     	}
-    	try {
-			GlobalScreen.unregisterNativeHook();
-		} catch (NativeHookException e) {
-			e.printStackTrace();
-		}
     	frame.dispose();
     	System.exit(0);
     }
