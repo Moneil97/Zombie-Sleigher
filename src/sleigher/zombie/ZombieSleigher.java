@@ -127,7 +127,7 @@ public class ZombieSleigher implements Controllable {
 	static Sound treeSound;			//9 when santa hits a tree
 	
 	private int soundCount = 1;		//I don't think this is needed, but I'm not sure
-	private boolean mute = false;
+	private boolean mute = true;	//TODO
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -214,7 +214,7 @@ public class ZombieSleigher implements Controllable {
     		"Total precents earned: "		//14
     };
 	
-    @SuppressWarnings("serial")
+//    @SuppressWarnings("serial")
 	public ZombieSleigher() {
     	
     	//create JFrame
@@ -314,6 +314,9 @@ public class ZombieSleigher implements Controllable {
     	statUnits[1] = "m";
     	statUnits[2] = "m";
     	
+    	statUnits[7] = "%"; //accuracy
+    	statUnits[8] = "%"; //overall accuracy
+    	
     	statUnits[9] = "s";
     	statUnits[10] = "s";
 
@@ -328,9 +331,7 @@ public class ZombieSleigher implements Controllable {
     	
     	String root = "/res/images/";
     	for (int i = 0; i < 3; i++) gameBackground[i] = load(root + "background.jpg");
-    	
-    	for (int i=1; i <=4; i++)
-    		santaImages[i-1] = load(root + "santa" + i + ".png");
+    	for (int i=1; i <=4; i++) santaImages[i-1] = load(root + "santa" + i + ".png");
     	santaRightArmImage = load(root + "santa_Arm_Right.png");
     	santaLeftArmImage = flip(santaRightArmImage);// = load(root + "santa_Arm_Right.png");
     	zombieImage = load(root + "zombie.png");
@@ -466,8 +467,8 @@ public class ZombieSleigher implements Controllable {
      * TODO (feature creep)
      * collision damage a property of zombie and tree
      * mute button on menu
-     * music mute
-     * sound mute
+     * separate sound and music buttons
+     * 			sample group?
      * bar showing time remaining between shots
      * can damage yourself with bazooka
      * background scrolls slowly on title, shop, and instructions
@@ -671,8 +672,8 @@ public class ZombieSleigher implements Controllable {
     			statValues[5] = Weapon.bulletsFired; //bullets fired
     			statValues[6] = treesDodged;	//trees dodged
     			
-    			statValues[7] = (int) (((float)Weapon.bulletsFired/zombiesShot)*100); //accuracy of run
-    			statValues[8] = 0;//Need to save lifeTime[bulletsFired and zombiesShot]	//lifetime accuracy 
+    			statValues[7] = (int) ((zombiesShot / Weapon.bulletsFired) * 100);
+    			statValues[8] = 0;//TODO Need to save lifeTime[bulletsFired and zombiesShot]	//lifetime accuracy 
     			
     			statValues[9] = seconds;		//time of run
     			statValues[10] += seconds;		//total play time
