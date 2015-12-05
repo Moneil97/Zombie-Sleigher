@@ -23,6 +23,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
@@ -402,6 +404,52 @@ public class ZombieSleigher implements Controllable {
     	instantiateButtons();
     	
     	//Needs to be added after buttons are created
+		canvas.addMouseWheelListener(new MouseWheelListener() {
+			
+			int p = 0;
+			int r = 1;
+			int b = 2;
+					
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						
+						if (!(rifle.purchased || bazooka.purchased))
+							return;
+						
+						if (weapon.index == p){
+							if (e.getWheelRotation() > 0) 	//down
+								if (rifle.purchased)
+									setWeapon(rifle);
+								else						
+									setWeapon(bazooka);
+							else							//up
+								if (bazooka.purchased)
+									setWeapon(bazooka);
+								else
+									setWeapon(rifle);
+						}
+						else if (weapon instanceof Rifle){
+							if (e.getWheelRotation() > 0) 	//down
+								if (bazooka.purchased)
+									setWeapon(bazooka);
+								else						//up
+									setWeapon(pistol);
+							else
+								setWeapon(pistol);
+						}
+						else{
+							if (e.getWheelRotation() > 0) 	//down
+								setWeapon(pistol);
+							else							//up
+								if (rifle.purchased)
+									setWeapon(rifle);
+								else
+									setWeapon(pistol);
+						}
+						
+						
+					}
+				});
     	canvas.addMouseMotionListener(new MouseMotion());
     	canvas.addMouseListener(new Mouse());
     	canvas.addKeyListener(new Key());
@@ -776,6 +824,7 @@ public class ZombieSleigher implements Controllable {
 	    	g.rotate(Math.PI / 6);
 	    	g.translate(-70, -23);
     	}
+    	
     }
     
     public void renderTitle(Graphics2D g, float delta) {
@@ -1207,7 +1256,7 @@ public class ZombieSleigher implements Controllable {
         new ZombieSleigher();
     }
    
-    private void say(Object o) {
+    public void say(Object o) {
 		System.out.println(o);
 	}
     
