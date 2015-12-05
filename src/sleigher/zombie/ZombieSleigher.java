@@ -406,47 +406,30 @@ public class ZombieSleigher implements Controllable {
     	//Needs to be added after buttons are created
 		canvas.addMouseWheelListener(new MouseWheelListener() {
 			
-			int p = 0;
-			int r = 1;
-			int b = 2;
-					
 					@Override
 					public void mouseWheelMoved(MouseWheelEvent e) {
 						
 						if (!(rifle.purchased || bazooka.purchased))
 							return;
 						
-						if (weapon.index == p){
+						if (weapon.index == 0){ //pistol
 							if (e.getWheelRotation() > 0) 	//down
-								if (rifle.purchased)
-									setWeapon(rifle);
-								else						
-									setWeapon(bazooka);
+								setWeapon(rifle.purchased? rifle : bazooka);
 							else							//up
-								if (bazooka.purchased)
-									setWeapon(bazooka);
-								else
-									setWeapon(rifle);
+								setWeapon(bazooka.purchased? bazooka : rifle);
 						}
-						else if (weapon instanceof Rifle){
+						else if (weapon.index == 1){ //rifle
 							if (e.getWheelRotation() > 0) 	//down
-								if (bazooka.purchased)
-									setWeapon(bazooka);
-								else						//up
-									setWeapon(pistol);
-							else
+								setWeapon(bazooka.purchased? bazooka : pistol);
+							else							//up
 								setWeapon(pistol);
 						}
-						else{
+						else{ //bazooka
 							if (e.getWheelRotation() > 0) 	//down
 								setWeapon(pistol);
 							else							//up
-								if (rifle.purchased)
-									setWeapon(rifle);
-								else
-									setWeapon(pistol);
+								setWeapon(rifle.purchased? rifle : pistol);
 						}
-						
 						
 					}
 				});
