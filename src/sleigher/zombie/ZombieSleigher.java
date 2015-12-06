@@ -111,7 +111,7 @@ public class ZombieSleigher implements Controllable {
 	static Sound treeSound;			//9 when santa hits a tree
 	
 	private int soundCount = 1;		//I don't think this is needed, but I'm not sure
-	private boolean mute = true;	//TODO
+	private boolean mute = false;	//TODO
 	
     private BoxButton[] menuButtons = new BoxButton[3];
     private BoxButton resumeButton;
@@ -284,7 +284,7 @@ public class ZombieSleigher implements Controllable {
     	checkImage = load(root + "check.png");
     	for (int i = 1; i <= 2; i++) muzzleSmokeImages[i - 1] = load(root + "smoke" + i + ".png");
     	
-    	root = "src/res/sounds/";
+    	root = "../src/res/sounds/";
     	audioContext = new AudioContext();
     	masterGlide = new Glide(audioContext, 0.5f, 0);
     	masterGain = new Gain(audioContext, soundCount, masterGlide);
