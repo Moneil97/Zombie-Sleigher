@@ -284,7 +284,7 @@ public class ZombieSleigher implements Controllable {
     	checkImage = load(root + "check.png");
     	for (int i = 1; i <= 2; i++) muzzleSmokeImages[i - 1] = load(root + "smoke" + i + ".png");
     	
-    	root = "../src/res/sounds/";
+    	root = "src/res/sounds/";
     	audioContext = new AudioContext();
     	masterGlide = new Glide(audioContext, 0.5f, 0);
     	masterGain = new Gain(audioContext, soundCount, masterGlide);
