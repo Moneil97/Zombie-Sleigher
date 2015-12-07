@@ -266,7 +266,7 @@ public class ZombieSleigher implements Controllable {
     	for (int i = 0; i < 3; i++) gameBackground[i] = load(root + "background.jpg");
     	for (int i=1; i <=4; i++) santaImages[i-1] = load(root + "santa" + i + ".png");
     	santaRightArmImage = load(root + "santa_Arm_Right.png");
-    	santaLeftArmImage = flip(santaRightArmImage);// = load(root + "santa_Arm_Right.png");
+    	santaLeftArmImage = flip(santaRightArmImage);
     	zombieImage = load(root + "zombie.png");
     	zombieDeadImage = load(root + "zombie_Dead.png");
     	titleImage = load(root + "title.png");
@@ -406,6 +406,7 @@ public class ZombieSleigher implements Controllable {
      * muzzle flash on rifle is off
      * prices not antialiased (other text antialiased) see render() method
      * buttons don't turn back to white after changing menu
+     * 
      * guns have irregular fire rate on occasion, maybe related to the jitter?
      * trees and dead zombies jitter down
      * size of frame is not size of canvas, santa can go over the right and bottom sides a tiny bit
@@ -415,6 +416,7 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * weapon switching sound
      * write and read lifetime vars
      * package images outside of jar with sounds
      * clicking sound when browsing buttons
@@ -634,7 +636,7 @@ public class ZombieSleigher implements Controllable {
     			statValues[6] = treesDodged;	//trees dodged
     			
     			statValues[7] = (int) ((bulletsHit / (float)Weapon.bulletsFired) * 100);
-    			statValues[8] = (int) ((lifetimeBulletsHit / (float)Weapon.bulletsFired) * 100);//lifetime accuracy 
+    			statValues[8] = (int) ((lifetimeBulletsHit / (float)lifetimeBulletsFired) * 100);//lifetime accuracy 
     			
     			statValues[9] = seconds;		//time of run
     			statValues[10] += seconds;		//total play time
@@ -919,6 +921,8 @@ public class ZombieSleigher implements Controllable {
 		zombiesRunover = 0;
 		treesDodged = 0;
 		precents = 0;
+		bulletsHit = 0;
+		Weapon.bulletsFired = 0;
     }
     
     private void resetLastPositions() {
