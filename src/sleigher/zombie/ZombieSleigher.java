@@ -95,6 +95,7 @@ public class ZombieSleigher implements Controllable {
 	static BufferedImage[] muzzleFireImages = new BufferedImage[2];
 	static BufferedImage checkImage;
 	static BufferedImage[] muzzleSmokeImages = new BufferedImage[2];
+	static BufferedImage treeHitImage;
 	
 	static AudioContext audioContext;
 	static Glide masterGlide;
@@ -283,6 +284,7 @@ public class ZombieSleigher implements Controllable {
     	bazookaLeftImage = flip(bazookaRightImage);
     	checkImage = load(root + "check.png");
     	for (int i = 1; i <= 2; i++) muzzleSmokeImages[i - 1] = load(root + "smoke" + i + ".png");
+    	treeHitImage = load(root + "tree_hit.png");
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
@@ -397,9 +399,6 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (actual things we have to add)
-     * clicking sound when browsing buttons
-     * dead santa image
-     * destroyed tree image
      * bazooka images and animations
      */
     
@@ -421,6 +420,8 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * clicking sound when browsing buttons
+     * dead santa image
      * collision damage a property of zombie and tree
      * mute button on menu
      * separate sound and music buttons
@@ -664,8 +665,9 @@ public class ZombieSleigher implements Controllable {
     	for (int i = 0; i < zombies.size(); i++)
 			zombies.get(i).render(g, delta);
     	
-    	for (int i = 0; i < trees.size(); i++)
+    	for (int i = 0; i < trees.size(); i++) {
     		trees.get(i).render(g, delta);
+    	}
     	
     	weapon.render(g, delta);
     	santa.render(g, mx, my, ticks, delta);

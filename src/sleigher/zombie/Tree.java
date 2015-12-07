@@ -15,6 +15,7 @@ public class Tree {
 	
 	Polygon bounds;
 	BufferedImage image = ZombieSleigher.treeImage;
+	BufferedImage deadImage = ZombieSleigher.treeHitImage;
 	
 	public Tree() {
 		
@@ -46,7 +47,8 @@ public class Tree {
 	
 	public void render(Graphics2D g, float delta) {
 		int drawy = (int) ((y - lasty) * delta + lasty);
-		g.drawImage(image, (int) x, drawy, width, height, null);
+		if (dead) g.drawImage(deadImage, (int) x, drawy, width, height, null);
+		else g.drawImage(image, (int) x, drawy, width, height, null);
 	}
 	
 	//	[lower, upper)
