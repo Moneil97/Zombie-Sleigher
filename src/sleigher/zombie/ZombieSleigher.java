@@ -399,11 +399,6 @@ public class ZombieSleigher implements Controllable {
     	}).start();
     }
     
-    /**
-     * TODO (actual things we have to add)
-     * bazooka images and animations
-     */
-    
     /** TODO known bugs
      * it takes a long time to load the images and sounds (mostly bg music) on just a grey screen. 
      * 			add a gamestate and load resources then?
@@ -420,6 +415,8 @@ public class ZombieSleigher implements Controllable {
     
     /**
      * TODO (feature creep)
+     * write and read lifetime vars
+     * package images outside of jar with sounds
      * clicking sound when browsing buttons
      * dead santa image
      * collision damage a property of zombie and tree
@@ -548,6 +545,7 @@ public class ZombieSleigher implements Controllable {
 	    				zombiesShot++;
 	    			}
     			} else { //bazooka //TODO check efficiency
+    				bazooka.fired(); 
     				Zombie z = zombies.get(closestZombieIndex);
     				
     				blast.translate(-bx, -by);
@@ -556,6 +554,8 @@ public class ZombieSleigher implements Controllable {
     				bx = (int) (z.x + z.width / 2);
     				by = (int) (z.y + z.height / 2);    		
     				
+    				bazooka.ex = bx - 30 * 3 / 2;
+    				bazooka.ey = by - 30 * 3 / 2;
     				blast.translate(bx, by);
     				
     				for (int i = 0; i < zombies.size(); i++) {
@@ -694,11 +694,7 @@ public class ZombieSleigher implements Controllable {
     	g.setColor(new Color(150, 50, 150));
     	g.setFont(new Font("helvetica", Font.PLAIN, 22));
     	g.drawString("" + precents, 770 - 7 - g.getFontMetrics().stringWidth("" + precents), 25);
-    	
-    	//TODO blast animation
-    	g.setColor(new Color(150, 50, 150, 100));
-    	g.fillPolygon(blast);
-    	
+    	    	
     	//weapon boxes
     	for (int i = 0; i < 3; i++) {
     		g.setColor(new Color(50, 50, 50, 150));
