@@ -96,6 +96,7 @@ public class ZombieSleigher implements Controllable {
 	static BufferedImage checkImage;
 	static BufferedImage[] muzzleSmokeImages = new BufferedImage[2];
 	static BufferedImage treeHitImage;
+	static BufferedImage[] explosionImages = new BufferedImage[3];
 	
 	static AudioContext audioContext;
 	static Glide masterGlide;
@@ -285,6 +286,7 @@ public class ZombieSleigher implements Controllable {
     	checkImage = load(root + "check.png");
     	for (int i = 1; i <= 2; i++) muzzleSmokeImages[i - 1] = load(root + "smoke" + i + ".png");
     	treeHitImage = load(root + "tree_hit.png");
+    	for (int i = 1; i <= 3; i++) explosionImages[i - 1] = load(root + "Exp" + i + ".png");
     	
     	root = "src/res/sounds/";
     	audioContext = new AudioContext();
@@ -408,8 +410,6 @@ public class ZombieSleigher implements Controllable {
      * 			have music playing during loading screen
      * muzzle flash on rifle is off
      * prices not antialiased (other text antialiased) see render() method
-     * accuracy over 100
-     * overall accuracy incorrect
      * buttons don't turn back to white after changing menu
      * guns have irregular fire rate on occasion, maybe related to the jitter?
      * trees and dead zombies jitter down
@@ -784,7 +784,7 @@ public class ZombieSleigher implements Controllable {
 		if (quitButton.hovering) {
 			g.setColor(Color.red);
 			g.setFont(new Font("helvetica", Font.PLAIN, 16));
-			g.drawString("If you quit, your progress", 300, 335);
+			g.drawString("If you quit, your progress", 400 - g.getFontMetrics().stringWidth("If you quit, your progress") / 2, 335);
 			g.drawString("will not be saved", 400 - g.getFontMetrics().stringWidth("will not be saved") / 2, 355);
 		}
 		
